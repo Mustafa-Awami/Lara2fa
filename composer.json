@@ -10,11 +10,12 @@
     },
     "authors": [
         {
-            "name": "Mustafa",
+            "name": "Mustafa Al-Awami",
             "email": "mustafa.awami1@gmail.com"
         }
     ],
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "web-auth/webauthn-lib": "5.2"
     },
