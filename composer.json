@@ -1,0 +1,28 @@
+{
+    "name": "mustafa/lara2fa",
+    "description": "Lara2FA is a modern and secure Two-Factor Authentication package for Laravel, providing developers with a flexible way to protect user accounts. It supports multiple verification methods, allowing you to choose the best fit for your application's needs.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Mustafa\\Lara2fa\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mustafa",
+            "email": "mustafa.awami1@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "web-auth/webauthn-lib": "5.2"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mustafa\\Lara2fa\\Lara2faServiceProvider"
+            ]
+        }
+    }
+}
