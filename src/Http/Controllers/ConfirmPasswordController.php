@@ -1,6 +1,6 @@
 <?php
 
-namespace Mustafa\Lara2fa\Http\Controllers;
+namespace MustafaAwami\Lara2fa\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Mustafa\Lara2fa\Http\Controllers\Settings;
+namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Mustafa\Lara2fa\Models\Passkey;
+use MustafaAwami\Lara2fa\Models\Passkey;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Webauthn\PublicKeyCredentialSource;
@@ -16,7 +16,7 @@ use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Fortify;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialCreationOptions;
-use Mustafa\Lara2fa\Services\WebauthnJsonSerializer;
+use MustafaAwami\Lara2fa\Services\WebauthnJsonSerializer;
 
 class PasskeysTwoFactorAuthenticationOptionsController extends Controller
 {

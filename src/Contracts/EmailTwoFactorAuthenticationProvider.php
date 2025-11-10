@@ -1,6 +1,6 @@
 <?php
 
-namespace Mustafa\Lara2fa\Contracts;
+namespace MustafaAwami\Lara2fa\Contracts;
 
 interface EmailTwoFactorAuthenticationProvider
 {

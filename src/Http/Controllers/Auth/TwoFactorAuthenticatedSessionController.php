@@ -1,17 +1,17 @@
 <?php
 
-namespace Mustafa\Lara2fa\Http\Controllers\Auth;
+namespace MustafaAwami\Lara2fa\Http\Controllers\Auth;
 
 use Inertia\Inertia;
-use Mustafa\Lara2fa\Lara2fa;
+use MustafaAwami\Lara2fa\Lara2fa;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\StatefulGuard;
-use Mustafa\Lara2fa\Events\RecoveryCodeReplaced;
+use MustafaAwami\Lara2fa\Events\RecoveryCodeReplaced;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Mustafa\Lara2fa\Events\TwoFactorAuthenticationFailed;
-use Mustafa\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
-use Mustafa\Lara2fa\Events\TwoFactorAuthenticationSuccessful;
-use Mustafa\Lara2fa\Http\Requests\Auth\TwoFactorLoginRequest;
+use MustafaAwami\Lara2fa\Events\TwoFactorAuthenticationFailed;
+use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
+use MustafaAwami\Lara2fa\Events\TwoFactorAuthenticationSuccessful;
+use MustafaAwami\Lara2fa\Http\Requests\Auth\TwoFactorLoginRequest;
 
 class TwoFactorAuthenticatedSessionController extends Controller
 {
@@ -34,7 +34,7 @@ class TwoFactorAuthenticatedSessionController extends Controller
     /**
      * Show the two factor authentication challenge view.
      *
-     * @param  \Mustafa\Lara2fa\Http\Requests\TwoFactorLoginRequest  $request
+     * @param  \MustafaAwami\Lara2fa\Http\Requests\TwoFactorLoginRequest  $request
      */
     public function create(TwoFactorLoginRequest $request)
     {
@@ -93,7 +93,7 @@ class TwoFactorAuthenticatedSessionController extends Controller
     /**
      * Attempt to authenticate a new session using the two factor authentication code.
      *
-     * @param  \Mustafa\Lara2fa\Http\Requests\TwoFactorLoginRequest  $request
+     * @param  \MustafaAwami\Lara2fa\Http\Requests\TwoFactorLoginRequest  $request
      * @return mixed
      */
     public function store(TwoFactorLoginRequest $request)

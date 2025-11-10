@@ -1,6 +1,6 @@
 <?php
 
-use Mustafa\Lara2fa\Features;
+use MustafaAwami\Lara2fa\Features;
 
 return[
 

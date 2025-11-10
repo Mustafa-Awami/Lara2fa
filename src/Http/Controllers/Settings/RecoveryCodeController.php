@@ -1,16 +1,16 @@
 <?php
 
-namespace Mustafa\Lara2fa\Http\Controllers\Settings;
+namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
 
 use Illuminate\Http\Request;
-use Mustafa\Lara2fa\Features;
+use MustafaAwami\Lara2fa\Features;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
-use Mustafa\Lara2fa\Actions\DisableRecoveryCodes;
-use Mustafa\Lara2fa\Actions\GenerateNewRecoveryCodes;
-use Mustafa\Lara2fa\Contracts\RecoveryCodesDisabledResponse;
-use Mustafa\Lara2fa\Contracts\RecoveryCodesGeneratedResponse;
+use MustafaAwami\Lara2fa\Actions\DisableRecoveryCodes;
+use MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes;
+use MustafaAwami\Lara2fa\Contracts\RecoveryCodesDisabledResponse;
+use MustafaAwami\Lara2fa\Contracts\RecoveryCodesGeneratedResponse;
 
 class RecoveryCodeController extends Controller
 {
@@ -40,8 +40,8 @@ class RecoveryCodeController extends Controller
      * Generate a fresh set of two factor authentication recovery codes.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Mustafa\Lara2fa\Actions\GenerateNewRecoveryCodes  $generate
-     * @return  \Mustafa\Lara2fa\Contracts\RecoveryCodesGeneratedResponse
+     * @param  \MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes  $generate
+     * @return  \MustafaAwami\Lara2fa\Contracts\RecoveryCodesGeneratedResponse
      */
     public function store(Request $request, GenerateNewRecoveryCodes $generate)
     {
@@ -58,7 +58,7 @@ class RecoveryCodeController extends Controller
      * Delete the two factor authentication recovery codes for authenticated user
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @return  \Mustafa\Lara2fa\Contracts\RecoveryCodesDisabledResponse
+     * @return  \MustafaAwami\Lara2fa\Contracts\RecoveryCodesDisabledResponse
      */
     public function destroy(Request $request, DisableRecoveryCodes $disable)
     {

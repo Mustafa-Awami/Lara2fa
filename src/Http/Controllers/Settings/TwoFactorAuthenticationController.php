@@ -1,11 +1,11 @@
 <?php
 
-namespace Mustafa\Lara2fa\Http\Controllers\Settings;
+namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use Mustafa\Lara2fa\Lara2fa;
-use Mustafa\Lara2fa\Features;
+use MustafaAwami\Lara2fa\Lara2fa;
+use MustafaAwami\Lara2fa\Features;
 use App\Http\Controllers\Controller;
 
 class TwoFactorAuthenticationController extends Controller

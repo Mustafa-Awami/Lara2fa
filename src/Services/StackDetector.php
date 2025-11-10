@@ -1,6 +1,6 @@
 <?php
 
-namespace Mustafa\Lara2fa\Services;
+namespace MustafaAwami\Lara2fa\Services;
 
 use Illuminate\Support\Facades\File;
 

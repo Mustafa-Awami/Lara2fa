@@ -1,11 +1,11 @@
 <?php
 
-namespace Mustafa\Lara2fa\Notifications;
+namespace MustafaAwami\Lara2fa\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Mustafa\Lara2fa\Lara2fa;
+use MustafaAwami\Lara2fa\Lara2fa;
 
 class emailTwoFactorCode extends Notification
 {
