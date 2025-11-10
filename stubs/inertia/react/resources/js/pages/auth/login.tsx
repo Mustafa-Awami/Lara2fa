@@ -17,6 +17,7 @@ import * as loginRoute from '@/routes/login';
 
 interface LoginProps {
     status?: string;
+    canRegister: boolean;
     canResetPassword: boolean;
     canUsePasskeys: boolean;
 }
@@ -28,7 +29,7 @@ interface loginForm {
     [key: string]: string | undefined;
 }
 
-export default function Login({ status, canResetPassword, canUsePasskeys }: LoginProps) {
+export default function Login({ status, canRegister, canResetPassword, canUsePasskeys }: LoginProps) {
 
     const loginForm = useForm<loginForm>({
         email: "",
@@ -158,13 +159,15 @@ export default function Login({ status, canResetPassword, canUsePasskeys }: Logi
                     )}
                     
                 </div>
-
-                <div className="text-center text-sm text-muted-foreground">
-                    Don't have an account?{' '}
-                    <TextLink href={register()} tabIndex={5}>
-                        Sign up
-                    </TextLink>
-                </div>
+                
+                {canRegister && (
+                    <div className="text-center text-sm text-muted-foreground">
+                        Don't have an account?{' '}
+                        <TextLink href={register()} tabIndex={5}>
+                            Sign up
+                        </TextLink>
+                    </div>
+                )}
             </form>
 
             {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}

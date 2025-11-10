@@ -1,9 +1,9 @@
 <?php
 
-namespace Mustafa\Lara2fa\Actions;
+namespace MustafaAwami\Lara2fa\Actions;
 
-use Mustafa\Lara2fa\Events\AuthenticatorAppTwoFactorAuthenticationDisabled;
-use Mustafa\Lara2fa\Features;
+use MustafaAwami\Lara2fa\Events\AuthenticatorAppTwoFactorAuthenticationDisabled;
+use MustafaAwami\Lara2fa\Features;
 
 class DisableAuthenticatorAppTwoFactorAuthentication
 {

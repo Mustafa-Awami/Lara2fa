@@ -1,15 +1,15 @@
 <?php
 
-use Mustafa\Lara2fa\Features;
+use MustafaAwami\Lara2fa\Features;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features as FortifyFeatures;
-use Mustafa\Lara2fa\Http\Controllers\ConfirmPasswordController;
-use Mustafa\Lara2fa\Http\Controllers\Settings\RecoveryCodeController;
-use Mustafa\Lara2fa\Http\Controllers\Auth\TwoFactorAuthenticatedSessionController;
-use Mustafa\Lara2fa\Http\Controllers\Settings\EmailTwoFactorAuthenticationController;
-use Mustafa\Lara2fa\Http\Controllers\Settings\PasskeysTwoFactorAuthenticationController;
-use Mustafa\Lara2fa\Http\Controllers\Settings\PasskeysTwoFactorAuthenticationOptionsController;
-use Mustafa\Lara2fa\Http\Controllers\Settings\AuthenticatorAppTwoFactorAuthenticationController;
+use MustafaAwami\Lara2fa\Http\Controllers\ConfirmPasswordController;
+use MustafaAwami\Lara2fa\Http\Controllers\Settings\RecoveryCodeController;
+use MustafaAwami\Lara2fa\Http\Controllers\Auth\TwoFactorAuthenticatedSessionController;
+use MustafaAwami\Lara2fa\Http\Controllers\Settings\EmailTwoFactorAuthenticationController;
+use MustafaAwami\Lara2fa\Http\Controllers\Settings\PasskeysTwoFactorAuthenticationController;
+use MustafaAwami\Lara2fa\Http\Controllers\Settings\PasskeysTwoFactorAuthenticationOptionsController;
+use MustafaAwami\Lara2fa\Http\Controllers\Settings\AuthenticatorAppTwoFactorAuthenticationController;
 
 Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
 

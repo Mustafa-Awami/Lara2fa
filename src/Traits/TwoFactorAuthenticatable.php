@@ -1,22 +1,22 @@
 <?php
 
-namespace Mustafa\Lara2fa\Traits;
+namespace MustafaAwami\Lara2fa\Traits;
 
 use BaconQrCode\Writer;
-use Mustafa\Lara2fa\Features;
+use MustafaAwami\Lara2fa\Features;
 use BaconQrCode\Renderer\Color\Rgb;
-use Mustafa\Lara2fa\Models\Passkey;
+use MustafaAwami\Lara2fa\Models\Passkey;
 use Illuminate\Support\Facades\Crypt;
 use BaconQrCode\Renderer\ImageRenderer;
 use Illuminate\Database\Eloquent\Model;
-use Mustafa\Lara2fa\Services\RecoveryCode;
+use MustafaAwami\Lara2fa\Services\RecoveryCode;
 use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use Laravel\Fortify\Fortify;
-use Mustafa\Lara2fa\Notifications\emailTwoFactorCode;
-use Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider;
+use MustafaAwami\Lara2fa\Notifications\emailTwoFactorCode;
+use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider;
 
 trait TwoFactorAuthenticatable
 {

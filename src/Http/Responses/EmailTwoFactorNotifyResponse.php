@@ -1,10 +1,10 @@
 <?php
 
-namespace Mustafa\Lara2fa\Http\Responses;
+namespace MustafaAwami\Lara2fa\Http\Responses;
 
 use Illuminate\Http\JsonResponse;
-use Mustafa\Lara2fa\Contracts\EmailTwoFactorNotifyResponse as EmailTwoFactorNotifyResponseContract;
-use Mustafa\Lara2fa\Lara2fa;
+use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorNotifyResponse as EmailTwoFactorNotifyResponseContract;
+use MustafaAwami\Lara2fa\Lara2fa;
 
 class EmailTwoFactorNotifyResponse implements EmailTwoFactorNotifyResponseContract
 {

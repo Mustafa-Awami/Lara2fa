@@ -18,6 +18,7 @@ import * as loginRoute from '@/routes/login';
 
 const props = defineProps<{
     status?: string;
+    canRegister: boolean;
     canResetPassword: boolean;
     canUsePasskeys: boolean;
 }>();
@@ -177,7 +178,7 @@ watch(showPassword, (value)=>{
                 </Button>
             </div>
 
-            <div class="text-center text-sm text-muted-foreground">
+            <div class="text-center text-sm text-muted-foreground" v-if="canRegister">
                 Don't have an account?
                 <TextLink :href="register()" :tabindex="5">Sign up</TextLink>
             </div>

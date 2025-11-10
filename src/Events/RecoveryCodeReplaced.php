@@ -1,6 +1,6 @@
 <?php
 
-namespace Mustafa\Lara2fa\Events;
+namespace MustafaAwami\Lara2fa\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;

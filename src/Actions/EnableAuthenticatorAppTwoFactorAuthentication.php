@@ -1,25 +1,25 @@
 <?php
 
-namespace Mustafa\Lara2fa\Actions;
+namespace MustafaAwami\Lara2fa\Actions;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
-use Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider;
-use Mustafa\Lara2fa\Events\AuthenticatorAppTwoFactorAuthenticationEnabled;
+use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider;
+use MustafaAwami\Lara2fa\Events\AuthenticatorAppTwoFactorAuthenticationEnabled;
 
 class EnableAuthenticatorAppTwoFactorAuthentication
 {
     /**
      * The authenticator app two factor authentication provider.
      *
-     * @var \Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider
+     * @var \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider
      */
     protected $provider;
 
     /**
      * Create a new action instance.
      *
-     * @param  \Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider  $provider
+     * @param  \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider  $provider
      * @return void
      */
     public function __construct(AuthenticatorAppTwoFactorAuthenticationProvider $provider)

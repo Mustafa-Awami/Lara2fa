@@ -1,17 +1,18 @@
 <?php
 
-namespace Mustafa\Lara2fa\Http\Controllers\Auth;
+namespace MustafaAwami\Lara2fa\Http\Controllers\Auth;
 
 use Inertia\Inertia;
-use Mustafa\Lara2fa\Lara2fa;
+use MustafaAwami\Lara2fa\Lara2fa;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\StatefulGuard;
-use Mustafa\Lara2fa\Events\RecoveryCodeReplaced;
+use MustafaAwami\Lara2fa\Events\RecoveryCodeReplaced;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Mustafa\Lara2fa\Events\TwoFactorAuthenticationFailed;
-use Mustafa\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
-use Mustafa\Lara2fa\Events\TwoFactorAuthenticationSuccessful;
-use Mustafa\Lara2fa\Http\Requests\Auth\TwoFactorLoginRequest;
+use MustafaAwami\Lara2fa\Events\TwoFactorAuthenticationFailed;
+use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
+use MustafaAwami\Lara2fa\Events\TwoFactorAuthenticationSuccessful;
+use MustafaAwami\Lara2fa\Http\Requests\Auth\TwoFactorLoginRequest;
+use Laravel\Fortify\Contracts\TwoFactorChallengeViewResponse;
 
 class TwoFactorAuthenticatedSessionController extends Controller
 {
@@ -34,7 +35,8 @@ class TwoFactorAuthenticatedSessionController extends Controller
     /**
      * Show the two factor authentication challenge view.
      *
-     * @param  \Mustafa\Lara2fa\Http\Requests\TwoFactorLoginRequest  $request
+     * @param  \MustafaAwami\Lara2fa\Http\Requests\TwoFactorLoginRequest  $request
+     * @return \Laravel\Fortify\Contracts\TwoFactorChallengeViewResponse
      */
     public function create(TwoFactorLoginRequest $request)
     {
@@ -42,58 +44,13 @@ class TwoFactorAuthenticatedSessionController extends Controller
             throw new HttpResponseException(redirect()->route('login'));
         }
 
-        $model = $this->guard->getProvider()->getModel();
-
-        if (! $request->session()->has('login.id') ||
-            ! $user = $model::find($request->session()->get('login.id'))) {
-            throw new HttpResponseException(
-                app(FailedTwoFactorLoginResponse::class)->toResponse($this)
-            );
-        }
-
-        $twoFactorMethod = '';
-        $numberOfEnableOptions = 0;
-
-        if (Lara2fa::canPasskeysUsedForTwoFactorAuthentication() && $user->hasEnabledPasskeyAuthentication()) {
-            // $twoFactorMethod = 'passkeys';
-            $numberOfEnableOptions++;
-        }
-        if ($user->hasEnabledTwoFactorRecoveryCodes()) {
-            // $twoFactorMethod = 'recovery_code';
-            $numberOfEnableOptions++;
-        } 
-        if ($user->hasEnabledEmailTwoFactorAuthentication()) {
-            // $twoFactorMethod = 'email_code';
-            $numberOfEnableOptions++;
-        } 
-        if ($user->hasEnabledAuthenticatorAppTwoFactorAuthentication()) {
-            // $twoFactorMethod = 'code';
-            $numberOfEnableOptions++;
-        } 
-
-        $twoFactorEnabled = [
-            'authenticatorApp' => $user->hasEnabledAuthenticatorAppTwoFactorAuthentication(),
-            'email' => $user->hasEnabledEmailTwoFactorAuthentication(),
-            'recoveryCodes' => $user->hasEnabledTwoFactorRecoveryCodes(),
-            'passkeys' => Lara2fa::canPasskeysUsedForTwoFactorAuthentication() && $user->hasEnabledPasskeyAuthentication(),
-        ];
-
-        if (Lara2fa::stack() === "react") {
-            $view = "auth/two-factor-challenge";
-        } elseif (Lara2fa::stack() === "vue") {
-            $view = "auth/TwoFactorChallenge";
-        }
-
-        return Inertia::render($view,[
-            'twoFactorMethod' => $twoFactorMethod,
-            'twoFactorEnabled' => $twoFactorEnabled,
-        ]);
+        return app(TwoFactorChallengeViewResponse::class);
     }
 
     /**
      * Attempt to authenticate a new session using the two factor authentication code.
      *
-     * @param  \Mustafa\Lara2fa\Http\Requests\TwoFactorLoginRequest  $request
+     * @param  \MustafaAwami\Lara2fa\Http\Requests\TwoFactorLoginRequest  $request
      * @return mixed
      */
     public function store(TwoFactorLoginRequest $request)
