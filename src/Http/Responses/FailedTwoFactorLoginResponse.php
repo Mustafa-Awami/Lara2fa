@@ -1,9 +1,9 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Http\Responses;
+namespace Mustafa\Lara2fa\Http\Responses;
 
 use Illuminate\Validation\ValidationException;
-use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
+use Mustafa\Lara2fa\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
 
 class FailedTwoFactorLoginResponse implements FailedTwoFactorLoginResponseContract
 {

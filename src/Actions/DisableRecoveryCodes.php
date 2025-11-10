@@ -1,8 +1,8 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Actions;
+namespace Mustafa\Lara2fa\Actions;
 
-use MustafaAwami\Lara2fa\Events\RecoveryCodesDisabled;
+use Mustafa\Lara2fa\Events\RecoveryCodesDisabled;
 
 class DisableRecoveryCodes
 {

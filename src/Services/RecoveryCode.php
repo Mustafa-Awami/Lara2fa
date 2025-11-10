@@ -1,6 +1,6 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Services;
+namespace Mustafa\Lara2fa\Services;
 
 use Illuminate\Support\Str;
 

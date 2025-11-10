@@ -1,31 +1,31 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
+namespace Mustafa\Lara2fa\Http\Controllers\Settings;
 
 use Illuminate\Http\Request;
 use Webauthn\PublicKeyCredential;
-use MustafaAwami\Lara2fa\Models\Passkey;
+use Mustafa\Lara2fa\Models\Passkey;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Webauthn\AuthenticatorAssertionResponse;
 use Illuminate\Validation\ValidationException;
 use Webauthn\AuthenticatorAttestationResponse;
-use MustafaAwami\Lara2fa\Actions\DisableRecoveryCodes;
-use MustafaAwami\Lara2fa\Services\WebauthnJsonSerializer;
-use MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes;
-use MustafaAwami\Lara2fa\Contracts\PasskeyCreatedResponse;
-use MustafaAwami\Lara2fa\Contracts\PasskeyDeletedResponse;
-use MustafaAwami\Lara2fa\Contracts\PasskeyUpdatedResponse;
+use Mustafa\Lara2fa\Actions\DisableRecoveryCodes;
+use Mustafa\Lara2fa\Services\WebauthnJsonSerializer;
+use Mustafa\Lara2fa\Actions\GenerateNewRecoveryCodes;
+use Mustafa\Lara2fa\Contracts\PasskeyCreatedResponse;
+use Mustafa\Lara2fa\Contracts\PasskeyDeletedResponse;
+use Mustafa\Lara2fa\Contracts\PasskeyUpdatedResponse;
 use Webauthn\AuthenticatorAssertionResponseValidator;
 use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
-use MustafaAwami\Lara2fa\Contracts\PasskeyDisapledResponse;
+use Mustafa\Lara2fa\Contracts\PasskeyDisapledResponse;
 use Webauthn\AuthenticatorAttestationResponseValidator;
-use MustafaAwami\Lara2fa\Contracts\PasskeyAuthenticatedResponse;
-use MustafaAwami\Lara2fa\Events\PasskeyCreated;
-use MustafaAwami\Lara2fa\Events\PasskeyUpdated;
-use MustafaAwami\Lara2fa\Events\PasskeyDeleted;
-use MustafaAwami\Lara2fa\Events\PasskeyDisabled;
+use Mustafa\Lara2fa\Contracts\PasskeyAuthenticatedResponse;
+use Mustafa\Lara2fa\Events\PasskeyCreated;
+use Mustafa\Lara2fa\Events\PasskeyUpdated;
+use Mustafa\Lara2fa\Events\PasskeyDeleted;
+use Mustafa\Lara2fa\Events\PasskeyDisabled;
 
 class PasskeysTwoFactorAuthenticationController extends Controller
 {
@@ -46,8 +46,8 @@ class PasskeysTwoFactorAuthenticationController extends Controller
      * Create a new passkey for the user.
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes  $generateRecoveryCodes
-     * @return \MustafaAwami\Lara2fa\Contracts\PasskeyCreatedResponse
+     * @param  \Mustafa\Lara2fa\Actions\GenerateNewRecoveryCodes  $generateRecoveryCodes
+     * @return \Mustafa\Lara2fa\Contracts\PasskeyCreatedResponse
      */
     public function store(Request $request, GenerateNewRecoveryCodes $generateRecoveryCodes)
     {
@@ -105,8 +105,8 @@ class PasskeysTwoFactorAuthenticationController extends Controller
      * Update the passkey for the user.
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Models\Passkey  $passkey
-     * @return \MustafaAwami\Lara2fa\Contracts\PasskeyUpdatedResponse
+     * @param  \Mustafa\Lara2fa\Models\Passkey  $passkey
+     * @return \Mustafa\Lara2fa\Contracts\PasskeyUpdatedResponse
      */
     public function update(Request $request, Passkey $passkey)
     {
@@ -127,7 +127,7 @@ class PasskeysTwoFactorAuthenticationController extends Controller
      * Authenticate the user with the givin passkey.
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @return \MustafaAwami\Lara2fa\Contracts\PasskeyAuthenticatedResponse
+     * @return \Mustafa\Lara2fa\Contracts\PasskeyAuthenticatedResponse
      */
     public function authenticate(Request $request)
     {
@@ -180,9 +180,9 @@ class PasskeysTwoFactorAuthenticationController extends Controller
      * Delete the passkey for the user.
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Models\Passkey  $passkey
-     * @param  \MustafaAwami\Lara2fa\Actions\DisableEmailTwoFactorAuthentication  $disable
-     * @return \MustafaAwami\Lara2fa\Contracts\PasskeyDeletedResponse
+     * @param  \Mustafa\Lara2fa\Models\Passkey  $passkey
+     * @param  \Mustafa\Lara2fa\Actions\DisableEmailTwoFactorAuthentication  $disable
+     * @return \Mustafa\Lara2fa\Contracts\PasskeyDeletedResponse
      */
     public function destroy(Request $request, Passkey $passkey, DisableRecoveryCodes $disableRecoveryCodes)
     {
@@ -201,8 +201,8 @@ class PasskeysTwoFactorAuthenticationController extends Controller
      * Delete all passkeys for the user.
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\DisableEmailTwoFactorAuthentication  $disable
-     * @return \MustafaAwami\Lara2fa\Contracts\PasskeyDisapledResponse
+     * @param  \Mustafa\Lara2fa\Actions\DisableEmailTwoFactorAuthentication  $disable
+     * @return \Mustafa\Lara2fa\Contracts\PasskeyDisapledResponse
      */
     public function disable(Request $request, DisableRecoveryCodes $disableRecoveryCodes)
     {

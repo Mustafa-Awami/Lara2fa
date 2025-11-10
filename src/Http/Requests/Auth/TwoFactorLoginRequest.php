@@ -1,15 +1,15 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Http\Requests\Auth;
+namespace Mustafa\Lara2fa\Http\Requests\Auth;
 
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider;
+use Mustafa\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
+use Mustafa\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider;
+use Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider;
 
 class TwoFactorLoginRequest extends FormRequest
 {

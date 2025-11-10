@@ -1,10 +1,10 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Http\Responses;
+namespace Mustafa\Lara2fa\Http\Responses;
 
 use Illuminate\Http\JsonResponse;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorEnabledResponse as EmailTwoFactorEnabledResponseContract;
-use MustafaAwami\Lara2fa\Lara2fa;
+use Mustafa\Lara2fa\Contracts\EmailTwoFactorEnabledResponse as EmailTwoFactorEnabledResponseContract;
+use Mustafa\Lara2fa\Lara2fa;
 
 class EmailTwoFactorEnabledResponse implements EmailTwoFactorEnabledResponseContract
 {

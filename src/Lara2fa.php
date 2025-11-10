@@ -1,6 +1,6 @@
 <?php
 
-namespace MustafaAwami\Lara2fa;
+namespace Mustafa\Lara2fa;
 
 class Lara2fa
 {

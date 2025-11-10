@@ -1,10 +1,10 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Http\Responses;
+namespace Mustafa\Lara2fa\Http\Responses;
 
 use Illuminate\Http\JsonResponse;
-use MustafaAwami\Lara2fa\Contracts\PasskeyCreatedResponse as PasskeyCreatedResponseContract;
-use MustafaAwami\Lara2fa\Lara2fa;
+use Mustafa\Lara2fa\Contracts\PasskeyCreatedResponse as PasskeyCreatedResponseContract;
+use Mustafa\Lara2fa\Lara2fa;
 
 class PasskeyCreatedResponse implements PasskeyCreatedResponseContract
 {

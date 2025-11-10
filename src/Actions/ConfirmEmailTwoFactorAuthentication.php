@@ -1,26 +1,26 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Actions;
+namespace Mustafa\Lara2fa\Actions;
 
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
-use MustafaAwami\Lara2fa\Events\EmailTwoFactorAuthenticationConfirmed;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider;
+use Mustafa\Lara2fa\Events\EmailTwoFactorAuthenticationConfirmed;
+use Mustafa\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider;
 
 class ConfirmEmailTwoFactorAuthentication
 {
     /**
      * The email two factor authentication provider.
      *
-     * @var \MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider
+     * @var \Mustafa\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider
      */
     protected $provider;
 
     /**
      * Create a new action instance.
      *
-     * @param  \MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider  $provider
+     * @param  \Mustafa\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider  $provider
      * @return void
      */
     public function __construct(EmailTwoFactorAuthenticationProvider $provider)

@@ -1,6 +1,6 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Console;
+namespace Mustafa\Lara2fa\Console;
 
 use Exception;
 use RuntimeException;
@@ -9,7 +9,7 @@ use Symfony\Component\Process\Process;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
-use MustafaAwami\Lara2fa\Services\StackDetector;
+use Mustafa\Lara2fa\Services\StackDetector;
 
 #[AsCommand(name: 'lara2fa:install')]
 class InstallCommand extends Command implements PromptsForMissingInput

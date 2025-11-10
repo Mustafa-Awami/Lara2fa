@@ -1,6 +1,6 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Events;
+namespace Mustafa\Lara2fa\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 

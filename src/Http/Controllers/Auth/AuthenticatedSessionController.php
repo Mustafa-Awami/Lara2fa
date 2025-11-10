@@ -1,18 +1,18 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Http\Controllers\Auth;
+namespace Mustafa\Lara2fa\Http\Controllers\Auth;
 
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
-use MustafaAwami\Lara2fa\Lara2fa;
-use MustafaAwami\Lara2fa\Features;
+use Mustafa\Lara2fa\Lara2fa;
+use Mustafa\Lara2fa\Features;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Auth\StatefulGuard;
-use MustafaAwami\Lara2fa\Http\Requests\Auth\LoginRequest;
+use Mustafa\Lara2fa\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
 {

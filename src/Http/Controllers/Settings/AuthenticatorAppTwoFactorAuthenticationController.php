@@ -1,19 +1,19 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
+namespace Mustafa\Lara2fa\Http\Controllers\Settings;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
-use MustafaAwami\Lara2fa\Actions\DisableRecoveryCodes;
-use MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorEnabledResponse;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorDisabledResponse;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorConfirmedResponse;
-use MustafaAwami\Lara2fa\Actions\EnableAuthenticatorAppTwoFactorAuthentication;
-use MustafaAwami\Lara2fa\Actions\ConfirmAuthenticatorAppTwoFactorAuthentication;
-use MustafaAwami\Lara2fa\Actions\DisableAuthenticatorAppTwoFactorAuthentication;
+use Mustafa\Lara2fa\Actions\DisableRecoveryCodes;
+use Mustafa\Lara2fa\Actions\GenerateNewRecoveryCodes;
+use Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorEnabledResponse;
+use Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorDisabledResponse;
+use Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorConfirmedResponse;
+use Mustafa\Lara2fa\Actions\EnableAuthenticatorAppTwoFactorAuthentication;
+use Mustafa\Lara2fa\Actions\ConfirmAuthenticatorAppTwoFactorAuthentication;
+use Mustafa\Lara2fa\Actions\DisableAuthenticatorAppTwoFactorAuthentication;
 
 class AuthenticatorAppTwoFactorAuthenticationController extends Controller
 {
@@ -21,9 +21,9 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
      * Enable authenticator app two factor authentication for the user.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\EnableAuthenticatorAppTwoFactorAuthentication  $enable
-     * @param  \MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes  $generateRecoveryCodes
-     * @return \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorEnabledResponse
+     * @param  \Mustafa\Lara2fa\Actions\EnableAuthenticatorAppTwoFactorAuthentication  $enable
+     * @param  \Mustafa\Lara2fa\Actions\GenerateNewRecoveryCodes  $generateRecoveryCodes
+     * @return \Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorEnabledResponse
      */
     public function store(Request $request, EnableAuthenticatorAppTwoFactorAuthentication $enable, GenerateNewRecoveryCodes $generateRecoveryCodes)
     {
@@ -40,9 +40,9 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
      * Confirm authenticator app two factor authentication for the user.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\ConfirmAuthenticatorAppTwoFactorAuthentication  $confirm
-     * @param  \MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes  $generateRecoveryCodes
-     * @return \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorConfirmedResponse
+     * @param  \Mustafa\Lara2fa\Actions\ConfirmAuthenticatorAppTwoFactorAuthentication  $confirm
+     * @param  \Mustafa\Lara2fa\Actions\GenerateNewRecoveryCodes  $generateRecoveryCodes
+     * @return \Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorConfirmedResponse
      */
     public function confirm(Request $request, ConfirmAuthenticatorAppTwoFactorAuthentication $confirm, GenerateNewRecoveryCodes $generateRecoveryCodes)
     {
@@ -59,8 +59,8 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
      * Disable authenticator app two factor authentication for the user.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\DisableAuthenticatorAppTwoFactorAuthentication  $disable
-     * @return \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorDisabledResponse
+     * @param  \Mustafa\Lara2fa\Actions\DisableAuthenticatorAppTwoFactorAuthentication  $disable
+     * @return \Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorDisabledResponse
      */
     public function destroy(Request $request, DisableAuthenticatorAppTwoFactorAuthentication $disable, DisableRecoveryCodes $disableRecoveryCodes)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Http\Requests\Auth;
+namespace Mustafa\Lara2fa\Http\Requests\Auth;
 
 use App\Models\User;
 use Illuminate\Auth\Events\Lockout;

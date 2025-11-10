@@ -1,10 +1,10 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Services;
+namespace Mustafa\Lara2fa\Services;
 
 use Carbon\Carbon;
-use MustafaAwami\Lara2fa\Lara2fa;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider as EmailTwoFactorAuthenticationProviderContract;
+use Mustafa\Lara2fa\Lara2fa;
+use Mustafa\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider as EmailTwoFactorAuthenticationProviderContract;
 
 class EmailTwoFactorAuthenticationProvider implements EmailTwoFactorAuthenticationProviderContract
 {

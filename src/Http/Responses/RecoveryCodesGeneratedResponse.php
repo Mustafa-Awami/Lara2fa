@@ -1,10 +1,10 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Http\Responses;
+namespace Mustafa\Lara2fa\Http\Responses;
 
 use Illuminate\Http\JsonResponse;
-use MustafaAwami\Lara2fa\Contracts\RecoveryCodesGeneratedResponse as RecoveryCodesGeneratedResponseContract;
-use MustafaAwami\Lara2fa\Lara2fa;
+use Mustafa\Lara2fa\Contracts\RecoveryCodesGeneratedResponse as RecoveryCodesGeneratedResponseContract;
+use Mustafa\Lara2fa\Lara2fa;
 
 class RecoveryCodesGeneratedResponse implements RecoveryCodesGeneratedResponseContract
 {

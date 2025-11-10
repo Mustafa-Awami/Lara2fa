@@ -1,13 +1,13 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Actions;
+namespace Mustafa\Lara2fa\Actions;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Crypt;
-use MustafaAwami\Lara2fa\Lara2fa;
-use MustafaAwami\Lara2fa\Services\RecoveryCode;
-use MustafaAwami\Lara2fa\Events\RecoveryCodesGenerated;
+use Mustafa\Lara2fa\Lara2fa;
+use Mustafa\Lara2fa\Services\RecoveryCode;
+use Mustafa\Lara2fa\Events\RecoveryCodesGenerated;
 
 class GenerateNewRecoveryCodes
 {

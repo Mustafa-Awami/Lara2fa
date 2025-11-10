@@ -1,10 +1,10 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Http\Responses;
+namespace Mustafa\Lara2fa\Http\Responses;
 
 use Illuminate\Http\JsonResponse;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorEnabledResponse as AuthenticatorAppTwoFactorEnabledResponseContract;
-use MustafaAwami\Lara2fa\Lara2fa;
+use Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorEnabledResponse as AuthenticatorAppTwoFactorEnabledResponseContract;
+use Mustafa\Lara2fa\Lara2fa;
 
 class AuthenticatorAppTwoFactorEnabledResponse implements AuthenticatorAppTwoFactorEnabledResponseContract
 {

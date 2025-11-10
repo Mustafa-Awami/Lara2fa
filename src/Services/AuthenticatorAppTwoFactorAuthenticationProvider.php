@@ -1,10 +1,10 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Services;
+namespace Mustafa\Lara2fa\Services;
 
 use Illuminate\Contracts\Cache\Repository;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider as AuthenticatorAppTwoFactorAuthenticationProviderContract;
-use MustafaAwami\Lara2fa\Lara2fa;
+use Mustafa\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider as AuthenticatorAppTwoFactorAuthenticationProviderContract;
+use Mustafa\Lara2fa\Lara2fa;
 use PragmaRX\Google2FA\Google2FA;
 
 class AuthenticatorAppTwoFactorAuthenticationProvider implements AuthenticatorAppTwoFactorAuthenticationProviderContract
