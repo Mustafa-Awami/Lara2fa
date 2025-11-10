@@ -82,6 +82,8 @@ class InstallCommand extends Command implements PromptsForMissingInput
             $this->updateFeatureEnable('passkeys', true);
         }
 
+        copy(__DIR__.'/../../stubs/app/Providers/FortifyServiceProvider.php', app_path('Providers/FortifyServiceProvider.php'));
+
         if ($selectedStack === "react") {
             copy(__DIR__.'/../../stubs/inertia/react/resources/js/pages/settings/two-factor.tsx', resource_path('js/pages/settings/two-factor.tsx'));
             copy(__DIR__.'/../../stubs/inertia/react/resources/js/pages/auth/login.tsx', resource_path('js/pages/auth/login.tsx'));

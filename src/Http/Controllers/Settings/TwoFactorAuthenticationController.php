@@ -42,13 +42,7 @@ class TwoFactorAuthenticationController extends Controller
             'recoveryCodesRequireTwoFactorEnabled' => Features::recoveryCodesRequireTwoFactorAuthenticationEnabled(),
             'status' => $request->session()->get('status'),
         ];
-
-        if (Lara2fa::stack() === "react") {
-            $view = "settings/two-factor";
-        } elseif (Lara2fa::stack() === "vue") {
-            $view = "settings/TwoFactor";
-        }
         
-        return Inertia::render($view, $props);
+        return Inertia::render(Lara2fa::getView("two-factor-settings"), $props);
     }
 }

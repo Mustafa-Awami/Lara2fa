@@ -89,4 +89,66 @@ class Lara2fa
     {
         return config('lara2fa.stack', 'react');
     }
+
+    public static function getView(string $viewName = ""): string
+    {
+        if (static::stack() === "react") {
+            if ($viewName === "two-factor-settings")
+                return "settings/two-factor";
+
+            elseif ($viewName === "login")
+                return "auth/login";
+
+            elseif ($viewName === "reset-password")
+                return "auth/reset-password";
+
+            elseif ($viewName === "forgot-password")
+                return "auth/forgot-password";
+
+            elseif ($viewName === "verify-email")
+                return "auth/verify-email";
+
+            elseif ($viewName === "register")
+                return "auth/register";
+
+            elseif ($viewName === "two-factor-challenge")
+                return "auth/two-factor-challenge";
+
+            elseif ($viewName === "confirm-password")
+                return "auth/confirm-password";
+
+            else
+                return $viewName;
+
+        } elseif (static::stack() === "vue") {
+            if ($viewName === "two-factor-settings")
+                return "settings/TwoFactor";
+
+            elseif ($viewName === "login")
+                return "auth/Login";
+
+            elseif ($viewName === "reset-password")
+                return "auth/ResetPassword";
+
+            elseif ($viewName === "forgot-password")
+                return "auth/ForgotPassword";
+
+            elseif ($viewName === "verify-email")
+                return "auth/VerifyEmail";
+
+            elseif ($viewName === "register")
+                return "auth/Register";
+
+            elseif ($viewName === "two-factor-challenge")
+                return "auth/TwoFactorChallenge";
+
+            elseif ($viewName === "confirm-password")
+                return "auth/ConfirmPassword";
+
+            else
+                return $viewName;
+        } else {
+            return $viewName;
+        }
+    }
 }
