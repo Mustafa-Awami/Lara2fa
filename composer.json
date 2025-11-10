@@ -14,7 +14,7 @@
             "email": "mustafa.awami1@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
         "web-auth/webauthn-lib": "5.2"
