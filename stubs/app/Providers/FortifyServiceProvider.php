@@ -101,7 +101,7 @@ class FortifyServiceProvider extends ServiceProvider
                 );
             }
             
-            Inertia::render(Lara2fa::getView("two-factor-challenge"), [
+            return Inertia::render(Lara2fa::getView("two-factor-challenge"), [
                 'twoFactorEnabled' => [
                     'authenticatorApp' => $user->hasEnabledAuthenticatorAppTwoFactorAuthentication(),
                     'email' => $user->hasEnabledEmailTwoFactorAuthentication(),
