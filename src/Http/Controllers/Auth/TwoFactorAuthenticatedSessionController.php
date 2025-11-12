@@ -48,7 +48,7 @@ class TwoFactorAuthenticatedSessionController extends Controller
     }
 
     /**
-     * Attempt to authenticate a new session using the two factor authentication code.
+     * Attempt to authenticate a new session using the two factor authentication.
      *
      * @param  \MustafaAwami\Lara2fa\Http\Requests\TwoFactorLoginRequest  $request
      * @return mixed
