@@ -112,7 +112,7 @@ trait TwoFactorAuthenticatable
 
 
     /**
-     * Get the user's two factor authentication recovery codes.
+     * Get the user's two-factor authentication recovery codes.
      *
      * @return array
      */
@@ -139,7 +139,7 @@ trait TwoFactorAuthenticatable
     }
 
     /**
-     * Get the QR code SVG of the user's two factor authentication QR code URL.
+     * Get the QR code SVG of the user's two-factor authentication QR code URL.
      *
      * @return string
      */
@@ -156,7 +156,7 @@ trait TwoFactorAuthenticatable
     }
 
     /**
-     * Get the two factor authentication QR code URL.
+     * Get the two-factor authentication QR code URL.
      *
      * @return string
      */
@@ -170,7 +170,7 @@ trait TwoFactorAuthenticatable
     }
 
     /**
-     * Reset the email two factor code.
+     * Reset the email two-factor code.
      */
     public function resetEmailTwoFactorCode()
     {

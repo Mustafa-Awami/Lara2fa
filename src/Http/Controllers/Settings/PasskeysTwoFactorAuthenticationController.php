@@ -124,7 +124,7 @@ class PasskeysTwoFactorAuthenticationController extends Controller
     }
 
     /**
-     * Authenticate the user with the givin passkey.
+     * Authenticate the user with the given passkey.
      * 
      * @param  \Illuminate\Http\Request  $request
      * @return \MustafaAwami\Lara2fa\Contracts\PasskeyAuthenticatedResponse

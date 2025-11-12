@@ -8,7 +8,7 @@ use MustafaAwami\Lara2fa\Features;
 class DisableAuthenticatorAppTwoFactorAuthentication
 {
     /**
-     * Disable authenticator app two factor authentication for the user.
+     * Disable authenticator app two-factor authentication for the user.
      *
      * @param  mixed  $user
      * @return void

@@ -8,7 +8,7 @@ use MustafaAwami\Lara2fa\Events\EmailTwoFactorAuthenticationEnabled;
 class EnableEmailTwoFactorAuthentication
 {
     /**
-     * The email two factor authentication provider.
+     * The email two-factor authentication provider.
      *
      * @var \MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider
      */
@@ -26,7 +26,7 @@ class EnableEmailTwoFactorAuthentication
     }
 
     /**
-     * Enable email two factor authentication for the user.
+     * Enable email two-factor authentication for the user.
      *
      * @param  mixed  $user
      * @param  bool  $force

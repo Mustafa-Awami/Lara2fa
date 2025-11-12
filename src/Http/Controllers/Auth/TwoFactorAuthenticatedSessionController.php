@@ -33,7 +33,7 @@ class TwoFactorAuthenticatedSessionController extends Controller
     }
 
     /**
-     * Show the two factor authentication challenge view.
+     * Show the two-factor authentication challenge view.
      *
      * @param  \MustafaAwami\Lara2fa\Http\Requests\TwoFactorLoginRequest  $request
      * @return \Laravel\Fortify\Contracts\TwoFactorChallengeViewResponse
@@ -48,7 +48,7 @@ class TwoFactorAuthenticatedSessionController extends Controller
     }
 
     /**
-     * Attempt to authenticate a new session using the two factor authentication.
+     * Attempt to authenticate a new session using the two-factor authentication.
      *
      * @param  \MustafaAwami\Lara2fa\Http\Requests\TwoFactorLoginRequest  $request
      * @return mixed
@@ -62,10 +62,10 @@ class TwoFactorAuthenticatedSessionController extends Controller
             event(new RecoveryCodeReplaced($user, $code));
         } elseif ($request->filled('email_code') & $request->hasValidEmailCode() == 'invalid') {
             event(new TwoFactorAuthenticationFailed($user));
-            return app(FailedTwoFactorLoginResponse::class)->toResponse($request->merge(['email_code_error_message' => __('The provided email two factor authentication code was invalid.')]));
+            return app(FailedTwoFactorLoginResponse::class)->toResponse($request->merge(['email_code_error_message' => __('The provided email two-factor authentication code was invalid.')]));
         } elseif ($request->filled('email_code') & $request->hasValidEmailCode() == 'expaired') {
             event(new TwoFactorAuthenticationFailed($user));
-            return app(FailedTwoFactorLoginResponse::class)->toResponse($request->merge(['email_code_error_message' => __('The provided email two factor authentication code is expaired.')]));
+            return app(FailedTwoFactorLoginResponse::class)->toResponse($request->merge(['email_code_error_message' => __('The provided email two-factor authentication code is expaired.')]));
         } elseif ($request->filled('code') & ! $request->hasValidCode()) {
             event(new TwoFactorAuthenticationFailed($user));
             return app(FailedTwoFactorLoginResponse::class)->toResponse($request);

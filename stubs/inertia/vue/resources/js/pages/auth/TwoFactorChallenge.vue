@@ -159,7 +159,7 @@ const getContent = (content: "title" | "description") => {
         if (content === "title")
             return ('Two-Factor Authentication');
         else if (content === "description")
-            return ('Please choose any of the following two factor method.');
+            return ('Please choose any of the following two-factor method.');
     }
 };
 

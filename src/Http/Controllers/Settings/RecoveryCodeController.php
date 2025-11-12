@@ -15,7 +15,7 @@ use MustafaAwami\Lara2fa\Contracts\RecoveryCodesGeneratedResponse;
 class RecoveryCodeController extends Controller
 {
     /**
-     * Get the two factor authentication recovery codes for authenticated user.
+     * Get the two-factor authentication recovery codes for authenticated user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -37,7 +37,7 @@ class RecoveryCodeController extends Controller
     }
 
     /**
-     * Generate a fresh set of two factor authentication recovery codes.
+     * Generate a fresh set of two-factor authentication recovery codes.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes  $generate
@@ -55,7 +55,7 @@ class RecoveryCodeController extends Controller
     }
 
     /**
-     * Delete the two factor authentication recovery codes for authenticated user
+     * Delete the two-factor authentication recovery codes for authenticated user
      * 
      * @param  \Illuminate\Http\Request  $request
      * @return  \MustafaAwami\Lara2fa\Contracts\RecoveryCodesDisabledResponse

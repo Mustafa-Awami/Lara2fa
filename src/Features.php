@@ -34,7 +34,7 @@ class Features
     }
 
     /**
-     * Enable the authenticator app two factor authentication feature.
+     * Enable the authenticator app two-factor authentication feature.
      *
      * @param  array  $options
      * @return string
@@ -62,7 +62,7 @@ class Features
 
     
     /**
-     * Enable the email two factor authentication feature.
+     * Enable the email two-factor authentication feature.
      *
      * @param  array  $options
      * @return string
@@ -89,7 +89,7 @@ class Features
     }
 
     /**
-     * Enable the recoveryCodes two factor authentication feature.
+     * Enable the recoveryCodes two-factor authentication feature.
      *
      * @param  array  $options
      * @return string
@@ -110,7 +110,7 @@ class Features
     }
 
     /**
-     * Enable the recoveryCodes two factor authentication feature.
+     * Enable the recoveryCodes two-factor authentication feature.
      *
      * @param  array  $options
      * @return string
@@ -131,7 +131,7 @@ class Features
     }
 
     /**
-     * Determine if the application can manage two factor authentication.
+     * Determine if the application can manage two-factor authentication.
      *
      * @return bool
      */
@@ -154,7 +154,7 @@ class Features
     }
 
     /**
-     * Determine if the recovery codes require the two factor authentication to be enabled.
+     * Determine if the recovery codes require the two-factor authentication to be enabled.
      *
      * @return bool
      */

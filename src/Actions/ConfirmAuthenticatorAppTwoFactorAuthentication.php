@@ -11,7 +11,7 @@ use MustafaAwami\Lara2fa\Events\AuthenticatorAppTwoFactorAuthenticationConfirmed
 class ConfirmAuthenticatorAppTwoFactorAuthentication
 {
     /**
-     * The authenticator app two factor authentication provider.
+     * The authenticator app two-factor authentication provider.
      *
      * @var \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider
      */
@@ -29,7 +29,7 @@ class ConfirmAuthenticatorAppTwoFactorAuthentication
     }
 
     /**
-     * Confirm the authenticator app two factor authentication configuration for the user.
+     * Confirm the authenticator app two-factor authentication configuration for the user.
      *
      * @param  mixed  $user
      * @param  string  $code
@@ -41,7 +41,7 @@ class ConfirmAuthenticatorAppTwoFactorAuthentication
             empty($code) ||
             ! $this->provider->verify((Model::$encrypter ?? Crypt::getFacadeRoot())->decrypt($user->two_factor_secret), $code)) {
             throw ValidationException::withMessages([
-                'code' => [__('The provided two factor authentication code was invalid.')],
+                'code' => [__('The provided two-factor authentication code was invalid.')],
             ])->errorBag('confirmTwoFactorAuthentication');
         }
 

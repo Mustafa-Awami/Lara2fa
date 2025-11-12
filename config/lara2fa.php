@@ -129,8 +129,8 @@ return[
             | This will determin how users can use thier registerd passkeys. When
             | this is set to Single Factor Authentication (sfa), Users will be able to
             | login with thier passkeys directly without the need to provide thier
-            | password. When this is set to Two Factor Authentication (2fa), then passkey
-            | will act as an additional Two Factor option.
+            | password. When this is set to Two-Factor Authentication (2fa), then passkey
+            | will act as an additional Two-Factor option.
             |
             | The "both" option will allow the users to use thier passkeys both
             | as "sfa" and "2fa".

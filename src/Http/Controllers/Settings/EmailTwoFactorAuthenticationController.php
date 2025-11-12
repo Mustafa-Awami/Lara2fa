@@ -39,7 +39,7 @@ class EmailTwoFactorAuthenticationController extends Controller
     }
 
     /**
-     * Enable email two factor authentication for the user.
+     * Enable email two-factor authentication for the user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \MustafaAwami\Lara2fa\Actions\EnableEmailTwoFactorAuthentication  $enable
@@ -58,7 +58,7 @@ class EmailTwoFactorAuthenticationController extends Controller
     }
 
     /**
-     * Confirm email two factor authentication for the user.
+     * Confirm email two-factor authentication for the user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \MustafaAwami\Lara2fa\Actions\ConfirmEmailTwoFactorAuthentication  $confirm
@@ -77,7 +77,7 @@ class EmailTwoFactorAuthenticationController extends Controller
     }
 
     /**
-     * Disable authenticator app two factor authentication for the user.
+     * Disable email two-factor authentication for the user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \MustafaAwami\Lara2fa\Actions\DisableEmailTwoFactorAuthentication  $disable
@@ -95,7 +95,7 @@ class EmailTwoFactorAuthenticationController extends Controller
     }
 
     /**
-     * Send a new email two factor authentication code.
+     * Send a new email two-factor authentication code.
      * 
      * @param  \Illuminate\Http\Request  $request
      * @return \MustafaAwami\Lara2fa\Contracts\EmailTwoFactorDisabledResponse

@@ -10,7 +10,7 @@ use PragmaRX\Google2FA\Google2FA;
 class AuthenticatorAppTwoFactorAuthenticationProvider implements AuthenticatorAppTwoFactorAuthenticationProviderContract
 {
     /**
-     * The underlying library providing two factor authentication helper services.
+     * The underlying library providing two-factor authentication helper services.
      *
      * @var \PragmaRX\Google2FA\Google2FA
      */
@@ -24,7 +24,7 @@ class AuthenticatorAppTwoFactorAuthenticationProvider implements AuthenticatorAp
     protected $cache;
 
     /**
-     * Create a new two factor authentication provider instance.
+     * Create a new two-factor authentication provider instance.
      *
      * @param  \PragmaRX\Google2FA\Google2FA  $engine
      * @param  \Illuminate\Contracts\Cache\Repository|null  $cache
@@ -48,7 +48,7 @@ class AuthenticatorAppTwoFactorAuthenticationProvider implements AuthenticatorAp
     }
 
     /**
-     * Get the two factor authentication QR code URL.
+     * Get the two-factor authentication QR code URL.
      *
      * @param  string  $companyName
      * @param  string  $companyEmail

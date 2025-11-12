@@ -154,7 +154,7 @@ class RedirectIfTwoFactorAuthenticatable implements RedirectsIfTwoFactorAuthenti
     }
 
     /**
-     * Get the two factor authentication enabled response.
+     * Get the two-factor authentication enabled response.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  mixed  $user

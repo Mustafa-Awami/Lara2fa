@@ -46,7 +46,7 @@ class emailTwoFactorCode extends Notification
          */
         $emailMessage = (new MailMessage);
 
-        $emailMessage->line('Your two factor code is '.$this->code);
+        $emailMessage->line('Your two-factor code is '.$this->code);
         if($this->actionUrl){
             $emailMessage->action('Verify Here', $this->actionUrl);
         }

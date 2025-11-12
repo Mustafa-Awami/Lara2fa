@@ -14,7 +14,7 @@ use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvid
 class TwoFactorLoginRequest extends FormRequest
 {
     /**
-     * The user attempting the two factor challenge.
+     * The user attempting the two-factor challenge.
      *
      * @var mixed
      */
@@ -50,7 +50,7 @@ class TwoFactorLoginRequest extends FormRequest
     }
 
     /**
-     * Determine if the request has a valid two factor code.
+     * Determine if the request has a valid two-factor code.
      *
      * @return bool
      */
@@ -66,7 +66,7 @@ class TwoFactorLoginRequest extends FormRequest
     }
 
     /**
-     * Determine if the request has a valid two factor email code.
+     * Determine if the request has a valid two-factor email code.
      *
      * @return string
      */
@@ -126,7 +126,7 @@ class TwoFactorLoginRequest extends FormRequest
     }
 
     /**
-     * Get the user that is attempting the two factor challenge.
+     * Get the user that is attempting the two-factor challenge.
      *
      * @return mixed
      */

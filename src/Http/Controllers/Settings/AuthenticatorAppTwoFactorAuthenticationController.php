@@ -18,7 +18,7 @@ use MustafaAwami\Lara2fa\Actions\DisableAuthenticatorAppTwoFactorAuthentication;
 class AuthenticatorAppTwoFactorAuthenticationController extends Controller
 {
     /**
-     * Enable authenticator app two factor authentication for the user.
+     * Enable authenticator app two-factor authentication for the user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \MustafaAwami\Lara2fa\Actions\EnableAuthenticatorAppTwoFactorAuthentication  $enable
@@ -37,7 +37,7 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
     }
 
     /**
-     * Confirm authenticator app two factor authentication for the user.
+     * Confirm authenticator app two-factor authentication for the user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \MustafaAwami\Lara2fa\Actions\ConfirmAuthenticatorAppTwoFactorAuthentication  $confirm
@@ -56,7 +56,7 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
     }
 
     /**
-     * Disable authenticator app two factor authentication for the user.
+     * Disable authenticator app two-factor authentication for the user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \MustafaAwami\Lara2fa\Actions\DisableAuthenticatorAppTwoFactorAuthentication  $disable
@@ -74,7 +74,7 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
     }
 
     /**
-     * Get the SVG element for the user's two factor authentication QR code.
+     * Get the SVG element for the user's two-factor authentication QR code.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -92,7 +92,7 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
     }
 
     /**
-     * Get the current user's two factor authentication setup / secret key.
+     * Get the current user's two-factor authentication setup / secret key.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -100,7 +100,7 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
     public function secretKey(Request $request)
     {
         if (is_null($request->user()->two_factor_secret)) {
-            abort(404, 'Two factor authentication has not been enabled.');
+            abort(404, 'Two-factor authentication has not been enabled.');
         }
 
         return response()->json([

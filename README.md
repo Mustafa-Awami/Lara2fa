@@ -143,7 +143,7 @@ use MustafaAwami\Lara2fa\Http\Controllers\Settings\TwoFactorAuthenticationContro
 
 ## Step 4️⃣
 
-In `fortify.php` config file, disable the two factor feature by comminting it out like so:
+In `fortify.php` config file, disable the two-factor feature by comminting it out like so:
 
 ```php
 // Features::twoFactorAuthentication([
@@ -201,16 +201,16 @@ Here are the list of defind routs:
 
 | Request                                                                 | Route Name                                | Description                                                                 |
 |-------------------------------------------------------------------------|-------------------------------------------|-----------------------------------------------------------------------------|
-| GET `/two-factor-challenge`                                             | `two-factor.login`                        | Show the two factor authentication challenge view.                          |
-| POST `/two-factor-challenge`                                            | -                                         | Submiting the two factor authentication challenge form.                     |
-| POST `/settings/authenticator-app-two-factor-authentication`            | `authenticator-app-two-factor.enable`     | Enable authenticator app two factor authentication for authenticated user.  |
-| POST `/settings/confirmed-authenticator-app-two-factor-authentication`  | `authenticator-app-two-factor.confirm`    | Confirm authenticator app two factor authentication for authenticated user. |
-| DELETE `/settings/authenticator-app-two-factor-authentication`          | `authenticator-app-two-factor.disable`    | Disable authenticator app two factor authentication for authenticated user. |
-| GET `/settings/authenticator-app-two-factor-qr-code`                    | `authenticator-app-two-factor.qr-code`    | Get the SVG element for the user's two factor authentication QR code.       |
-| GET `/settings/authenticator-app-two-factor-secret-key`                 | `authenticator-app-two-factor.secret-key` | Get the current user's two factor authentication setup / secret key.        |
-| POST `/settings/email-two-factor-authentication`                        | `email-two-factor.enable`                 | Enable email two factor authentication for authenticated user.              |
-| POST `/settings/confirmed-email-two-factor-authentication`              | `email-two-factor.confirm`                | Confirm email two factor authentication for authenticated user.             |
-| DELETE `/settings/email-two-factor-authentication`                      | `email-two-factor.disable`                | Disable authenticator app two factor authentication for authenticated user. |
+| GET `/two-factor-challenge`                                             | `two-factor.login`                        | Show the two-factor authentication challenge view.                          |
+| POST `/two-factor-challenge`                                            | -                                         | Submiting the two-factor authentication challenge form.                     |
+| POST `/settings/authenticator-app-two-factor-authentication`            | `authenticator-app-two-factor.enable`     | Enable authenticator app two-factor authentication for authenticated user.  |
+| POST `/settings/confirmed-authenticator-app-two-factor-authentication`  | `authenticator-app-two-factor.confirm`    | Confirm authenticator app two-factor authentication for authenticated user. |
+| DELETE `/settings/authenticator-app-two-factor-authentication`          | `authenticator-app-two-factor.disable`    | Disable authenticator app two-factor authentication for authenticated user. |
+| GET `/settings/authenticator-app-two-factor-qr-code`                    | `authenticator-app-two-factor.qr-code`    | Get the SVG element for the user's two-factor authentication QR code.       |
+| GET `/settings/authenticator-app-two-factor-secret-key`                 | `authenticator-app-two-factor.secret-key` | Get the current user's two-factor authentication setup / secret key.        |
+| POST `/settings/email-two-factor-authentication`                        | `email-two-factor.enable`                 | Enable email two-factor authentication for authenticated user.              |
+| POST `/settings/confirmed-email-two-factor-authentication`              | `email-two-factor.confirm`                | Confirm email two-factor authentication for authenticated user.             |
+| DELETE `/settings/email-two-factor-authentication`                      | `email-two-factor.disable`                | Disable authenticator app two-factor authentication for authenticated user. |
 | POST `/settings/email-two-factor-authentication-send-code`              | `email-two-factor.send-code`              | Send the OTP via email.                                                     |
 | GET `/settings/passkeys-two-factor-authentication`                      | `passkeys-two-factor.get`                 | Get the user passkeys.                                                      |
 | GET `/settings/passkeys-two-factor-authentication-registerOptions`      | `passkeys-two-factor.getRegisterOptions`  | Get passkey registration options.                                           |
@@ -218,9 +218,9 @@ Here are the list of defind routs:
 | DELETE `/settings/passkeys-two-factor-authentication`                   | `passkeys-two-factor.disable`             | Delete all passkeys for authenticated user.                                 |
 | DELETE `/settings/passkeys-two-factor-authentication/{passkey}/destroy` | `passkeys-two-factor.destroy`             | Delete the provided passkey for authenticated user.                         |
 | PUT `/settings/passkeys-two-factor-authentication/{passkey}/update`     | `passkeys-two-factor.update`              | Update the name of the provided passkey for authenticated user.             |
-| GET `/settings/two-factor-recovery-codes`                               | `two-factor-recovery-codes.get`           | Get the two factor authentication recovery codes for authenticated user.    |
-| POST `/settings/two-factor-recovery-codes`                              | `two-factor-recovery-codes.generate`      | Generate a fresh set of two factor authentication recovery codes.           |
-| DELETE `/settings/two-factor-recovery-codes`                            | `two-factor-recovery-codes.disable`       | Delete the two factor authentication recovery codes for authenticated user. |
+| GET `/settings/two-factor-recovery-codes`                               | `two-factor-recovery-codes.get`           | Get the two-factor authentication recovery codes for authenticated user.    |
+| POST `/settings/two-factor-recovery-codes`                              | `two-factor-recovery-codes.generate`      | Generate a fresh set of two-factor authentication recovery codes.           |
+| DELETE `/settings/two-factor-recovery-codes`                            | `two-factor-recovery-codes.disable`       | Delete the two-factor authentication recovery codes for authenticated user. |
 | GET `/passkeys-two-factor/authenticateOptions`                          | `passkeys-two-factor.authenticateOptions` | Get passkey authentication options.                                         |
 | POST `/passkeys-two-factor/authenticate`                                | `passkeys-two-factor.authenticate`        | Authenticate the user with the givin passkey.                               |
 

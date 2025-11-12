@@ -18,11 +18,11 @@ class FailedTwoFactorLoginResponse implements FailedTwoFactorLoginResponseContra
         if ($request->filled('email_code')){
             [$key, $message] = ['email_code', $request->email_code_error_message];
         } elseif ($request->filled('recovery_code')) {
-            [$key, $message] = ['recovery_code', __('The provided two factor recovery code was invalid.')];
+            [$key, $message] = ['recovery_code', __('The provided two-factor recovery code was invalid.')];
         } elseif ($request->filled('code')) {
-            [$key, $message] = ['code', __('The provided authenticator app two factor authentication code was invalid.')];
+            [$key, $message] = ['code', __('The provided authenticator app two-factor authentication code was invalid.')];
         } else {
-            [$key, $message] = ['empty', __('Empty! please provide the two factor authentication code')];
+            [$key, $message] = ['empty', __('Empty! please provide the two-factor authentication code')];
         }
 
         if ($request->wantsJson()) {

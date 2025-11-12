@@ -10,7 +10,7 @@ use MustafaAwami\Lara2fa\Events\AuthenticatorAppTwoFactorAuthenticationEnabled;
 class EnableAuthenticatorAppTwoFactorAuthentication
 {
     /**
-     * The authenticator app two factor authentication provider.
+     * The authenticator app two-factor authentication provider.
      *
      * @var \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider
      */
@@ -28,7 +28,7 @@ class EnableAuthenticatorAppTwoFactorAuthentication
     }
 
     /**
-     * Enable authenticator app two factor authentication for the user.
+     * Enable authenticator app two-factor authentication for the user.
      *
      * @param  mixed  $user
      * @param  bool  $force

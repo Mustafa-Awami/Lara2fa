@@ -11,7 +11,7 @@ use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider;
 class ConfirmEmailTwoFactorAuthentication
 {
     /**
-     * The email two factor authentication provider.
+     * The email two-factor authentication provider.
      *
      * @var \MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider
      */
@@ -29,7 +29,7 @@ class ConfirmEmailTwoFactorAuthentication
     }
 
     /**
-     * Confirm the email two factor authentication configuration for the user.
+     * Confirm the email two-factor authentication configuration for the user.
      *
      * @param  mixed  $user
      * @param  string  $code
@@ -41,7 +41,7 @@ class ConfirmEmailTwoFactorAuthentication
             empty($code) ||
             ! $this->provider->verify((Model::$encrypter ?? Crypt::getFacadeRoot())->decrypt($user->email_two_factor_code), $code)) {
             throw ValidationException::withMessages([
-                'code' => [__('The provided two factor authentication code was invalid.')],
+                'code' => [__('The provided two-factor authentication code was invalid.')],
             ])->errorBag('confirmEmailTwoFactorAuthentication');
         } elseif (empty($user->email_two_factor_code_expires_at) || 
             $this->provider->isCodeExpired($user->email_two_factor_code_expires_at)){

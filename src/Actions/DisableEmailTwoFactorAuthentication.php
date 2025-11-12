@@ -8,7 +8,7 @@ use MustafaAwami\Lara2fa\Events\EmailTwoFactorAuthenticationDisabled;
 class DisableEmailTwoFactorAuthentication
 {
     /**
-     * Disable email two factor authentication for the user.
+     * Disable email two-factor authentication for the user.
      *
      * @param  mixed  $user
      * @return void
