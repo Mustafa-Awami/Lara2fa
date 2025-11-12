@@ -155,8 +155,14 @@ In `fortify.php` config file, disable the two factor feature by comminting it ou
 
 ## Step 5️⃣
 
-run `php artisan migrate` to migrate the newly add tables.
-
+Run migration command to migrate the newly add tables:
+```bash
+php artisan migrate
+```
+Finally, run the build command:
+```bash
+npm run build
+```
 --- 
 
 # 🔧 Configuration (Optional)
