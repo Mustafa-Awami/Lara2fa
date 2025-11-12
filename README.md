@@ -1,6 +1,6 @@
-# 🔐 Lara2FA
-<p>
-<!-- <a href="https://github.com/laravel/fortify/actions"><img src="https://github.com/mustafa-awami/lara2fa/workflows/tests/badge.svg" alt="Build Status"></a> -->
+<p align="center"><img width="500" height="185" src="/art/logo.png" alt="Logo Laravel Fortify"></p>
+
+<p align="center">
 <a href="https://packagist.org/packages/mustafa-awami/lara2fa"><img src="https://img.shields.io/packagist/v/mustafa-awami/lara2fa" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/mustafa-awami/lara2fa"><img src="https://img.shields.io/packagist/dt/mustafa-awami/lara2fa" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/mustafa-awami/lara2fa"><img src="https://img.shields.io/packagist/l/mustafa-awami/lara2fa" alt="License"></a>
@@ -19,7 +19,7 @@ Designed for simplicity, security, and seamless integration into any Laravel pro
 
 ---
 
-## 🚀 Features
+# 🚀 Features
 
 - ✅ Plug-and-play 2FA for Laravel 12
 - 🔢 Compatible with Google Authenticator, Authy, and 1Password
@@ -30,7 +30,11 @@ Designed for simplicity, security, and seamless integration into any Laravel pro
 
 ---
 
-## 🧰 Installation
+# 📝 Minimum Requirments
+
+* Laravel Framework 12.37.0
+
+# 🧰 Installation
 
 Install via Composer:
 
@@ -40,9 +44,9 @@ composer require mustafa-awami/lara2fa -W
 
 --- 
 
-## ⚙️ Set Up
+# ⚙️ Set Up
 
-### Step 1️⃣
+## Step 1️⃣
 
 After installing via composer, publish resources using the `lara2fa:install` Artisan command
 
@@ -79,7 +83,7 @@ Depending on the selected methods, the published `lara2fa.php` config file will 
 
 
 
-#### ⚠️ Important Warning
+### ⚠️ Important Warning
 The installation process may publish and overwrite existing files in your project if files with the same names already exist (for example: configuration or resource files).
 It’s strongly recommended to commit your changes or back up your project before running the install command.
 
@@ -88,6 +92,7 @@ Here ara the list of files that will be published:
 * `config/lara2fa.php`
 * `database/migrations/2024_07_29_090549_add_two_factor_email_columns_to_users_table.php`
 * `database/migrations/2025_09_10_081543_create_passkeys_table.php`
+* `app/Providers/Lara2faServiceProvider.php`
 * `app/Providers/FortifyServiceProvider.php`
 
 Here ara the react resource files that will be published if react is chosen:
@@ -108,7 +113,7 @@ Here ara the vue stack files that will be published if vue is chosen:
 * `resources/js/pages/auth/TwoFactorChallenge.vue`
 * `resources/js/components/ConfirmPasswordDialog.vue`
 
-### Step 2️⃣
+## Step 2️⃣
 
 In `User.php` model, replace:
 
@@ -122,7 +127,7 @@ with:
 use MustafaAwami\Lara2fa\Traits\TwoFactorAuthenticatable;
 ```
 
-### Step 3️⃣
+## Step 3️⃣
 
 In `settings.php` route file, replace:
 
@@ -136,7 +141,7 @@ with:
 use MustafaAwami\Lara2fa\Http\Controllers\Settings\TwoFactorAuthenticationController;
 ```
 
-### Step 4️⃣
+## Step 4️⃣
 
 In `fortify.php` config file, disable the two factor feature by comminting it out like so:
 
@@ -148,12 +153,69 @@ In `fortify.php` config file, disable the two factor feature by comminting it ou
 // ]),
 ```
 
-### Step 5️⃣
+## Step 5️⃣
 
 run `php artisan migrate` to migrate the newly add tables.
 
 --- 
 
-## 🔧 Configuration
+# 🔧 Configuration (Optional)
 
-### Routs
+## Routs
+
+If you want to customize the `lara2fa.php` route file, first publish it with the following command:
+
+```bash
+php artisan vendor:publish --tag=lara2fa-routes
+```
+
+then in `routes\web.php` add the following line at the end:
+
+```php
+require __DIR__.'/lara2fa.php';
+```
+
+make sure to disable the orginal route file by adding `Lara2fa::ignoreRoutes();` in `app/Providers/Lara2faServiceProvider.php` register method
+
+```php
+namespace App\Providers;
+
+use MustafaAwami\Lara2fa\Lara2fa;
+
+class Lara2faServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        Lara2fa::ignoreRoutes();
+    }
+}
+```
+
+Here are the list of defind routs:
+
+| Request                                                                 | Route Name                                | Description                                                                 |
+|-------------------------------------------------------------------------|-------------------------------------------|-----------------------------------------------------------------------------|
+| GET `/two-factor-challenge`                                             | `two-factor.login`                        | Show the two factor authentication challenge view.                          |
+| POST `/two-factor-challenge`                                            | -                                         | Submiting the two factor authentication challenge form.                     |
+| POST `/settings/authenticator-app-two-factor-authentication`            | `authenticator-app-two-factor.enable`     | Enable authenticator app two factor authentication for authenticated user.  |
+| POST `/settings/confirmed-authenticator-app-two-factor-authentication`  | `authenticator-app-two-factor.confirm`    | Confirm authenticator app two factor authentication for authenticated user. |
+| DELETE `/settings/authenticator-app-two-factor-authentication`          | `authenticator-app-two-factor.disable`    | Disable authenticator app two factor authentication for authenticated user. |
+| GET `/settings/authenticator-app-two-factor-qr-code`                    | `authenticator-app-two-factor.qr-code`    | Get the SVG element for the user's two factor authentication QR code.       |
+| GET `/settings/authenticator-app-two-factor-secret-key`                 | `authenticator-app-two-factor.secret-key` | Get the current user's two factor authentication setup / secret key.        |
+| POST `/settings/email-two-factor-authentication`                        | `email-two-factor.enable`                 | Enable email two factor authentication for authenticated user.              |
+| POST `/settings/confirmed-email-two-factor-authentication`              | `email-two-factor.confirm`                | Confirm email two factor authentication for authenticated user.             |
+| DELETE `/settings/email-two-factor-authentication`                      | `email-two-factor.disable`                | Disable authenticator app two factor authentication for authenticated user. |
+| POST `/settings/email-two-factor-authentication-send-code`              | `email-two-factor.send-code`              | Send the OTP via email.                                                     |
+| GET `/settings/passkeys-two-factor-authentication`                      | `passkeys-two-factor.get`                 | Get the user passkeys.                                                      |
+| GET `/settings/passkeys-two-factor-authentication-registerOptions`      | `passkeys-two-factor.getRegisterOptions`  | Get passkey registration options.                                           |
+| POST `/settings/passkeys-two-factor-authentication`                     | `passkeys-two-factor.store`               | Create a new passkey for authenticated user.                                |
+| DELETE `/settings/passkeys-two-factor-authentication`                   | `passkeys-two-factor.disable`             | Delete all passkeys for authenticated user.                                 |
+| DELETE `/settings/passkeys-two-factor-authentication/{passkey}/destroy` | `passkeys-two-factor.destroy`             | Delete the provided passkey for authenticated user.                         |
+| PUT `/settings/passkeys-two-factor-authentication/{passkey}/update`     | `passkeys-two-factor.update`              | Update the name of the provided passkey for authenticated user.             |
+| GET `/settings/two-factor-recovery-codes`                               | `two-factor-recovery-codes.get`           | Get the two factor authentication recovery codes for authenticated user.    |
+| POST `/settings/two-factor-recovery-codes`                              | `two-factor-recovery-codes.generate`      | Generate a fresh set of two factor authentication recovery codes.           |
+| DELETE `/settings/two-factor-recovery-codes`                            | `two-factor-recovery-codes.disable`       | Delete the two factor authentication recovery codes for authenticated user. |
+| GET `/passkeys-two-factor/authenticateOptions`                          | `passkeys-two-factor.authenticateOptions` | Get passkey authentication options.                                         |
+| POST `/passkeys-two-factor/authenticate`                                | `passkeys-two-factor.authenticate`        | Authenticate the user with the givin passkey.                               |
+
+You can customize the first part of the url by setting `prefix` value in the `lara2fa.php` config file.
