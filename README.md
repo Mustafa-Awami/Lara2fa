@@ -163,6 +163,60 @@ npm run build
 
 # 🔧 Configuration (Optional)
 
+## Two-Factor Authentication 
+
+### 1- Authenticator App (TOTP)
+
+This section configures Two-Factor Authentication (2FA) using a time-based one-time password (TOTP) app like Google Authenticator or Authy.
+
+You will find the configuration for this feature in `lara2fa.php` config file under `Features:authenticatorAppTwoFactorAuthentication([...])`.
+
+- `'enable' => true`:  Enable or disable this feature.
+- `'confirm' => true`: Requires users to confirm setup by entering a code from their app.
+- `'confirmPassword' => true`: Requires users to re-enter their password before enabling or modifying this feature.
+- `'window' => 1`: Allows a 1-minute grace period for time differences (clock drift) between the user's device and the server.
+- `'secret-length' => 16`: The length of the secret key generated for the authenticator app.
+
+### 2- Email (OTP)
+
+This configures 2FA by sending a one-time code to the user's registered email address.
+
+You will find the configuration for this feature in `lara2fa.php` config file under `Features:emailTwoFactorAuthentication([...])`.
+
+- `'enable' => true`: Enable or disable this feature.
+- `'confirm' => true`: Requires a confirmation step during setup.
+- `'confirmPassword' => true`: Requires users to re-enter their password before enabling or modifying this feature.
+- `'window' => 10`: The time (in minutes) for which the email verification code is valid.
+
+### 3- Passkeys
+
+This configures login using device-based security like Face ID, Touch ID, Windows Hello, or physical security keys (YubiKey). It can also be used as passwordless authentication.
+
+You will find the configuration for this feature in `lara2fa.php` config file under `Features:passkeys([...])`.
+
+- `'enable' => true`: Enable or disable this feature.
+- `'max_passkeys' => 3`: The maximum number of Passkeys a user can have.
+- `'confirmPassword' => true`: Requires users to re-enter their password to add or remove passkeys.
+- `'authentication_mode' => 'both'`: Allows passkeys to be used for both single-factor (passwordless) and two-factor (password + passkey) authentication.
+- `'challenge_length' => 32`: The length of the random string used in the authentication challenge.
+- `'timeout' => 60000`: Time (in ms) that the caller is willing to wait for the call to complete.
+- `'icon' => env('PASSKEY_ICON')`: URL which resolves to an image associated with the entity.
+- `'attestation_conveyance' => 'none'`: This parameter specify the preference regarding the attestation conveyance during credential generation.
+- `'attachment_mode' => null`: Authentication can be tied to the current device or a cross-platform device or buth.
+- `'user_verification' => 'preferred'`: Most authenticators and smartphones will ask the user to actively verify themselves for log in. Use "required" to always ask verify, "preferred" to ask when possible, and "discouraged" to just ask for user presence.
+- `'resident_key' => 'preferred'`: By default, users must input their email to receive a list of credentials ID to use for authentication, but they can also login without specifying one if the device can remember them, allowing for true one-touch login. If required or preferred, login verification will be always required.
+
+### 4- Recovery Codes
+
+This configures one-time-use backup codes for users who lose access to their 2FA device.
+
+You will find the configuration for this feature in `lara2fa.php` config file under `Features:recoveryCodes([...])`.
+
+- `'enable' => true`: Enable or disable this feature.
+- `'confirmPassword' => true`: Requires users to re-enter their password to view or generate new codes.
+- `'requireTwoFactorAuthenticationEnabled' => true`: Require a Two-Factor Authentication method to be enabled before allowing recovery code generation.
+- `'numberOfCodesGenerated' => 8`: The total number of unique recovery codes that will be generated for the user.
+
 ## Routes
 
 If you want to customize the `lara2fa.php` route file, first publish it with the following command:
