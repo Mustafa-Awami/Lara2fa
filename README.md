@@ -5,7 +5,6 @@
 <a href="https://packagist.org/packages/mustafa-awami/lara2fa"><img src="https://img.shields.io/packagist/dt/mustafa-awami/lara2fa" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/mustafa-awami/lara2fa"><img src="https://img.shields.io/packagist/l/mustafa-awami/lara2fa" alt="License"></a>
 <a href="https://laravel.com/"><img src="https://img.shields.io/badge/Laravel-12%2B-red?logo=laravel" alt="Laravel 12+"></a>
-  
 </p>
 
 **Lara2FA** is a modern, flexible, and developer-friendly **Two-Factor Authentication (2FA)** package for Laravel.  
@@ -221,6 +220,86 @@ Here is the list of defined routes:
 | GET `/passkeys-two-factor/authenticateOptions`                          | `passkeys-two-factor.authenticateOptions` | Get passkey authentication options.                                         |
 | POST `/passkeys-two-factor/authenticate`                                | `passkeys-two-factor.authenticate`        | Authenticate the user with the given passkey.                               |
 
-You can customize the first part of the URL by setting the 'prefix' value in the `lara2fa.php` config file.
+You can customize the first part of the URL by setting the `prefix` value in the `lara2fa.php` config file.
 
+## Rate Limiter
+
+Lara2fa defines 3 rate limiters:
+
+### 1- Passkey Login Attempts (passkey-login)
+- This limiter protects the initial login/passkey verification endpoint.
+- Purpose: Prevents rapid, repeated login attempts (brute-force) from a single user and/or IP address.
+- Limit: 5 attempts per minute.
+
+### 2- Two-Factor Email Notification (two-factor-email-notify)
+- This limiter controls the "resend 2FA code" feature.
+- Purpose: Prevents a user from spamming the system to send dozens of 2FA emails, which could abuse a mail service.
+- Limit: 2 attempts per minute.
+
+### 3- Two-Factor Code Verification (two-factor-login)
+- This limiter protects the endpoint where the user submits their 2FA code.
+- Purpose: Prevents a user from rapidly guessing the 6-digit (or similar) 2FA code.
+- Limit: 5 attempts per minute.
+
+You can find and customize the rate limiters inside the `boot` method of `\app\Providers\Lara2faServiceProvider.php`.
+
+```php
+namespace App\Providers;
+
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Laravel\Fortify\Fortify;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Validation\ValidationException;
+
+class Lara2faServiceProvider extends ServiceProvider
+{
+    public function boot(): void
+    {
+        RateLimiter::for('passkey-login', function (Request $request) {
+            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+
+            return Limit::perMinute(5)->by($throttleKey)->response(function (Request $request,array $headers) {
+
+                $seconds = $headers['Retry-After'];
+
+                throw ValidationException::withMessages([
+                    Fortify::username() => [__('Too many attempts. Please try again after') . $seconds. __(' seconds')],
+                ]);
+            });
+        });
+
+        RateLimiter::for('two-factor-email-notify', function (Request $request) {
+
+            $throttleKey = $request->session()->get('login.id');
+
+            return Limit::perMinute(2)->by($throttleKey)->response(function (Request $request,array $headers) {
+
+                $seconds = $headers['Retry-After'];
+
+                throw ValidationException::withMessages([
+                    'attempts' => [__('Too many attempts. Please try again after ') . $seconds. __(' seconds')],
+                ])->errorBag('EmailTwoFactorAuthenticationNotification');
+            });
+        });
+
+        RateLimiter::for('two-factor-login', function (Request $request) {
+
+            $throttleKey = $request->session()->get('login.id');
+
+            return Limit::perMinute(5)->by($throttleKey)->response(function (Request $request,array $headers) {
+                $seconds = $headers['Retry-After'];
+
+                throw ValidationException::withMessages([
+                    'attempts' => [__('Too many attempts. Please try again after ') . $seconds. __(' seconds')],
+                ]);
+            });
+        });
+    }
+}
 ```
+
+You can also view them inside the `limiters` value in the `lara2fa.php` config file.
+
