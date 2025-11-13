@@ -71,7 +71,7 @@ Then you will be asked which of the following 2FA methods would you like to enab
   [3] Passkeys
 ```
 
-Depending on the selected methods, the published `lara2fa.php` config file will be updated with enabling the selected methods and disabling the rest.
+Depending on the selected methods, the published `lara2fa.php` config file will be updated to enable the selected methods and disable the rest.
 
 * **Note:** For Passkeys to work correctly, the following conditions must be met:
   - Use a browser that supports WebAuthn.
@@ -79,8 +79,8 @@ Depending on the selected methods, the published `lara2fa.php` config file will 
   - An SSL/TLS certificate trusted by your browser (self-signed is okay).
   - An HTTPS connection on port 443 (ports other than 443 will be rejected).
   
-### ⚠️ Important Warning
-The installation process may publish and overwrite existing files in your project if files with the same names already exist (for example: configuration or resource files).
+### ⚠️ Warning
+The installation process may publish files that overwrite existing files in your project (for example, configuration or resource files).
 It’s strongly recommended to commit your changes or back up your project before running the install command.
 
 Here is the list of files that will be published:
