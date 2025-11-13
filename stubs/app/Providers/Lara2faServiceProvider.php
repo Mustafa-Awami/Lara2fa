@@ -29,7 +29,7 @@ class Lara2faServiceProvider extends ServiceProvider
         RateLimiter::for('passkey-login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
 
-            return Limit::perMinute(5)->by($throttleKey)->response(function (Request $request,array $headers) use ($throttleKey) {
+            return Limit::perMinute(5)->by($throttleKey)->response(function (Request $request,array $headers) {
 
                 $seconds = $headers['Retry-After'];
 
@@ -43,7 +43,7 @@ class Lara2faServiceProvider extends ServiceProvider
 
             $throttleKey = $request->session()->get('login.id');
 
-            return Limit::perMinute(2)->by($throttleKey)->response(function (Request $request,array $headers) use ($throttleKey) {
+            return Limit::perMinute(2)->by($throttleKey)->response(function (Request $request,array $headers) {
 
                 $seconds = $headers['Retry-After'];
 
@@ -54,7 +54,10 @@ class Lara2faServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('two-factor-login', function (Request $request) {
-            return Limit::perMinute(5)->by($request->session()->get('login.id'))->response(function (Request $request,array $headers) {
+
+            $throttleKey = $request->session()->get('login.id');
+
+            return Limit::perMinute(5)->by($throttleKey)->response(function (Request $request,array $headers) {
                 $seconds = $headers['Retry-After'];
 
                 throw ValidationException::withMessages([
