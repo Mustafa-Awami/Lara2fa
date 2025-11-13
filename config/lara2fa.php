@@ -49,9 +49,10 @@ return[
     | Rate Limiting
     |--------------------------------------------------------------------------
     |
-    | By default, Lara2FA will throttle logins to five requests per minute for
-    | every email and IP address combination. However, if you would like to
-    | specify a custom rate limiter to call then you may specify it here.
+    | Lara2fa defines separate rate limiters for two-factor related
+    | actions (email notifications, two-factor code login attempts and
+    | passkey logins). Configure those limiters in your application's
+    | RateLimiter definitions (in App\Providers\Lara2faServiceProvider).
     |
     */
 
