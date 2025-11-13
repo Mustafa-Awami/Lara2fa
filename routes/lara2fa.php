@@ -22,7 +22,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
 
     if ((! FortifyFeatures::canManagetwoFactorAuthentication()) & Features::canManagetwoFactorAuthentication()) {
         // Two-factor authentication....
-        $twoFactorLimiter = config('lara2fa.limiters.two-factor');
+        $twoFactorLimiter = config('lara2fa.limiters.two-factor-login');
 
         Route::get('/two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])
                 ->middleware(['guest:'.config('fortify.guard')])
