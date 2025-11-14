@@ -29,9 +29,10 @@ Designed for simplicity, security, and seamless integration into any Laravel pro
 
 ---
 
-# 📝 Minimum Requirements
+# 📝 Prerequisites
 
-* Laravel Framework 12.37.0
+* **Laravel Framework:** 12.37.0+
+* **Frontend Stack:** The installer currently supports **Inertia** with **React** or **Vue**, **Livewire** can be added if requested.
 
 ---
 
@@ -163,7 +164,7 @@ npm run build
 ```
 --- 
 
-# 💻 Usage
+# 🧪 Example Repository
 
 You will find an example of usage on [Mustafa-Awami/lara2fa-example](https://github.com/Mustafa-Awami/lara2fa-example).
 
