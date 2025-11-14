@@ -33,6 +33,8 @@ Designed for simplicity, security, and seamless integration into any Laravel pro
 
 * Laravel Framework 12.37.0
 
+---
+
 # 🧰 Installation
 
 Install via Composer:
@@ -74,10 +76,10 @@ Then you will be asked which of the following 2FA methods would you like to enab
 Depending on the selected methods, the published `lara2fa.php` config file will be updated to enable the selected methods and disable the rest.
 
 * **Note:** For Passkeys to work correctly, the following conditions must be met:
-  - Use a browser that supports WebAuthn.
+  - Use a browser that supports WebAuthn (see: [https://caniuse.com/webauthn](https://caniuse.com/webauthn)).
   - A proper domain (localhost and 127.0.0.1 will be rejected by webauthn.js).
   - An SSL/TLS certificate trusted by your browser (self-signed is okay).
-  - An HTTPS connection on port 443 (ports other than 443 will be rejected).
+  - An HTTPS connection on port 443 (ports other than 443 will be rejected) (use [Laravel Herd](https://herd.laravel.com/) to serve your sites over HTTPS).
   
 ### ⚠️ Warning
 The installation process may publish files that overwrite existing files in your project (for example, configuration or resource files).
@@ -161,7 +163,13 @@ npm run build
 ```
 --- 
 
-# 🔧 Configuration (Optional)
+# 💻 Usage
+
+You will find an example of usage on [Mustafa-Awami/lara2fa-example](https://github.com/Mustafa-Awami/lara2fa-example).
+
+---
+
+# 🛠️ Configuration (Optional)
 
 ## Two-Factor Authentication 
 
