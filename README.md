@@ -398,18 +398,18 @@ For Passkeys to work correctly, the following conditions must be met:
 
 ---
 
-# 🤝 Contributing
+# 👥 Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue for bugs, features, or improvements.
+Thank you for considering contributing to Lara2fa! You can read the contribution guide [here](.github/CONTRIBUTING.md).
 
 ---
 
 # 🔒 Security Vulnerabilities
 
-If you discover a security vulnerability within Lara2FA, please send an e-mail to Mustafa Awami at [mustafa.awami1@gmail.com](mailto:mustafa.awami1@gmail.com). All security vulnerabilities will be promptly addressed.
+Please review the [security policy](.github/SECURITY.md) on how to report security vulnerabilities.
 
 ---
 
-# 📄 License
+# ⚖️ License
 
-The Lara2FA package is open-source software licensed under the **[MIT license](/LICENSE.md)**.
+The Lara2FA package is licensed under the **[MIT license](/LICENSE.md)**.
