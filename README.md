@@ -8,11 +8,12 @@
 </p>
 
 **Lara2FA** is a modern, flexible, and developer-friendly **Two-Factor Authentication (2FA)** package for Laravel.  
-It supports **three powerful authentication methods** out of the box:
+It supports **powerful authentication methods** out of the box:
 
 - ✉️ **Email OTP**
 - 🔢 **Authenticator Apps (TOTP)**
 - 🪪 **WebAuthn (Passkeys / Security Keys / Biometrics)**
+- 🔑 **Recovery Codes**
 
 Designed for simplicity, security, and seamless integration into any Laravel project.
 
@@ -20,12 +21,12 @@ Designed for simplicity, security, and seamless integration into any Laravel pro
 
 # 🚀 Features
 
-- ✅ Plug-and-play 2FA for Laravel 12
 - 🔢 Compatible with Google Authenticator, Authy, and 1Password
-- ✉️ Built-in Email OTP with configurable templates
+- ✉️ Built-in Email OTP
 - 🪪 WebAuthn support for FIDO2 devices, Windows Hello, Touch ID, and Passkeys
 - 🧩 Easy install command with feature selection
 - 🔒 Secure and standards-compliant implementation
+- 🧑‍💻 Developer Friendly – clean, easy setup, and customizable flows
 
 ---
 
@@ -76,41 +77,9 @@ Then you will be asked which of the following 2FA methods would you like to enab
 
 Depending on the selected methods, the published `lara2fa.php` config file will be updated to enable the selected methods and disable the rest.
 
-* **Note:** For Passkeys to work correctly, the following conditions must be met:
-  - Use a browser that supports WebAuthn (see: [https://caniuse.com/webauthn](https://caniuse.com/webauthn)).
-  - A proper domain (localhost and 127.0.0.1 will be rejected by webauthn.js).
-  - An SSL/TLS certificate trusted by your browser (self-signed is okay).
-  - An HTTPS connection on port 443 (ports other than 443 will be rejected) (use [Laravel Herd](https://herd.laravel.com/) to serve your sites over HTTPS).
-  
 ### ⚠️ Warning
-The installation process may publish files that overwrite existing files in your project (for example, configuration or resource files).
-It’s strongly recommended to commit your changes or back up your project before running the install command.
 
-Here is the list of files that will be published:
-
-* `config/lara2fa.php`
-* `database/migrations/2024_07_29_090549_add_two_factor_email_columns_to_users_table.php`
-* `database/migrations/2025_09_10_081543_create_passkeys_table.php`
-* `app/Providers/Lara2faServiceProvider.php`
-* `app/Providers/FortifyServiceProvider.php`
-
-Here are the React resource files that will be published if React is chosen:
-
-* `resources/js/pages/settings/two-factor.tsx`
-* `resources/js/pages/auth/login.tsx`
-* `resources/js/pages/auth/two-factor-challenge.tsx`
-* `resources/js/components/confirm-password-dialog.tsx`
-
-Here are the Vue stack files that will be published if Vue is chosen:
-
-* `resources/js/pages/settings/TwoFactor.vue`
-* `resources/js/components/TwoFactorAuthenticatorApp.vue`
-* `resources/js/components/TwoFactorEmail.vue`
-* `resources/js/components/TwoFactorPasskeys.vue`
-* `resources/js/components/TwoFactorRecoveryCodes.vue`
-* `resources/js/pages/auth/Login.vue`
-* `resources/js/pages/auth/TwoFactorChallenge.vue`
-* `resources/js/components/ConfirmPasswordDialog.vue`
+This instalation process may override some of your files in your project directory, see the full list of files at the [Troubleshooting Section](#-troubleshooting--important-notes)
 
 ## Step 2️⃣
 
@@ -167,6 +136,24 @@ npm run build
 # 🧪 Example Repository
 
 You will find an example of usage on [Mustafa-Awami/lara2fa-example](https://github.com/Mustafa-Awami/lara2fa-example).
+
+--- 
+
+# 💻 Usage
+
+Users can enable any of the two-factor methods in thier settings page.
+
+![two-factor-settings](/art/two-factor-settings.png)
+
+By enabling any of the main 3 methods, recovery codes will be enabled automaticly.
+
+Users who have enabled any of the two-factor methods will be automatically redirected to the two-factor-challenge page after entering their password.
+
+![two-factor-challenge](/art/two-factor-challenge.png)
+
+If a user enabled passkeys, they can login directly without entering their password in the login page by clicking on the `Use Passkey` button (passwordless authentication).
+
+![login](/art/login.png)
 
 ---
 
@@ -366,3 +353,63 @@ class Lara2faServiceProvider extends ServiceProvider
 
 You can also view them inside the `limiters` value in the `lara2fa.php` config file.
 
+---
+
+# 🚑 Troubleshooting & Important Notes
+
+## ⚠️ Warning: File Overwrites
+
+The installation process may publish files that overwrite existing files in your project (for example, configuration or resource files).
+It’s strongly recommended to commit your changes or back up your project before running the install command.
+
+Here is the list of files that will be published:
+
+* `config/lara2fa.php`
+* `database/migrations/2024_07_29_090549_add_two_factor_email_columns_to_users_table.php`
+* `database/migrations/2025_09_10_081543_create_passkeys_table.php`
+* `app/Providers/Lara2faServiceProvider.php`
+* `app/Providers/FortifyServiceProvider.php`
+
+Here are the React resource files that will be published if React is chosen:
+
+* `resources/js/pages/settings/two-factor.tsx`
+* `resources/js/pages/auth/login.tsx`
+* `resources/js/pages/auth/two-factor-challenge.tsx`
+* `resources/js/components/confirm-password-dialog.tsx`
+
+Here are the Vue stack files that will be published if Vue is chosen:
+
+* `resources/js/pages/settings/TwoFactor.vue`
+* `resources/js/components/TwoFactorAuthenticatorApp.vue`
+* `resources/js/components/TwoFactorEmail.vue`
+* `resources/js/components/TwoFactorPasskeys.vue`
+* `resources/js/components/TwoFactorRecoveryCodes.vue`
+* `resources/js/pages/auth/Login.vue`
+* `resources/js/pages/auth/TwoFactorChallenge.vue`
+* `resources/js/components/ConfirmPasswordDialog.vue`
+
+## Passkey Requirements
+
+For Passkeys to work correctly, the following conditions must be met:
+* Use a browser that supports WebAuthn (see: [https://caniuse.com/webauthn](https://caniuse.com/webauthn)).
+* A proper domain (localhost and 127.0.0.1 will be rejected by webauthn.js).
+* An SSL/TLS certificate trusted by your browser (self-signed is okay).
+* An HTTPS connection on port 443 (ports other than 443 will be rejected) (use [Laravel Herd](https://herd.laravel.com/) to serve your sites over HTTPS).
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or open an issue for bugs, features, or improvements.
+
+---
+
+# 🔒 Security Vulnerabilities
+
+If you discover a security vulnerability within Lara2FA, please send an e-mail to Mustafa Awami at [mustafa.awami1@gmail.com](mailto:mustafa.awami1@gmail.com). All security vulnerabilities will be promptly addressed.
+
+---
+
+# 📄 License
+
+The Lara2FA package is open-source software licensed under the **[MIT license](/LICENSE.md)**.
