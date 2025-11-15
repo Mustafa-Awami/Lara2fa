@@ -26,10 +26,11 @@ class InstallCommand extends Command implements PromptsForMissingInput
     private array $choices = [
         1 => 'Authenticator App (TOTP)',
         2 => 'Email OTP',
-        3 => 'Passkeys'
+        3 => 'Passkeys',
+        4 => 'All of the above',
     ];
 
-    private int $defaultChoice = 1;
+    private int $defaultChoice = 4;
 
     protected $signature = 'lara2fa:install';
 
@@ -124,15 +125,15 @@ class InstallCommand extends Command implements PromptsForMissingInput
             }
         }
 
-        if (in_array('Authenticator App (TOTP)', $selectedChoices)) {
+        if (in_array('Authenticator App (TOTP)', $selectedChoices) || in_array('All of the above', $selectedChoices)) {
             $this->updateFeatureEnable('authenticatorAppTwoFactorAuthentication', true);
         }
 
-        if (in_array('Email OTP', $selectedChoices)) {
+        if (in_array('Email OTP', $selectedChoices) || in_array('All of the above', $selectedChoices)) {
             $this->updateFeatureEnable('emailTwoFactorAuthentication', true);
         }
 
-        if (in_array('Passkeys', $selectedChoices)) {
+        if (in_array('Passkeys', $selectedChoices) || in_array('All of the above', $selectedChoices)) {
             $this->updateFeatureEnable('passkeys', true);
         }
 
