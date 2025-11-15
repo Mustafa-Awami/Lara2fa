@@ -14,6 +14,10 @@ use MustafaAwami\Lara2fa\Services\StackDetector;
 #[AsCommand(name: 'lara2fa:install')]
 class InstallCommand extends Command implements PromptsForMissingInput
 {
+    private array $filesThatNeedToBePublished;
+
+    private array $filesThatwillBeOverwritten;
+
     private array $stacks = [
         1 => 'react',
         2 => 'vue',
@@ -64,11 +68,61 @@ class InstallCommand extends Command implements PromptsForMissingInput
             true // multiple selection allowed
         );
 
-        // Publish...
-        $this->callSilent('vendor:publish', ['--tag' => 'lara2fa-config', '--force' => true]);
+        $this->filesThatNeedToBePublished = [
+            'publish(lara2fa-config)' => config_path('lara2fa.php'),
+            'publish(lara2fa-two-factor-email-migrations)' => database_path('migrations/2024_01_01_000000_create_two_factor_email_tokens_table.php'),
+            'publish(lara2fa-passkeys-migrations)' => database_path('migrations/2024_01_01_000001_create_passkeys_table.php'),
+            'serviceProvider()' => app_path('Providers/Lara2faServiceProvider.php'),
+            'copy('.__DIR__.'/../../stubs/app/Providers/FortifyServiceProvider.php)' => app_path('Providers/FortifyServiceProvider.php'),
+        ];
 
-        $this->callSilent('vendor:publish', ['--tag' => 'lara2fa-two-factor-email-migrations', '--force' => true]);
-        $this->callSilent('vendor:publish', ['--tag' => 'lara2fa-passkeys-migrations', '--force' => true]);
+        if ($selectedStack === "react") { 
+            $this->filesThatNeedToBePublished = array_merge($this->filesThatNeedToBePublished, [
+                'copy('.__DIR__.'/../../stubs/inertia/react/resources/js/pages/settings/two-factor.tsx)' => resource_path('js/pages/settings/two-factor.tsx'),
+                'copy('.__DIR__.'/../../stubs/inertia/react/resources/js/pages/auth/login.tsx)' => resource_path('js/pages/auth/login.tsx'),
+                'copy('.__DIR__.'/../../stubs/inertia/react/resources/js/pages/auth/two-factor-challenge.tsx)' => resource_path('js/pages/auth/two-factor-challenge.tsx'),
+                'copy('.__DIR__.'/../../stubs/inertia/react/resources/js/components/confirm-password-dialog.tsx)' => resource_path('js/components/confirm-password-dialog.tsx'),
+            ]);
+        } elseif ($selectedStack === "vue") {
+            $this->filesThatNeedToBePublished = array_merge($this->filesThatNeedToBePublished, [
+                'copy('.__DIR__.'/../../stubs/inertia/vue/resources/js/pages/settings/TwoFactor.vue)' => resource_path('js/pages/settings/TwoFactor.vue'),
+                'copy('.__DIR__.'/../../stubs/inertia/vue/resources/js/components/TwoFactorAuthenticatorApp.vue)' => resource_path('js/components/TwoFactorAuthenticatorApp.vue'),
+                'copy('.__DIR__.'/../../stubs/inertia/vue/resources/js/components/TwoFactorEmail.vue)' => resource_path('js/components/TwoFactorEmail.vue'),
+                'copy('.__DIR__.'/../../stubs/inertia/vue/resources/js/components/TwoFactorPasskeys.vue)' => resource_path('js/components/TwoFactorPasskeys.vue'),
+                'copy('.__DIR__.'/../../stubs/inertia/vue/resources/js/components/TwoFactorRecoveryCodes.vue)' => resource_path('js/components/TwoFactorRecoveryCodes.vue'),
+                'copy('.__DIR__.'/../../stubs/inertia/vue/resources/js/pages/auth/Login.vue)' => resource_path('js/pages/auth/Login.vue'),
+                'copy('.__DIR__.'/../../stubs/inertia/vue/resources/js/pages/auth/TwoFactorChallenge.vue)' => resource_path('js/pages/auth/TwoFactorChallenge.vue'),
+                'copy('.__DIR__.'/../../stubs/inertia/vue/resources/js/components/ConfirmPasswordDialog.vue)' => resource_path('js/components/ConfirmPasswordDialog.vue'),
+            ]);
+        }
+
+        if ($this->filesWillBeOverwritten()) {
+            $this->warn('⚠️  Warning: The installation will overwrite the following files:');
+            $this->newLine();
+
+            foreach ($this->filesThatwillBeOverwritten as $filePath) {
+                $this->line(" - {$filePath}");
+            }
+
+            if (!$this->confirm('Do you want to continue?', $default = true)) {
+                $this->error('Installation aborted.');
+                return Command::FAILURE;
+            }
+        }
+
+        foreach ($this->filesThatNeedToBePublished as $key => $filePath) {
+            $command = explode('(', $key)[0];
+            $commandArgs = explode('(', $key)[1] ?? '';
+            $commandArgs = rtrim($commandArgs, ')');
+
+            if ($command === 'publish') {
+                $this->callSilent('vendor:publish', ['--tag' => $commandArgs, '--force' => true]);
+            } elseif ($command === 'serviceProvider') {
+                $this->registerLara2faServiceProvider();
+            } elseif ($command === 'copy') {
+                copy($commandArgs, $filePath);
+            }
+        }
 
         if (in_array('Authenticator App (TOTP)', $selectedChoices)) {
             $this->updateFeatureEnable('authenticatorAppTwoFactorAuthentication', true);
@@ -82,32 +136,12 @@ class InstallCommand extends Command implements PromptsForMissingInput
             $this->updateFeatureEnable('passkeys', true);
         }
 
-        copy(__DIR__.'/../../stubs/app/Providers/FortifyServiceProvider.php', app_path('Providers/FortifyServiceProvider.php'));
-
+        // Install other NPM packages...
         if ($selectedStack === "react") {
-            copy(__DIR__.'/../../stubs/inertia/react/resources/js/pages/settings/two-factor.tsx', resource_path('js/pages/settings/two-factor.tsx'));
-            copy(__DIR__.'/../../stubs/inertia/react/resources/js/pages/auth/login.tsx', resource_path('js/pages/auth/login.tsx'));
-            copy(__DIR__.'/../../stubs/inertia/react/resources/js/pages/auth/two-factor-challenge.tsx', resource_path('js/pages/auth/two-factor-challenge.tsx'));
-            copy(__DIR__.'/../../stubs/inertia/react/resources/js/components/confirm-password-dialog.tsx', resource_path('js/components/confirm-password-dialog.tsx'));
-
-            // Install other NPM packages...
             $this->installNodePackages([
                 '@simplewebauthn/browser' => '^13.1.2',
             ]);
-            
         } elseif ($selectedStack === "vue") {
-            copy(__DIR__.'/../../stubs/inertia/vue/resources/js/pages/settings/TwoFactor.vue', resource_path('js/pages/settings/TwoFactor.vue'));
-
-            copy(__DIR__.'/../../stubs/inertia/vue/resources/js/components/TwoFactorAuthenticatorApp.vue', resource_path('js/components/TwoFactorAuthenticatorApp.vue'));
-            copy(__DIR__.'/../../stubs/inertia/vue/resources/js/components/TwoFactorEmail.vue', resource_path('js/components/TwoFactorEmail.vue'));
-            copy(__DIR__.'/../../stubs/inertia/vue/resources/js/components/TwoFactorPasskeys.vue', resource_path('js/components/TwoFactorPasskeys.vue'));
-            copy(__DIR__.'/../../stubs/inertia/vue/resources/js/components/TwoFactorRecoveryCodes.vue', resource_path('js/components/TwoFactorRecoveryCodes.vue'));
-
-            copy(__DIR__.'/../../stubs/inertia/vue/resources/js/pages/auth/Login.vue', resource_path('js/pages/auth/Login.vue'));
-            copy(__DIR__.'/../../stubs/inertia/vue/resources/js/pages/auth/TwoFactorChallenge.vue', resource_path('js/pages/auth/TwoFactorChallenge.vue'));
-            copy(__DIR__.'/../../stubs/inertia/vue/resources/js/components/ConfirmPasswordDialog.vue', resource_path('js/components/ConfirmPasswordDialog.vue'));
-
-            // Install other NPM packages...
             $this->installNodePackages([
                 '@simplewebauthn/browser' => '^13.1.2',
                 '@headlessui/vue' => '^1.7.23'
@@ -115,9 +149,6 @@ class InstallCommand extends Command implements PromptsForMissingInput
         }
 
         $this->replaceInFile("'stack' => 'react'", "'stack' => '" . $selectedStack . "'",config_path('lara2fa.php'));
-
-        // Service Providers...
-        $this->registerLara2faServiceProvider();
 
         $this->newLine();
         $this->info('✅ Lara2FA installed successfully!');
@@ -273,4 +304,22 @@ class InstallCommand extends Command implements PromptsForMissingInput
         });
     }
 
+    /**
+     * Check if any of the files that need to be published already exist.
+     *
+     * @return bool
+     */
+    protected function filesWillBeOverwritten(): bool
+    {
+        $fileExists = false;
+
+        foreach ($this->filesThatNeedToBePublished as $key => $filePath) {
+            if (file_exists($filePath)) {
+                $fileExists = true;
+                $this->filesThatwillBeOverwritten[] = $filePath;
+            }
+        }
+
+        return $fileExists;
+    }
 }
