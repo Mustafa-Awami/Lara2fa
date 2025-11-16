@@ -32,8 +32,8 @@ Designed for simplicity, security, and seamless integration into any Laravel pro
 
 # 📝 Prerequisites
 
-* **Laravel Framework:** 12.37.0+
-* **Frontend Stack:** The installer currently supports **Inertia** with **React** or **Vue**, **Livewire** can be added if requested.
+- **Laravel Framework:** 12.37.0+
+- **Frontend Stack:** The installer currently supports **Inertia** with **React** or **Vue**, **Livewire** can be added if requested.
 
 ---
 
@@ -45,7 +45,7 @@ Install via Composer:
 composer require mustafa-awami/lara2fa -W
 ```
 
---- 
+---
 
 # ⚙️ Set Up
 
@@ -57,22 +57,24 @@ After installing via composer, publish resources using the `lara2fa:install` Art
 php artisan lara2fa:install
 ```
 
-During installation, you’ll be asked which starter kit/stack you are currently using: 
+During installation, you’ll be asked which starter kit/stack you are currently using:
 
-```
+```text
  Which stack are you using?
   [1] react
   [2] vue
 ```
+
 - **Note:** Currently supported stacks are React and Vue only. Livewire can be added if requested.
 
 Then you will be asked which of the following 2FA methods would you like to enable:
 
-```
+```text
  Which 2FA methods would you like to enable? (comma separated):
   [1] Authenticator App (TOTP)
   [2] Email OTP
   [3] Passkeys
+  [4] All of the above
 ```
 
 Depending on the selected methods, the published `lara2fa.php` config file will be updated to enable the selected methods and disable the rest.
@@ -124,20 +126,24 @@ In `fortify.php` config file, disable the two-factor feature by commenting it ou
 ## Step 5️⃣
 
 Run the migrations to create the new tables:
+
 ```bash
 php artisan migrate
 ```
+
 Finally, run the build command:
+
 ```bash
 npm run build
 ```
---- 
+
+---
 
 # 🧪 Example Repository
 
 You will find an example of usage on [Mustafa-Awami/lara2fa-example](https://github.com/Mustafa-Awami/lara2fa-example).
 
---- 
+---
 
 # 💻 Usage
 
@@ -159,7 +165,7 @@ If a user enabled passkeys, they can login directly without entering their passw
 
 # 🛠️ Configuration (Optional)
 
-## Two-Factor Authentication 
+## Two-Factor Authentication
 
 ### 1- Authenticator App (TOTP)
 
@@ -277,16 +283,19 @@ You can customize the first part of the URL by setting the `prefix` value in the
 Lara2fa defines 3 rate limiters:
 
 ### 1- Passkey Login Attempts (passkey-login)
+
 - This limiter protects the initial login/passkey verification endpoint.
 - Purpose: Prevents rapid, repeated login attempts (brute-force) from a single user and/or IP address.
 - Limit: 5 attempts per minute.
 
 ### 2- Two-Factor Email Notification (two-factor-email-notify)
+
 - This limiter controls the "resend 2FA code" feature.
 - Purpose: Prevents a user from spamming the system to send dozens of 2FA emails, which could abuse a mail service.
 - Limit: 2 attempts per minute.
 
 ### 3- Two-Factor Code Verification (two-factor-login)
+
 - This limiter protects the endpoint where the user submits their 2FA code.
 - Purpose: Prevents a user from rapidly guessing the 6-digit (or similar) 2FA code.
 - Limit: 5 attempts per minute.
@@ -364,43 +373,44 @@ It’s strongly recommended to commit your changes or back up your project befor
 
 Here is the list of files that will be published:
 
-* `config/lara2fa.php`
-* `database/migrations/2024_07_29_090549_add_two_factor_email_columns_to_users_table.php`
-* `database/migrations/2025_09_10_081543_create_passkeys_table.php`
-* `app/Providers/Lara2faServiceProvider.php`
-* `app/Providers/FortifyServiceProvider.php`
+- `config/lara2fa.php`
+- `database/migrations/2024_07_29_090549_add_two_factor_email_columns_to_users_table.php`
+- `database/migrations/2025_09_10_081543_create_passkeys_table.php`
+- `app/Providers/Lara2faServiceProvider.php`
+- `app/Providers/FortifyServiceProvider.php`
 
 Here are the React resource files that will be published if React is chosen:
 
-* `resources/js/pages/settings/two-factor.tsx`
-* `resources/js/pages/auth/login.tsx`
-* `resources/js/pages/auth/two-factor-challenge.tsx`
-* `resources/js/components/confirm-password-dialog.tsx`
+- `resources/js/pages/settings/two-factor.tsx`
+- `resources/js/pages/auth/login.tsx`
+- `resources/js/pages/auth/two-factor-challenge.tsx`
+- `resources/js/components/confirm-password-dialog.tsx`
 
 Here are the Vue stack files that will be published if Vue is chosen:
 
-* `resources/js/pages/settings/TwoFactor.vue`
-* `resources/js/components/TwoFactorAuthenticatorApp.vue`
-* `resources/js/components/TwoFactorEmail.vue`
-* `resources/js/components/TwoFactorPasskeys.vue`
-* `resources/js/components/TwoFactorRecoveryCodes.vue`
-* `resources/js/pages/auth/Login.vue`
-* `resources/js/pages/auth/TwoFactorChallenge.vue`
-* `resources/js/components/ConfirmPasswordDialog.vue`
+- `resources/js/pages/settings/TwoFactor.vue`
+- `resources/js/components/TwoFactorAuthenticatorApp.vue`
+- `resources/js/components/TwoFactorEmail.vue`
+- `resources/js/components/TwoFactorPasskeys.vue`
+- `resources/js/components/TwoFactorRecoveryCodes.vue`
+- `resources/js/pages/auth/Login.vue`
+- `resources/js/pages/auth/TwoFactorChallenge.vue`
+- `resources/js/components/ConfirmPasswordDialog.vue`
 
 ## Passkey Requirements
 
 For Passkeys to work correctly, the following conditions must be met:
-* Use a browser that supports WebAuthn (see: [https://caniuse.com/webauthn](https://caniuse.com/webauthn)).
-* A proper domain (localhost and 127.0.0.1 will be rejected by webauthn.js).
-* An SSL/TLS certificate trusted by your browser (self-signed is okay).
-* An HTTPS connection on port 443 (ports other than 443 will be rejected) (use [Laravel Herd](https://herd.laravel.com/) to serve your sites over HTTPS).
+
+- Use a browser that supports WebAuthn (see: [https://caniuse.com/webauthn](https://caniuse.com/webauthn)).
+- A proper domain (localhost and 127.0.0.1 will be rejected by webauthn.js).
+- An SSL/TLS certificate trusted by your browser (self-signed is okay).
+- An HTTPS connection on port 443 (ports other than 443 will be rejected) (use [Laravel Herd](https://herd.laravel.com/) to serve your sites over HTTPS).
 
 ---
 
 # 👥 Contributing
 
-Thank you for considering contributing to Lara2fa! You can read the contribution guide [here](.github/CONTRIBUTING.md).
+Thank you for considering contributing to Lara2fa! You can read the [contribution guide](.github/CONTRIBUTING.md).
 
 ---
 
