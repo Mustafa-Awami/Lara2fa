@@ -7,7 +7,7 @@
 <a href="https://laravel.com/"><img src="https://img.shields.io/badge/Laravel-12%2B-red?logo=laravel" alt="Laravel 12+"></a>
 </p>
 
-**Lara2FA** is a modern, flexible, and developer-friendly **Two-Factor Authentication (2FA)** package for Laravel.  
+**Lara2FA** is a modern, flexible, and developer-friendly **Two-Factor Authentication (2FA)** package for Laravel.
 It supports **powerful authentication methods** out of the box:
 
 - ✉️ **Email OTP**
