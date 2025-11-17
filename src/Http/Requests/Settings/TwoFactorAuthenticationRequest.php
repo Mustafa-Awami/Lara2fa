@@ -12,7 +12,7 @@ class TwoFactorAuthenticationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Features::enabled(Features::canManagetwoFactorAuthentication());
+        return Features::canManagetwoFactorAuthentication();
     }
 
     /**
