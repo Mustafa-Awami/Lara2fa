@@ -3,17 +3,17 @@
 namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
 
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use MustafaAwami\Lara2fa\Lara2fa;
 use MustafaAwami\Lara2fa\Features;
 use App\Http\Controllers\Controller;
+use MustafaAwami\Lara2fa\Http\Requests\Settings\TwoFactorAuthenticationRequest;
 
 class TwoFactorAuthenticationController extends Controller
 {
     /**
      * Show the user's two-factor authentication settings page.
      */
-    public function show(Request $request)
+    public function show(TwoFactorAuthenticationRequest $request)
     {
         $props = [
             'userEnabledtwoFactor' => $request->user()->hasEnabledTwoFactorAuthentication(),
