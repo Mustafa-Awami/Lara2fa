@@ -76,7 +76,7 @@ class InstallCommand extends Command implements PromptsForMissingInput
             'serviceProvider()' => app_path('Providers/Lara2faServiceProvider.php'),
             'copy('.__DIR__.'/../../stubs/app/Providers/FortifyServiceProvider.php)' => app_path('Providers/FortifyServiceProvider.php'),
 
-            'copy('.__DIR__.'/../../stubs/tasts/inertia/Auth/AuthenticationTest.php)' => base_path('tests/Feature/Auth/AuthenticationTest.php'),
+            'copy('.__DIR__.'/../../stubs/tests/inertia/Auth/AuthenticationTest.php)' => base_path('tests/Feature/Auth/AuthenticationTest.php'),
             'copy('.__DIR__.'/../../stubs/tests/inertia/Auth/TwoFactorChallengeTest.php)' => base_path('tests/Feature/Auth/TwoFactorChallengeTest.php'),
             'copy('.__DIR__.'/../../stubs/tests/inertia/Settings/TwoFactorAuthenticationTest.php)' => base_path('tests/Feature/Settings/TwoFactorAuthenticationTest.php'),
         ];
