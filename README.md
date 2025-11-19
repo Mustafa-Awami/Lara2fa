@@ -378,6 +378,9 @@ Here is the list of files that will be published:
 - `database/migrations/2025_09_10_081543_create_passkeys_table.php`
 - `app/Providers/Lara2faServiceProvider.php`
 - `app/Providers/FortifyServiceProvider.php`
+- `tests/Feature/Auth/AuthenticationTest.php`
+- `tests/Feature/Auth/TwoFactorChallengeTest.php`
+- `tests/Feature/Settings/TwoFactorAuthenticationTest.php`
 
 Here are the React resource files that will be published if React is chosen:
 
