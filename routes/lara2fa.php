@@ -7,8 +7,8 @@ use MustafaAwami\Lara2fa\Http\Controllers\ConfirmPasswordController;
 use MustafaAwami\Lara2fa\Http\Controllers\Settings\RecoveryCodeController;
 use MustafaAwami\Lara2fa\Http\Controllers\Auth\TwoFactorAuthenticatedSessionController;
 use MustafaAwami\Lara2fa\Http\Controllers\Settings\EmailTwoFactorAuthenticationController;
+use MustafaAwami\Lara2fa\Http\Controllers\PasskeysTwoFactorAuthenticationOptionsController;
 use MustafaAwami\Lara2fa\Http\Controllers\Settings\PasskeysTwoFactorAuthenticationController;
-use MustafaAwami\Lara2fa\Http\Controllers\Settings\PasskeysTwoFactorAuthenticationOptionsController;
 use MustafaAwami\Lara2fa\Http\Controllers\Settings\AuthenticatorAppTwoFactorAuthenticationController;
 
 Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
