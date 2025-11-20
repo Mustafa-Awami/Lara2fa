@@ -8,6 +8,13 @@
             "MustafaAwami\\Lara2fa\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "MustafaAwami\\Lara2fa\\Tests\\": "tests/",
+            "App\\": "workbench/app/",
+            "Database\\Factories\\": "workbench/database/factories/"
+        }
+    },
     "authors": [
         {
             "name": "Mustafa Al-Awami",
