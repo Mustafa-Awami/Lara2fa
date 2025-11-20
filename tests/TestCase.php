@@ -1,6 +1,6 @@
 <?php
 
-namespace MustafaAwami\Lara2fa\Tests;
+namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
