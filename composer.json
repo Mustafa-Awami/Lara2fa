@@ -19,6 +19,9 @@
     "require": {
         "web-auth/webauthn-lib": "5.2"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^10.4|^11.3"
+    },
     "extra": {
         "laravel": {
             "providers": [
