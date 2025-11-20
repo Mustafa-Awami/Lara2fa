@@ -7,7 +7,7 @@
     </testsuites>
 
     <php>
-        <env name="APP_KEY" value="base64:PwhNs4pt0V7BmUGdN42Zvhe5I8C/uGVnV4lOfQ6+HMA="/>
+        <env name="APP_KEY" value="base64:randomlygeneratedkeyhere1234567890abcdef="/>
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
