@@ -2,8 +2,8 @@
 
 namespace MustafaAwami\Lara2fa\Tests;
 
+use MustafaAwami\Lara2fa\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
