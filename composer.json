@@ -25,5 +25,8 @@
                 "MustafaAwami\\Lara2fa\\Lara2faServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     }
 }
