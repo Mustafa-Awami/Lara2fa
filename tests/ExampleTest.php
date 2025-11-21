@@ -2,7 +2,7 @@
 
 namespace MustafaAwami\Lara2fa\Tests;
 
-use MustafaAwami\Lara2fa\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExampleTest extends TestCase
