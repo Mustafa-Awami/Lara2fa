@@ -1,0 +1,6 @@
+providers:
+  - MustafaAwami\Lara2fa\Lara2faServiceProvider
+  - Laravel\Fortify\FortifyServiceProvider
+
+migrations:
+  - database/migrations

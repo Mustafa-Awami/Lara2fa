@@ -39,7 +39,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "MustafaAwami\\Lara2fa\\Tests\\": "tests/"
+            "MustafaAwami\\Lara2fa\\Tests\\": "tests/",
+            "App\\": "workbench/app/",
+            "Database\\Factories\\": "workbench/database/factories/"
         }
     },
     "authors": [
@@ -52,6 +54,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.2",
+        "laravel/fortify": "^1.32",
         "web-auth/webauthn-lib": "5.2"
     },
     "require-dev": {
