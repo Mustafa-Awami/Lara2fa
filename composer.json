@@ -1,6 +1,35 @@
 {
     "name": "mustafa-awami/lara2fa",
     "description": "Lara2FA is a modern and secure Two-Factor Authentication package for Laravel, providing developers with a flexible way to protect user accounts. It supports multiple verification methods, allowing you to choose the best fit for your application's needs.",
+    "keywords": [
+        "laravel",
+        "2fa",
+        "two-factor",
+        "two-factor authentication",
+        "authentication",
+        "auth",
+        "security",
+        "otp",
+        "email otp",
+        "webauthn",
+        "passkeys",
+        "authenticator app",
+        "google authenticator",
+        "mfa",
+        "multi factor authentication",
+        "laravel security",
+        "laravel package",
+        "tfa",
+        "login security",
+        "auth package",
+        "laravel plugin",
+        "laravel addon",
+        "otp verification",
+        "two-step verification",
+        "totp",
+        "u2f",
+        "fido2"
+    ],
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -10,9 +39,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "MustafaAwami\\Lara2fa\\Tests\\": "tests/",
-            "App\\": "workbench/app/",
-            "Database\\Factories\\": "workbench/database/factories/"
+            "MustafaAwami\\Lara2fa\\Tests\\": "tests/"
         }
     },
     "authors": [
@@ -24,9 +51,12 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
+        "php": "^8.2",
         "web-auth/webauthn-lib": "5.2"
     },
     "require-dev": {
+        "laravel/pint": "^1.25.1",
+        "orchestra/testbench": "^10.7",
         "phpunit/phpunit": "^10.4|^11.3"
     },
     "extra": {
@@ -35,6 +65,9 @@
                 "MustafaAwami\\Lara2fa\\Lara2faServiceProvider"
             ]
         }
+    },
+    "config": {
+        "sort-packages": true
     },
     "scripts": {
         "test": "@php vendor/bin/phpunit"
