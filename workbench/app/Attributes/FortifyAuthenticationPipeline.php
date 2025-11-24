@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Attributes;
+
+use Attribute;
+use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Features;
+use Laravel\Fortify\Actions\CanonicalizeUsername;
+use Laravel\Fortify\Actions\AttemptToAuthenticate;
+use Laravel\Fortify\Actions\EnsureLoginIsNotThrottled;
+use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
+use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
+use MustafaAwami\Lara2fa\Features as Lara2faFeatures;
+use MustafaAwami\Lara2fa\Actions\RedirectIfTwoFactorAuthenticatable as Lara2faRedirectIfTwoFactorAuthenticatable;
+
+#[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
+class FortifyAuthenticationPipeline
+{
+    // public function __construct()
+    // {
+    //     // dd('here');
+    //     Fortify::authenticateThrough(function () {
+    //         return array_filter([
+    //                 config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
+    //                 config('fortify.lowercase_usernames') ? CanonicalizeUsername::class : null,
+    //                 Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorAuthenticatable::class : 
+    //                 (Lara2faFeatures::canManagetwoFactorAuthentication() ? Lara2faRedirectIfTwoFactorAuthenticatable::class : null),
+    //                 AttemptToAuthenticate::class,
+    //                 PrepareAuthenticatedSession::class,
+    //         ]);
+    //     });
+    // }
+
+    /**
+     * Construct a new attribute.
+     *
+     */
+    public function __construct() {
+        dd('__construct');
+    }
+
+    /**
+     * Handle the attribute.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     */
+    public function __invoke($app): void
+    {
+        dd('__invoke');
+        Fortify::authenticateThrough(function () {
+            return array_filter([
+                    config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
+                    config('fortify.lowercase_usernames') ? CanonicalizeUsername::class : null,
+                    Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorAuthenticatable::class : 
+                    (Lara2faFeatures::canManagetwoFactorAuthentication() ? Lara2faRedirectIfTwoFactorAuthenticatable::class : null),
+                    AttemptToAuthenticate::class,
+                    PrepareAuthenticatedSession::class,
+            ]);
+        });
+    }
+}

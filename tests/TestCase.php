@@ -31,7 +31,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
         $app['config']->set('lara2fa.features', [
             Features::authenticatorAppTwoFactorAuthentication([
                 'enable' => true,
-                'confirm' => true,
+                'confirm' => false,
                 'confirmPassword' => true,
                 'window' => 1,
                 'secret-length' => 16
