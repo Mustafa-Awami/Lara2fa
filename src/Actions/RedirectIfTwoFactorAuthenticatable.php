@@ -53,35 +53,7 @@ class RedirectIfTwoFactorAuthenticatable implements RedirectsIfTwoFactorAuthenti
     {
         $user = $this->validateCredentials($request);
 
-        if (Features::confirmsAuthenticatorAppTwoFactorAuthentication() ||
-            Features::confirmsEmailTwoFactorAuthentication()) {
-
-            if (optional($user)->two_factor_secret &&
-                ! is_null(optional($user)->two_factor_confirmed_at) &&
-                in_array(TwoFactorAuthenticatable::class, class_uses_recursive($user))) {
-                return $this->twoFactorChallengeResponse($request, $user);
-            } elseif (optional($user)->email_two_factor_enabled_at &&
-            ! is_null(optional($user)->email_two_factor_confirmed_at) &&
-            in_array(TwoFactorAuthenticatable::class, class_uses_recursive($user))) {
-                return $this->twoFactorChallengeResponse($request, $user);
-            } elseif (Lara2fa::canPasskeysUsedForTwoFactorAuthentication() &&
-            $user->hasEnabledPasskeyAuthentication()) {
-                return $this->twoFactorChallengeResponse($request, $user);
-            }
-            
-
-            return $next($request);
-            
-        }
-
-        if (optional($user)->two_factor_secret &&
-            in_array(TwoFactorAuthenticatable::class, class_uses_recursive($user))) {
-            return $this->twoFactorChallengeResponse($request, $user);
-        } elseif (optional($user)->email_two_factor_enabled_at &&
-            in_array(TwoFactorAuthenticatable::class, class_uses_recursive($user))) {
-            return $this->twoFactorChallengeResponse($request, $user);
-        } elseif (Lara2fa::canPasskeysUsedForTwoFactorAuthentication() &&
-        $user->hasEnabledPasskeyAuthentication()) {
+        if ($user->hasEnabledTwoFactorAuthentication()) {
             return $this->twoFactorChallengeResponse($request, $user);
         }
 

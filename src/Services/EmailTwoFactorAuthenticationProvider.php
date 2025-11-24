@@ -38,7 +38,6 @@ class EmailTwoFactorAuthenticationProvider implements EmailTwoFactorAuthenticati
      */
     public function verify($code, $inputCode)
     {
-        // dd($code, $inputCode, ($inputCode == $code)); 
         return ($inputCode == $code) ? true : false;
     }
 

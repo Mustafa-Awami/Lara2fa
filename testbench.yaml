@@ -1,6 +1,7 @@
 providers:
-  - MustafaAwami\Lara2fa\Lara2faServiceProvider
   - Laravel\Fortify\FortifyServiceProvider
+  - MustafaAwami\Lara2fa\Lara2faServiceProvider
 
 migrations:
   - database/migrations
+  - vendor/laravel/fortify/database/migrations
