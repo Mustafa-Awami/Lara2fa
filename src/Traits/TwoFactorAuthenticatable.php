@@ -187,7 +187,7 @@ trait TwoFactorAuthenticatable
 
     public function passkeys(): HasMany
     {
-        return $this->hasMany(Passkey::class);
+        return $this->hasMany(Passkey::class, 'user_id');
     }
 
     public function passkeysCollection()
