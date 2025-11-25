@@ -5,7 +5,7 @@ namespace MustafaAwami\Lara2fa\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use MustafaAwami\Lara2fa\Models\Passkey;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Session;
 use Webauthn\PublicKeyCredentialSource;
 use Webauthn\PublicKeyCredentialRpEntity;

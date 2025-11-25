@@ -2,17 +2,16 @@
 
 namespace MustafaAwami\Lara2fa\Http\Controllers\Auth;
 
-use Inertia\Inertia;
 use MustafaAwami\Lara2fa\Lara2fa;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Auth\StatefulGuard;
-use MustafaAwami\Lara2fa\Events\RecoveryCodeReplaced;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use MustafaAwami\Lara2fa\Events\RecoveryCodeReplaced;
+use Laravel\Fortify\Contracts\TwoFactorChallengeViewResponse;
 use MustafaAwami\Lara2fa\Events\TwoFactorAuthenticationFailed;
 use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
 use MustafaAwami\Lara2fa\Events\TwoFactorAuthenticationSuccessful;
 use MustafaAwami\Lara2fa\Http\Requests\Auth\TwoFactorLoginRequest;
-use Laravel\Fortify\Contracts\TwoFactorChallengeViewResponse;
 
 class TwoFactorAuthenticatedSessionController extends Controller
 {

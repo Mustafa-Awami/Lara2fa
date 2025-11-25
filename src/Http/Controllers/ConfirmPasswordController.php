@@ -3,7 +3,7 @@
 namespace MustafaAwami\Lara2fa\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Date;
 
 class ConfirmPasswordController extends Controller

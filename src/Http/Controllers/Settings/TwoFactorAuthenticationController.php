@@ -5,7 +5,7 @@ namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
 use Inertia\Inertia;
 use MustafaAwami\Lara2fa\Lara2fa;
 use MustafaAwami\Lara2fa\Features;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use MustafaAwami\Lara2fa\Http\Requests\Settings\TwoFactorAuthenticationRequest;
 
 class TwoFactorAuthenticationController extends Controller

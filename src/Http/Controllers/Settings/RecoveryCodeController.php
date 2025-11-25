@@ -4,7 +4,7 @@ namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
 
 use Illuminate\Http\Request;
 use MustafaAwami\Lara2fa\Features;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
 use MustafaAwami\Lara2fa\Actions\DisableRecoveryCodes;
