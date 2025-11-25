@@ -16,37 +16,10 @@ use MustafaAwami\Lara2fa\Actions\RedirectIfTwoFactorAuthenticatable as Lara2faRe
 #[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
 class FortifyAuthenticationPipeline
 {
-    // public function __construct()
-    // {
-    //     // dd('here');
-    //     Fortify::authenticateThrough(function () {
-    //         return array_filter([
-    //                 config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
-    //                 config('fortify.lowercase_usernames') ? CanonicalizeUsername::class : null,
-    //                 Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorAuthenticatable::class : 
-    //                 (Lara2faFeatures::canManagetwoFactorAuthentication() ? Lara2faRedirectIfTwoFactorAuthenticatable::class : null),
-    //                 AttemptToAuthenticate::class,
-    //                 PrepareAuthenticatedSession::class,
-    //         ]);
-    //     });
-    // }
-
     /**
      * Construct a new attribute.
-     *
      */
     public function __construct() {
-        dd('__construct');
-    }
-
-    /**
-     * Handle the attribute.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     */
-    public function __invoke($app): void
-    {
-        dd('__invoke');
         Fortify::authenticateThrough(function () {
             return array_filter([
                     config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
