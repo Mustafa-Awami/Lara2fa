@@ -1,6 +1,7 @@
 <p align="center"><img width="500" height="185" src="/art/logo.png" alt="Logo Lara2fa"></p>
 
 <p align="center">
+<a href="https://github.com/Mustafa-Awami/Lara2fa/actions"><img src="https://github.com/Mustafa-Awami/Lara2fa/actions/workflows/tests.yml/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/mustafa-awami/lara2fa"><img src="https://img.shields.io/packagist/v/mustafa-awami/lara2fa" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/mustafa-awami/lara2fa"><img src="https://img.shields.io/packagist/dt/mustafa-awami/lara2fa" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/mustafa-awami/lara2fa"><img src="https://img.shields.io/packagist/l/mustafa-awami/lara2fa" alt="License"></a>
@@ -33,6 +34,7 @@ Designed for simplicity, security, and seamless integration into any Laravel pro
 # 📝 Prerequisites
 
 - **Laravel Framework:** 12.37.0+
+- **Laravel Fortify:** 1.32.0+
 - **Frontend Stack:** The installer currently supports **Inertia** with **React** or **Vue**, **Livewire** can be added if requested.
 
 ---
