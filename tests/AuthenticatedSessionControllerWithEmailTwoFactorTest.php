@@ -5,14 +5,11 @@ namespace MustafaAwami\Lara2fa\Tests;
 use MustafaAwami\Lara2fa\Tests\TestCase;
 use Orchestra\Testbench\Attributes\WithConfig;
 use App\Attributes\FortifyAuthenticationPipeline;
-use DateInterval;
 use Orchestra\Testbench\Attributes\WithMigration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider;
 use Orchestra\Testbench\Attributes\DefineEnvironment;
 use MustafaAwami\Lara2fa\Tests\Models\UserWithTwoFactor;
-
-use function Symfony\Component\Clock\now;
 
 #[WithMigration]
 #[WithConfig('auth.providers.users.model', UserWithTwoFactor::class)]
@@ -130,7 +127,7 @@ class AuthenticatedSessionControllerWithEmailTwoFactorTest extends TestCase
             'email' => 'mustafa.awami1@gmail.com',
             'password' => bcrypt('secret'),
             'email_two_factor_code' => encrypt($validOtp),
-            'email_two_factor_code_expires_at' => now()->sub(DateInterval::createFromDateString('1 minutes')),
+            'email_two_factor_code_expires_at' => now()->subMinutes(1),
             'email_two_factor_enabled_at' => now(),
         ]);
 
