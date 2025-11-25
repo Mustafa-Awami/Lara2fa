@@ -39,17 +39,4 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             FortifyFeatures::updatePasswords(),
         ]);
     }
-
-    protected function withAuthenticatorAppTwoFactorAuthentication($app)
-    {
-        $app['config']->set('lara2fa.features', [
-            Features::authenticatorAppTwoFactorAuthentication([
-                'enable' => true,
-                'confirm' => false,
-                'confirmPassword' => true,
-                'window' => 1,
-                'secret-length' => 16
-            ]),
-        ]);
-    }
 }
