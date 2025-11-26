@@ -45,11 +45,10 @@ class AuthenticatedSessionControllerWithPasskeysTwoFactorTest extends TestCase
                 \Webauthn\TrustPath\EmptyTrustPath::create(),
                 Uuid::fromString('38195f59-0e5b-4ebf-be46-75664177eeee'),
                 'oWNrZXlldmFsdWU=',
-                'MQ',
+                Base64UrlSafe::encodeUnpadded($user->id),
                 0
             ),
         ]);
-
 
         $response = $this->withoutExceptionHandling()->post('/login', [
             'email' => 'mustafa.awami1@gmail.com',
@@ -57,5 +56,21 @@ class AuthenticatedSessionControllerWithPasskeysTwoFactorTest extends TestCase
         ]);
 
         $response->assertRedirect('/two-factor-challenge');
+    }
+
+    public function test_user_can_get_passkeys_authentication_options()
+    {
+        UserWithTwoFactor::forceCreate([
+            'name' => 'Mustafa Awami',
+            'email' => 'mustafa.awami1@gmail.com',
+            'password' => bcrypt('secret'),
+        ]);
+
+        $authenticationOptions = $this->withoutExceptionHandling()->getJson('/passkeys-two-factor/authenticateOptions', [
+            'email' => 'mustafa.awami1@gmail.com',
+        ])->json();
+
+        $this->assertarrayHasKey('challenge', $authenticationOptions);
+        $this->assertarrayHasKey('allowCredentials', $authenticationOptions);
     }
 }
