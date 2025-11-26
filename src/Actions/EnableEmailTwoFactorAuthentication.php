@@ -17,7 +17,6 @@ class EnableEmailTwoFactorAuthentication
     /**
      * Create a new action instance.
      *
-     * @param  \MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider  $provider
      * @return void
      */
     public function __construct(EmailTwoFactorAuthenticationProvider $provider)

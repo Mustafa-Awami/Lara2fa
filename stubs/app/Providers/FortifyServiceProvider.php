@@ -2,27 +2,27 @@
 
 namespace App\Providers;
 
-use Inertia\Inertia;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Laravel\Fortify\Fortify;
-use MustafaAwami\Lara2fa\Lara2fa;
-use Laravel\Fortify\Features;
 use App\Actions\Fortify\CreateNewUser;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Cache\RateLimiting\Limit;
 use App\Actions\Fortify\ResetUserPassword;
-use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Auth\StatefulGuard;
-use MustafaAwami\Lara2fa\Features as Lara2faFeatures;
-use Laravel\Fortify\Actions\CanonicalizeUsername;
-use Laravel\Fortify\Actions\AttemptToAuthenticate;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
+use Inertia\Inertia;
+use Laravel\Fortify\Actions\AttemptToAuthenticate;
+use Laravel\Fortify\Actions\CanonicalizeUsername;
 use Laravel\Fortify\Actions\EnsureLoginIsNotThrottled;
 use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
-use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
+use Laravel\Fortify\Features;
+use Laravel\Fortify\Fortify;
 use MustafaAwami\Lara2fa\Actions\RedirectIfTwoFactorAuthenticatable as Lara2faRedirectIfTwoFactorAuthenticatable;
+use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
+use MustafaAwami\Lara2fa\Features as Lara2faFeatures;
+use MustafaAwami\Lara2fa\Lara2fa;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -45,12 +45,12 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::authenticateThrough(function (Request $request) {
             return array_filter([
-                    config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
-                    config('fortify.lowercase_usernames') ? CanonicalizeUsername::class : null,
-                    Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorAuthenticatable::class : 
-                    (Lara2faFeatures::canManagetwoFactorAuthentication() ? Lara2faRedirectIfTwoFactorAuthenticatable::class : null),
-                    AttemptToAuthenticate::class,
-                    PrepareAuthenticatedSession::class,
+                config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
+                config('fortify.lowercase_usernames') ? CanonicalizeUsername::class : null,
+                Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorAuthenticatable::class :
+                (Lara2faFeatures::canManagetwoFactorAuthentication() ? Lara2faRedirectIfTwoFactorAuthenticatable::class : null),
+                AttemptToAuthenticate::class,
+                PrepareAuthenticatedSession::class,
             ]);
         });
     }
@@ -69,27 +69,27 @@ class FortifyServiceProvider extends ServiceProvider
      */
     private function configureViews(): void
     {
-        Fortify::loginView(fn (Request $request) => Inertia::render(Lara2fa::getView("login"), [
+        Fortify::loginView(fn (Request $request) => Inertia::render(Lara2fa::getView('login'), [
             'canResetPassword' => Features::enabled(Features::resetPasswords()),
             'canRegister' => Features::enabled(Features::registration()),
             'status' => $request->session()->get('status'),
-            'canUsePasskeys' => Lara2fa::canPasskeysUsedForSingleFactorAuthentication()
+            'canUsePasskeys' => Lara2fa::canPasskeysUsedForSingleFactorAuthentication(),
         ]));
 
-        Fortify::resetPasswordView(fn (Request $request) => Inertia::render(Lara2fa::getView("reset-password"), [
+        Fortify::resetPasswordView(fn (Request $request) => Inertia::render(Lara2fa::getView('reset-password'), [
             'email' => $request->email,
             'token' => $request->route('token'),
         ]));
 
-        Fortify::requestPasswordResetLinkView(fn (Request $request) => Inertia::render(Lara2fa::getView("forgot-password"), [
+        Fortify::requestPasswordResetLinkView(fn (Request $request) => Inertia::render(Lara2fa::getView('forgot-password'), [
             'status' => $request->session()->get('status'),
         ]));
 
-        Fortify::verifyEmailView(fn (Request $request) => Inertia::render(Lara2fa::getView("verify-email"), [
+        Fortify::verifyEmailView(fn (Request $request) => Inertia::render(Lara2fa::getView('verify-email'), [
             'status' => $request->session()->get('status'),
         ]));
 
-        Fortify::registerView(fn () => Inertia::render(Lara2fa::getView("register")));
+        Fortify::registerView(fn () => Inertia::render(Lara2fa::getView('register')));
 
         Fortify::twoFactorChallengeView(function (Request $request) {
             $model = app(StatefulGuard::class)->getProvider()->getModel();
@@ -100,18 +100,18 @@ class FortifyServiceProvider extends ServiceProvider
                     app(FailedTwoFactorLoginResponse::class)->toResponse($this)
                 );
             }
-            
-            return Inertia::render(Lara2fa::getView("two-factor-challenge"), [
+
+            return Inertia::render(Lara2fa::getView('two-factor-challenge'), [
                 'twoFactorEnabled' => [
                     'authenticatorApp' => $user->hasEnabledAuthenticatorAppTwoFactorAuthentication(),
                     'email' => $user->hasEnabledEmailTwoFactorAuthentication(),
                     'recoveryCodes' => $user->hasEnabledTwoFactorRecoveryCodes(),
                     'passkeys' => Lara2fa::canPasskeysUsedForTwoFactorAuthentication() && $user->hasEnabledPasskeyAuthentication(),
-                ]
+                ],
             ]);
         });
 
-        Fortify::confirmPasswordView(fn () => Inertia::render(Lara2fa::getView("confirm-password")));
+        Fortify::confirmPasswordView(fn () => Inertia::render(Lara2fa::getView('confirm-password')));
     }
 
     /**

@@ -2,11 +2,11 @@
 
 namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
 
-use Inertia\Inertia;
-use MustafaAwami\Lara2fa\Lara2fa;
-use MustafaAwami\Lara2fa\Features;
 use Illuminate\Routing\Controller;
+use Inertia\Inertia;
+use MustafaAwami\Lara2fa\Features;
 use MustafaAwami\Lara2fa\Http\Requests\Settings\TwoFactorAuthenticationRequest;
+use MustafaAwami\Lara2fa\Lara2fa;
 
 class TwoFactorAuthenticationController extends Controller
 {
@@ -21,12 +21,12 @@ class TwoFactorAuthenticationController extends Controller
                 'authenticatorApp' => Features::enabled(Features::authenticatorAppTwoFactorAuthentication()) ? [
                     'userEnabled' => $request->user()->hasEnabledAuthenticatorAppTwoFactorAuthentication(),
                     'requirePasswordConfirmation' => Features::confirmsPasswordAuthenticatorAppTwoFactorAuthentication(),
-                    'requiresConfirmation' => Features::confirmsAuthenticatorAppTwoFactorAuthentication()
+                    'requiresConfirmation' => Features::confirmsAuthenticatorAppTwoFactorAuthentication(),
                 ] : false,
                 'email' => Features::enabled(Features::emailTwoFactorAuthentication()) ? [
                     'userEnabled' => $request->user()->hasEnabledEmailTwoFactorAuthentication(),
                     'requirePasswordConfirmation' => Features::confirmsPasswordEmailTwoFactorAuthentication(),
-                    'requiresConfirmation' => Features::confirmsEmailTwoFactorAuthentication()
+                    'requiresConfirmation' => Features::confirmsEmailTwoFactorAuthentication(),
                 ] : false,
                 'passkeys' => Features::enabled(Features::passkeys()) ? [
                     'userEnabled' => $request->user()->hasEnabledPasskeyAuthentication(),
@@ -36,13 +36,13 @@ class TwoFactorAuthenticationController extends Controller
             'canManageAdditionalAuthentication' => Features::canManageAdditionalAuthentication() ? [
                 'recoveryCodes' => Features::enabled(Features::recoveryCodes()) ? [
                     'userEnabled' => $request->user()->hasEnabledTwoFactorRecoveryCodes(),
-                    'confirmsPasswordRecoveryCode' => Features::confirmsPasswordRecoveryCode()
-                ] : false
+                    'confirmsPasswordRecoveryCode' => Features::confirmsPasswordRecoveryCode(),
+                ] : false,
             ] : false,
             'recoveryCodesRequireTwoFactorEnabled' => Features::recoveryCodesRequireTwoFactorAuthenticationEnabled(),
             'status' => $request->session()->get('status'),
         ];
-        
-        return Inertia::render(Lara2fa::getView("two-factor-settings"), $props);
+
+        return Inertia::render(Lara2fa::getView('two-factor-settings'), $props);
     }
 }

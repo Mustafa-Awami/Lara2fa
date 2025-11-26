@@ -2,29 +2,28 @@
 
 namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use MustafaAwami\Lara2fa\Features;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Database\Eloquent\Model;
 use MustafaAwami\Lara2fa\Actions\DisableRecoveryCodes;
 use MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes;
 use MustafaAwami\Lara2fa\Contracts\RecoveryCodesDisabledResponse;
 use MustafaAwami\Lara2fa\Contracts\RecoveryCodesGeneratedResponse;
+use MustafaAwami\Lara2fa\Features;
 
 class RecoveryCodeController extends Controller
 {
     /**
      * Get the two-factor authentication recovery codes for authenticated user.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
         if (! (Features::recoveryCodesRequireTwoFactorAuthenticationEnabled() ?
             $request->user()->hasEnabledTwoFactorAuthentication() : true)) {
-                return [];
+            return [];
         }
 
         if (! $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
@@ -39,15 +38,13 @@ class RecoveryCodeController extends Controller
     /**
      * Generate a fresh set of two-factor authentication recovery codes.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes  $generate
-     * @return  \MustafaAwami\Lara2fa\Contracts\RecoveryCodesGeneratedResponse
+     * @return \MustafaAwami\Lara2fa\Contracts\RecoveryCodesGeneratedResponse
      */
     public function store(Request $request, GenerateNewRecoveryCodes $generate)
     {
         if (! (Features::recoveryCodesRequireTwoFactorAuthenticationEnabled() ?
             $request->user()->hasEnabledTwoFactorAuthentication() : true)) {
-                return null;
+            return null;
         }
         $generate($request->user());
 
@@ -56,14 +53,13 @@ class RecoveryCodeController extends Controller
 
     /**
      * Delete the two-factor authentication recovery codes for authenticated user
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @return  \MustafaAwami\Lara2fa\Contracts\RecoveryCodesDisabledResponse
+     *
+     * @return \MustafaAwami\Lara2fa\Contracts\RecoveryCodesDisabledResponse
      */
     public function destroy(Request $request, DisableRecoveryCodes $disable)
     {
         if (! $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
-            return ;
+            return;
         }
 
         $disable($request->user());

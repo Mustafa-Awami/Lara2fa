@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('email_two_factor_code_expires_at')
                 ->after('email_two_factor_code')
                 ->nullable();
-            
+
             $table->timestamp('email_two_factor_enabled_at')
                 ->after('email_two_factor_code_expires_at')
                 ->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->timestamp('email_two_factor_confirmed_at')
                 ->after('email_two_factor_enabled_at')
                 ->nullable();
-            
+
         });
     }
 
@@ -41,7 +41,7 @@ return new class extends Migration
                 'email_two_factor_code',
                 'email_two_factor_code_expires_at',
                 'email_two_factor_enabled_at',
-                'email_two_factor_confirmed_at'
+                'email_two_factor_confirmed_at',
             ]);
         });
     }

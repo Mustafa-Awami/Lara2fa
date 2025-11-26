@@ -2,14 +2,13 @@
 
 namespace MustafaAwami\Lara2fa\Tests;
 
-use MustafaAwami\Lara2fa\Tests\TestCase;
-use Orchestra\Testbench\Attributes\WithConfig;
 use App\Attributes\FortifyAuthenticationPipeline;
-use Orchestra\Testbench\Attributes\WithMigration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider;
-use Orchestra\Testbench\Attributes\DefineEnvironment;
 use MustafaAwami\Lara2fa\Tests\Models\UserWithTwoFactor;
+use Orchestra\Testbench\Attributes\DefineEnvironment;
+use Orchestra\Testbench\Attributes\WithConfig;
+use Orchestra\Testbench\Attributes\WithMigration;
 
 #[WithMigration]
 #[WithConfig('auth.providers.users.model', UserWithTwoFactor::class)]
@@ -21,7 +20,7 @@ use MustafaAwami\Lara2fa\Tests\Models\UserWithTwoFactor;
 class AuthenticatedSessionControllerWithEmailTwoFactorTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     #[WithConfig('lara2fa-options.email-two-factor-authentication', [
         'enabled' => true,
     ])]
@@ -107,7 +106,7 @@ class AuthenticatedSessionControllerWithEmailTwoFactorTest extends TestCase
             'login.id' => $user->id,
             'login.remember' => false,
         ])->withoutExceptionHandling()->post('/two-factor-challenge', [
-            'email_code' => $validOtp."",
+            'email_code' => $validOtp.'',
         ]);
 
         $response->assertRedirect('/home')
@@ -135,15 +134,13 @@ class AuthenticatedSessionControllerWithEmailTwoFactorTest extends TestCase
             'login.id' => $user->id,
             'login.remember' => false,
         ])->withoutExceptionHandling()->post('/two-factor-challenge', [
-            'email_code' => $validOtp."",
+            'email_code' => $validOtp.'',
         ]);
 
         $response->assertRedirect('/two-factor-challenge')
-                 ->assertSessionHas('login.id')
-                 ->assertSessionHasErrors(['email_code']);
+            ->assertSessionHas('login.id')
+            ->assertSessionHasErrors(['email_code']);
     }
-
-
 
     #[WithConfig('lara2fa.features', [])]
     public function test_user_can_authenticate_when_two_factor_challenge_is_disabled()
@@ -162,5 +159,4 @@ class AuthenticatedSessionControllerWithEmailTwoFactorTest extends TestCase
 
         $response->assertRedirect('/home');
     }
-
 }

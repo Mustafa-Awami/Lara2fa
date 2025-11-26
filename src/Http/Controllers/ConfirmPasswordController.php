@@ -11,7 +11,6 @@ class ConfirmPasswordController extends Controller
     /**
      * Get the password confirmation status.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request)
@@ -35,8 +34,6 @@ class ConfirmPasswordController extends Controller
 
     /**
      * confirm password
-     *
-     * @param  \Illuminate\Http\Request  $request
      */
     public function store(Request $request)
     {

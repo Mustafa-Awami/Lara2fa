@@ -13,7 +13,7 @@ interface EmailTwoFactorAuthenticationProvider
 
     /**
      * Generate code expires date
-     * 
+     *
      * @return Carbon
      */
     public function generateExpiresAt();
@@ -30,9 +30,7 @@ interface EmailTwoFactorAuthenticationProvider
     /**
      * Check if the code expaired.
      *
-     * @param $codeExpiresAt
      * @return bool
      */
     public function isCodeExpired($codeExpiresAt);
-
 }

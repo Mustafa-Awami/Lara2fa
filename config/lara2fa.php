@@ -2,7 +2,7 @@
 
 use MustafaAwami\Lara2fa\Features;
 
-return[
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ return[
     | Redirect Paths
     |--------------------------------------------------------------------------
     |
-    | Define the paths where the user will be redirected after certain 
+    | Define the paths where the user will be redirected after certain
     | actions, such as successfully completing two-factor login.
     |
     */
@@ -62,7 +62,7 @@ return[
         // Rate limiter for the two-factor authentication login attempts.
         'two-factor-login' => 'two-factor-login',
         // Rate limiter for login attempts using passkeys.
-        'passkey-login' => 'passkey-login'
+        'passkey-login' => 'passkey-login',
     ],
 
     /*
@@ -86,7 +86,7 @@ return[
             // The time step window (in minutes) to allow for drift when verifying the TOTP code.
             'window' => 1,
             // The length of the secret key generated for the authenticator app.
-            'secret-length' => 16
+            'secret-length' => 16,
         ]),
         Features::emailTwoFactorAuthentication([
             // Enable or disable the use of email-based codes for 2FA.
@@ -117,7 +117,7 @@ return[
             | Password Confirmation
             |--------------------------------------------------------------------------
             |
-            | Here you may specify whether or not password confirmation is 
+            | Here you may specify whether or not password confirmation is
             | required to enable, create ,update and delete Passkeys.
             |
             */
@@ -126,7 +126,7 @@ return[
             |--------------------------------------------------------------------------
             | Authentication Mode
             |--------------------------------------------------------------------------
-            | 
+            |
             | This will determin how users can use thier registerd passkeys. When
             | this is set to Single Factor Authentication (sfa), Users will be able to
             | login with thier passkeys directly without the need to provide thier
@@ -135,7 +135,7 @@ return[
             |
             | The "both" option will allow the users to use thier passkeys both
             | as "sfa" and "2fa".
-            | 
+            |
             | Supported: "sfa", "2fa", "both".
             |
             */
@@ -242,7 +242,7 @@ return[
             |
             */
 
-            'resident_key' => "preferred",
+            'resident_key' => 'preferred',
         ]),
         Features::recoveryCodes([
             // Enable or disable the use of recovery codes for emergency login.
@@ -252,7 +252,7 @@ return[
             // Require a Two-Factor Authentication method to be enabled before allowing recovery code generation.
             'requireTwoFactorAuthenticationEnabled' => true,
             // The total number of unique recovery codes that will be generated for the user.
-            'numberOfCodesGenerated' => 8
+            'numberOfCodesGenerated' => 8,
         ]),
     ],
 

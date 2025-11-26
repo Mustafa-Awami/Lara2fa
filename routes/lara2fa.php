@@ -1,15 +1,15 @@
 <?php
 
-use MustafaAwami\Lara2fa\Features;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features as FortifyFeatures;
-use MustafaAwami\Lara2fa\Http\Controllers\ConfirmPasswordController;
-use MustafaAwami\Lara2fa\Http\Controllers\Settings\RecoveryCodeController;
+use MustafaAwami\Lara2fa\Features;
 use MustafaAwami\Lara2fa\Http\Controllers\Auth\TwoFactorAuthenticatedSessionController;
-use MustafaAwami\Lara2fa\Http\Controllers\Settings\EmailTwoFactorAuthenticationController;
+use MustafaAwami\Lara2fa\Http\Controllers\ConfirmPasswordController;
 use MustafaAwami\Lara2fa\Http\Controllers\PasskeysTwoFactorAuthenticationOptionsController;
-use MustafaAwami\Lara2fa\Http\Controllers\Settings\PasskeysTwoFactorAuthenticationController;
 use MustafaAwami\Lara2fa\Http\Controllers\Settings\AuthenticatorAppTwoFactorAuthenticationController;
+use MustafaAwami\Lara2fa\Http\Controllers\Settings\EmailTwoFactorAuthenticationController;
+use MustafaAwami\Lara2fa\Http\Controllers\Settings\PasskeysTwoFactorAuthenticationController;
+use MustafaAwami\Lara2fa\Http\Controllers\Settings\RecoveryCodeController;
 
 Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
 
@@ -25,17 +25,16 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
         $twoFactorLimiter = config('lara2fa.limiters.two-factor-login');
 
         Route::get('/two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])
-                ->middleware(['guest:'.config('fortify.guard')])
-                ->name('two-factor.login');
+            ->middleware(['guest:'.config('fortify.guard')])
+            ->name('two-factor.login');
 
         Route::post('/two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store'])
-        ->middleware(array_filter([
-            'guest:'.config('fortify.guard'),
-            $twoFactorLimiter ? 'throttle:'.$twoFactorLimiter : null,
-        ]));
-    
-            
-        if(Features::enabled(Features::authenticatorAppTwoFactorAuthentication())){
+            ->middleware(array_filter([
+                'guest:'.config('fortify.guard'),
+                $twoFactorLimiter ? 'throttle:'.$twoFactorLimiter : null,
+            ]));
+
+        if (Features::enabled(Features::authenticatorAppTwoFactorAuthentication())) {
             $authenticatorAppTwoFactorMiddleware = (Features::confirmsPasswordAuthenticatorAppTwoFactorAuthentication())
                 ? ['auth:'.config('fortify.guard'), 'password.confirm']
                 : ['auth:'.config('fortify.guard')];
@@ -43,25 +42,25 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
             Route::post('/settings/authenticator-app-two-factor-authentication', [AuthenticatorAppTwoFactorAuthenticationController::class, 'store'])
                 ->middleware($authenticatorAppTwoFactorMiddleware)
                 ->name('authenticator-app-two-factor.enable');
-    
-            Route::post( '/settings/confirmed-authenticator-app-two-factor-authentication', [AuthenticatorAppTwoFactorAuthenticationController::class, 'confirm'])
+
+            Route::post('/settings/confirmed-authenticator-app-two-factor-authentication', [AuthenticatorAppTwoFactorAuthenticationController::class, 'confirm'])
                 ->middleware($authenticatorAppTwoFactorMiddleware)
                 ->name('authenticator-app-two-factor.confirm');
-    
+
             Route::delete('/settings/authenticator-app-two-factor-authentication', [AuthenticatorAppTwoFactorAuthenticationController::class, 'destroy'])
                 ->middleware($authenticatorAppTwoFactorMiddleware)
                 ->name('authenticator-app-two-factor.disable');
-    
+
             Route::get('/settings/authenticator-app-two-factor-qr-code', [AuthenticatorAppTwoFactorAuthenticationController::class, 'qrCode'])
                 ->middleware($authenticatorAppTwoFactorMiddleware)
                 ->name('authenticator-app-two-factor.qr-code');
-    
+
             Route::get('/settings/authenticator-app-two-factor-secret-key', [AuthenticatorAppTwoFactorAuthenticationController::class, 'secretKey'])
                 ->middleware($authenticatorAppTwoFactorMiddleware)
                 ->name('authenticator-app-two-factor.secret-key');
         }
 
-        if(Features::enabled(Features::emailTwoFactorAuthentication())){
+        if (Features::enabled(Features::emailTwoFactorAuthentication())) {
             $emailTwoFactorMiddleware = (Features::confirmsPasswordEmailTwoFactorAuthentication())
                 ? ['auth:'.config('fortify.guard'), 'password.confirm']
                 : ['auth:'.config('fortify.guard')];
@@ -69,23 +68,23 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
             Route::post('/settings/email-two-factor-authentication', [EmailTwoFactorAuthenticationController::class, 'store'])
                 ->middleware($emailTwoFactorMiddleware)
                 ->name('email-two-factor.enable');
-    
+
             Route::post('/settings/confirmed-email-two-factor-authentication', [EmailTwoFactorAuthenticationController::class, 'confirm'])
                 ->middleware($emailTwoFactorMiddleware)
                 ->name('email-two-factor.confirm');
-    
+
             Route::delete('/settings/email-two-factor-authentication', [EmailTwoFactorAuthenticationController::class, 'destroy'])
                 ->middleware($emailTwoFactorMiddleware)
                 ->name('email-two-factor.disable');
 
             $twoFactorEmailNotifyLimiter = config('lara2fa.limiters.two-factor-email-notify');
-            
+
             Route::post('/settings/email-two-factor-authentication-send-code', [EmailTwoFactorAuthenticationController::class, 'notify'])
                 ->middleware($twoFactorEmailNotifyLimiter ? ['throttle:'.$twoFactorEmailNotifyLimiter] : [])
                 ->name('email-two-factor.send-code');
         }
 
-        if(Features::enabled(Features::passkeys())){
+        if (Features::enabled(Features::passkeys())) {
             $passkeysTwoFactorMiddleware = (Features::confirmsPasswordPasskeys())
                 ? ['auth:'.config('fortify.guard'), 'password.confirm']
                 : ['auth:'.config('fortify.guard')];
@@ -105,7 +104,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
             Route::delete('/settings/passkeys-two-factor-authentication', [PasskeysTwoFactorAuthenticationController::class, 'disable'])
                 ->middleware($passkeysTwoFactorMiddleware)
                 ->name('passkeys-two-factor.disable');
-    
+
             Route::delete('/settings/passkeys-two-factor-authentication/{passkey}/destroy', [PasskeysTwoFactorAuthenticationController::class, 'destroy'])
                 ->middleware($passkeysTwoFactorMiddleware)
                 ->name('passkeys-two-factor.destroy');
@@ -115,7 +114,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
                 ->name('passkeys-two-factor.update');
         }
 
-        if(Features::enabled(Features::recoveryCodes())){
+        if (Features::enabled(Features::recoveryCodes())) {
             $recoveryCodesMiddleware = (Features::confirmsPasswordRecoveryCode())
                 ? ['auth:'.config('fortify.guard'), 'password.confirm']
                 : ['auth:'.config('fortify.guard')];
@@ -123,7 +122,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
             Route::get('/settings/two-factor-recovery-codes', [RecoveryCodeController::class, 'index'])
                 ->middleware($recoveryCodesMiddleware)
                 ->name('two-factor-recovery-codes.get');
-            
+
             Route::post('/settings/two-factor-recovery-codes', [RecoveryCodeController::class, 'store'])
                 ->middleware($recoveryCodesMiddleware)
                 ->name('two-factor-recovery-codes.generate');
@@ -134,7 +133,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
         }
     }
 
-    if(Features::enabled(Features::passkeys())){
+    if (Features::enabled(Features::passkeys())) {
         // Passkey Authentication
         $limiterMiddleware = ($limiter = config('lara2fa.limiters.passkey-login')) !== null
             ? 'throttle:'.$limiter

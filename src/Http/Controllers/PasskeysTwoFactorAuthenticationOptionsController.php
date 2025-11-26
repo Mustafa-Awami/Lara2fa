@@ -2,29 +2,27 @@
 
 namespace MustafaAwami\Lara2fa\Http\Controllers;
 
-use Illuminate\Support\Str;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
-use MustafaAwami\Lara2fa\Models\Passkey;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Session;
-use Webauthn\PublicKeyCredentialSource;
-use Webauthn\PublicKeyCredentialRpEntity;
-use Webauthn\PublicKeyCredentialUserEntity;
-use Illuminate\Contracts\Auth\StatefulGuard;
-use Webauthn\AuthenticatorSelectionCriteria;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Fortify;
-use Webauthn\PublicKeyCredentialRequestOptions;
-use Webauthn\PublicKeyCredentialCreationOptions;
+use MustafaAwami\Lara2fa\Models\Passkey;
 use MustafaAwami\Lara2fa\Services\WebauthnJsonSerializer;
+use Webauthn\AuthenticatorSelectionCriteria;
+use Webauthn\PublicKeyCredentialCreationOptions;
+use Webauthn\PublicKeyCredentialRequestOptions;
+use Webauthn\PublicKeyCredentialRpEntity;
+use Webauthn\PublicKeyCredentialSource;
+use Webauthn\PublicKeyCredentialUserEntity;
 
 class PasskeysTwoFactorAuthenticationOptionsController extends Controller
 {
-
     /**
      * Get passkey registration options
-     * 
-     * @param  \Illuminate\Http\Request  $request
+     *
      * @return string
      */
     public function registerOptions(Request $request)
@@ -41,9 +39,9 @@ class PasskeysTwoFactorAuthenticationOptionsController extends Controller
 
         /** @var array<array-key,PublicKeyCredentialDescriptor> */
         $excludeCredentials = $request->user()->passkeys()->get()
-                            ->map(fn (Passkey $passkey) => $passkey->data)
-                            ->map(fn (PublicKeyCredentialSource $publicKeyCredentialSource) => $publicKeyCredentialSource->getPublicKeyCredentialDescriptor())
-                            ->toArray() ?? [];
+            ->map(fn (Passkey $passkey) => $passkey->data)
+            ->map(fn (PublicKeyCredentialSource $publicKeyCredentialSource) => $publicKeyCredentialSource->getPublicKeyCredentialDescriptor())
+            ->toArray() ?? [];
 
         $options = new PublicKeyCredentialCreationOptions(
             rp: new PublicKeyCredentialRpEntity(
@@ -74,8 +72,7 @@ class PasskeysTwoFactorAuthenticationOptionsController extends Controller
 
     /**
      * Get passkey authentication options
-     * 
-     * @param  \Illuminate\Http\Request  $request
+     *
      * @return string
      */
     public function authenticateOptions(Request $request)
@@ -84,17 +81,17 @@ class PasskeysTwoFactorAuthenticationOptionsController extends Controller
 
         $userId = null;
 
-        if ($request->filled('email') && $user = $userModel::where(Fortify::username(), $request->email)->first()) 
+        if ($request->filled('email') && $user = $userModel::where(Fortify::username(), $request->email)->first()) {
             $userId = $user->id;
-        else if ($request->session()->has('login.id'))
+        } elseif ($request->session()->has('login.id')) {
             $userId = $request->session()->get('login.id');
+        }
 
-        
         $allowedCredentials = Passkey::query()->where('user_id', $userId)
-                ->get()
-                ->map(fn (Passkey $passkey) => $passkey->data)
-                ->map(fn (PublicKeyCredentialSource $publicKeyCredentialSource) => $publicKeyCredentialSource->getPublicKeyCredentialDescriptor())
-                ->toArray() ?? [];
+            ->get()
+            ->map(fn (Passkey $passkey) => $passkey->data)
+            ->map(fn (PublicKeyCredentialSource $publicKeyCredentialSource) => $publicKeyCredentialSource->getPublicKeyCredentialDescriptor())
+            ->toArray() ?? [];
 
         $options = new PublicKeyCredentialRequestOptions(
             challenge: Str::random(),

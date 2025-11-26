@@ -3,8 +3,8 @@
 namespace MustafaAwami\Lara2fa\Services;
 
 use Carbon\Carbon;
-use MustafaAwami\Lara2fa\Lara2fa;
 use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider as EmailTwoFactorAuthenticationProviderContract;
+use MustafaAwami\Lara2fa\Lara2fa;
 
 class EmailTwoFactorAuthenticationProvider implements EmailTwoFactorAuthenticationProviderContract
 {
@@ -20,12 +20,13 @@ class EmailTwoFactorAuthenticationProvider implements EmailTwoFactorAuthenticati
 
     /**
      * Generate code expires date
-     * 
+     *
      * @return Carbon
      */
     public function generateExpiresAt()
     {
         $expireTimeWindow = Lara2fa::emailTwoFactorWindow();
+
         return now()->addMinutes($expireTimeWindow);
     }
 
@@ -44,7 +45,6 @@ class EmailTwoFactorAuthenticationProvider implements EmailTwoFactorAuthenticati
     /**
      * Check if the code expaired.
      *
-     * @param $codeExpiresAt
      * @return bool
      */
     public function isCodeExpired($codeExpiresAt)

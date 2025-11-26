@@ -2,14 +2,13 @@
 
 namespace MustafaAwami\Lara2fa\Tests;
 
-use PragmaRX\Google2FA\Google2FA;
-use MustafaAwami\Lara2fa\Tests\TestCase;
-use Orchestra\Testbench\Attributes\WithConfig;
 use App\Attributes\FortifyAuthenticationPipeline;
-use Orchestra\Testbench\Attributes\WithMigration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Orchestra\Testbench\Attributes\DefineEnvironment;
 use MustafaAwami\Lara2fa\Tests\Models\UserWithTwoFactor;
+use Orchestra\Testbench\Attributes\DefineEnvironment;
+use Orchestra\Testbench\Attributes\WithConfig;
+use Orchestra\Testbench\Attributes\WithMigration;
+use PragmaRX\Google2FA\Google2FA;
 
 #[WithMigration]
 #[WithConfig('auth.providers.users.model', UserWithTwoFactor::class)]
@@ -21,7 +20,7 @@ use MustafaAwami\Lara2fa\Tests\Models\UserWithTwoFactor;
 class AuthenticatedSessionControllerWithAuthenticatorAppTwoFactorTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     #[WithConfig('lara2fa-options.authenticator-app-two-factor-authentication', [
         'enabled' => true,
     ])]
@@ -138,11 +137,9 @@ class AuthenticatedSessionControllerWithAuthenticatorAppTwoFactorTest extends Te
         ]);
 
         $response->assertRedirect('/two-factor-challenge')
-                 ->assertSessionHas('login.id')
-                 ->assertSessionHasErrors(['code']);
+            ->assertSessionHas('login.id')
+            ->assertSessionHasErrors(['code']);
     }
-
-
 
     #[WithConfig('lara2fa.features', [])]
     public function test_user_can_authenticate_when_two_factor_challenge_is_disabled()
@@ -161,5 +158,4 @@ class AuthenticatedSessionControllerWithAuthenticatorAppTwoFactorTest extends Te
 
         $response->assertRedirect('/home');
     }
-
 }

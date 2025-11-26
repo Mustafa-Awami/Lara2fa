@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('credential_id');
             $table->json('data');
-            
+
             $table->timestamps();
         });
     }

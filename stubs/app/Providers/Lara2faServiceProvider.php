@@ -2,14 +2,13 @@
 
 namespace App\Providers;
 
-
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Laravel\Fortify\Fortify;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Laravel\Fortify\Fortify;
 
 class Lara2faServiceProvider extends ServiceProvider
 {
@@ -29,12 +28,12 @@ class Lara2faServiceProvider extends ServiceProvider
         RateLimiter::for('passkey-login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
 
-            return Limit::perMinute(5)->by($throttleKey)->response(function (Request $request,array $headers) {
+            return Limit::perMinute(5)->by($throttleKey)->response(function (Request $request, array $headers) {
 
                 $seconds = $headers['Retry-After'];
 
                 throw ValidationException::withMessages([
-                    Fortify::username() => [__('Too many attempts. Please try again after') . $seconds. __(' seconds')],
+                    Fortify::username() => [__('Too many attempts. Please try again after').$seconds.__(' seconds')],
                 ]);
             });
         });
@@ -43,12 +42,12 @@ class Lara2faServiceProvider extends ServiceProvider
 
             $throttleKey = $request->session()->get('login.id');
 
-            return Limit::perMinute(2)->by($throttleKey)->response(function (Request $request,array $headers) {
+            return Limit::perMinute(2)->by($throttleKey)->response(function (Request $request, array $headers) {
 
                 $seconds = $headers['Retry-After'];
 
                 throw ValidationException::withMessages([
-                    'attempts' => [__('Too many attempts. Please try again after ') . $seconds. __(' seconds')],
+                    'attempts' => [__('Too many attempts. Please try again after ').$seconds.__(' seconds')],
                 ])->errorBag('EmailTwoFactorAuthenticationNotification');
             });
         });
@@ -57,11 +56,11 @@ class Lara2faServiceProvider extends ServiceProvider
 
             $throttleKey = $request->session()->get('login.id');
 
-            return Limit::perMinute(5)->by($throttleKey)->response(function (Request $request,array $headers) {
+            return Limit::perMinute(5)->by($throttleKey)->response(function (Request $request, array $headers) {
                 $seconds = $headers['Retry-After'];
 
                 throw ValidationException::withMessages([
-                    'attempts' => [__('Too many attempts. Please try again after ') . $seconds. __(' seconds')],
+                    'attempts' => [__('Too many attempts. Please try again after ').$seconds.__(' seconds')],
                 ]);
             });
         });

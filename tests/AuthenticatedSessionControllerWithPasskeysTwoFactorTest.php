@@ -2,15 +2,14 @@
 
 namespace MustafaAwami\Lara2fa\Tests;
 
-use Symfony\Component\Uid\Uuid;
-use MustafaAwami\Lara2fa\Tests\TestCase;
-use ParagonIE\ConstantTime\Base64UrlSafe;
-use Orchestra\Testbench\Attributes\WithConfig;
 use App\Attributes\FortifyAuthenticationPipeline;
-use Orchestra\Testbench\Attributes\WithMigration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Orchestra\Testbench\Attributes\DefineEnvironment;
 use MustafaAwami\Lara2fa\Tests\Models\UserWithTwoFactor;
+use Orchestra\Testbench\Attributes\DefineEnvironment;
+use Orchestra\Testbench\Attributes\WithConfig;
+use Orchestra\Testbench\Attributes\WithMigration;
+use ParagonIE\ConstantTime\Base64UrlSafe;
+use Symfony\Component\Uid\Uuid;
 
 #[WithMigration]
 #[WithConfig('auth.providers.users.model', UserWithTwoFactor::class)]
@@ -22,7 +21,7 @@ use MustafaAwami\Lara2fa\Tests\Models\UserWithTwoFactor;
 class AuthenticatedSessionControllerWithPasskeysTwoFactorTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     #[WithConfig('lara2fa-options.passkeys', [
         'enabled' => true,
     ])]

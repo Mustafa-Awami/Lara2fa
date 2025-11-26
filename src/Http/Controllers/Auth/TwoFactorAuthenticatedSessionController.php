@@ -2,16 +2,16 @@
 
 namespace MustafaAwami\Lara2fa\Http\Controllers\Auth;
 
-use MustafaAwami\Lara2fa\Lara2fa;
-use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use MustafaAwami\Lara2fa\Events\RecoveryCodeReplaced;
+use Illuminate\Routing\Controller;
 use Laravel\Fortify\Contracts\TwoFactorChallengeViewResponse;
-use MustafaAwami\Lara2fa\Events\TwoFactorAuthenticationFailed;
 use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
+use MustafaAwami\Lara2fa\Events\RecoveryCodeReplaced;
+use MustafaAwami\Lara2fa\Events\TwoFactorAuthenticationFailed;
 use MustafaAwami\Lara2fa\Events\TwoFactorAuthenticationSuccessful;
 use MustafaAwami\Lara2fa\Http\Requests\Auth\TwoFactorLoginRequest;
+use MustafaAwami\Lara2fa\Lara2fa;
 
 class TwoFactorAuthenticatedSessionController extends Controller
 {
@@ -23,7 +23,6 @@ class TwoFactorAuthenticatedSessionController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
      * @return void
      */
     public function __construct(StatefulGuard $guard)
@@ -61,21 +60,26 @@ class TwoFactorAuthenticatedSessionController extends Controller
             event(new RecoveryCodeReplaced($user, $code));
         } elseif ($request->filled('email_code') & $request->hasValidEmailCode() == 'invalid') {
             event(new TwoFactorAuthenticationFailed($user));
+
             return app(FailedTwoFactorLoginResponse::class)->toResponse($request->merge(['email_code_error_message' => __('The provided email two-factor authentication code was invalid.')]));
         } elseif ($request->filled('email_code') & $request->hasValidEmailCode() == 'expaired') {
             event(new TwoFactorAuthenticationFailed($user));
+
             return app(FailedTwoFactorLoginResponse::class)->toResponse($request->merge(['email_code_error_message' => __('The provided email two-factor authentication code is expaired.')]));
         } elseif ($request->filled('code') & ! $request->hasValidCode()) {
             event(new TwoFactorAuthenticationFailed($user));
+
             return app(FailedTwoFactorLoginResponse::class)->toResponse($request);
         } elseif ($request->filled('recovery_code') & ! $request->validRecoveryCode()) {
             event(new TwoFactorAuthenticationFailed($user));
+
             return app(FailedTwoFactorLoginResponse::class)->toResponse($request);
-        } elseif (!$request->filled('code') & !$request->filled('email_code') & !$request->filled('recovery_code')) {
+        } elseif (! $request->filled('code') & ! $request->filled('email_code') & ! $request->filled('recovery_code')) {
             event(new TwoFactorAuthenticationFailed($user));
+
             return app(FailedTwoFactorLoginResponse::class)->toResponse($request);
         }
-        
+
         if ($request->filled('email_code')) {
             $user->resetEmailTwoFactorCode();
         }

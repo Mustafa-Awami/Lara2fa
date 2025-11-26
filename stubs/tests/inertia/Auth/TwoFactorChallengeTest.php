@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Auth;
 
-use Tests\TestCase;
 use App\Models\User;
-use MustafaAwami\Lara2fa\Lara2fa;
-use MustafaAwami\Lara2fa\Features;
-use Inertia\Testing\AssertableInertia as Assert;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
+use MustafaAwami\Lara2fa\Features;
+use MustafaAwami\Lara2fa\Lara2fa;
+use Tests\TestCase;
 
 class TwoFactorChallengeTest extends TestCase
 {

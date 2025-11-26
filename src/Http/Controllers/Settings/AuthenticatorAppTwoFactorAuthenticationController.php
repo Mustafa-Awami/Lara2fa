@@ -2,34 +2,31 @@
 
 namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Database\Eloquent\Model;
-use MustafaAwami\Lara2fa\Actions\DisableRecoveryCodes;
-use MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorEnabledResponse;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorDisabledResponse;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorConfirmedResponse;
-use MustafaAwami\Lara2fa\Actions\EnableAuthenticatorAppTwoFactorAuthentication;
 use MustafaAwami\Lara2fa\Actions\ConfirmAuthenticatorAppTwoFactorAuthentication;
 use MustafaAwami\Lara2fa\Actions\DisableAuthenticatorAppTwoFactorAuthentication;
+use MustafaAwami\Lara2fa\Actions\DisableRecoveryCodes;
+use MustafaAwami\Lara2fa\Actions\EnableAuthenticatorAppTwoFactorAuthentication;
+use MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes;
+use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorConfirmedResponse;
+use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorDisabledResponse;
+use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorEnabledResponse;
 
 class AuthenticatorAppTwoFactorAuthenticationController extends Controller
 {
     /**
      * Enable authenticator app two-factor authentication for the user.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\EnableAuthenticatorAppTwoFactorAuthentication  $enable
-     * @param  \MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes  $generateRecoveryCodes
      * @return \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorEnabledResponse
      */
     public function store(Request $request, EnableAuthenticatorAppTwoFactorAuthentication $enable, GenerateNewRecoveryCodes $generateRecoveryCodes)
     {
         $enable($request->user(), $request->boolean('force', false));
 
-        if ($request->user()->hasEnabledTwoFactorAuthentication() & !$request->user()->hasEnabledTwoFactorRecoveryCodes()) {
+        if ($request->user()->hasEnabledTwoFactorAuthentication() & ! $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
             $generateRecoveryCodes($request->user());
         }
 
@@ -39,16 +36,13 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
     /**
      * Confirm authenticator app two-factor authentication for the user.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\ConfirmAuthenticatorAppTwoFactorAuthentication  $confirm
-     * @param  \MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes  $generateRecoveryCodes
      * @return \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorConfirmedResponse
      */
     public function confirm(Request $request, ConfirmAuthenticatorAppTwoFactorAuthentication $confirm, GenerateNewRecoveryCodes $generateRecoveryCodes)
     {
         $confirm($request->user(), $request->input('code'));
 
-        if ($request->user()->hasEnabledTwoFactorAuthentication() & !$request->user()->hasEnabledTwoFactorRecoveryCodes()) {
+        if ($request->user()->hasEnabledTwoFactorAuthentication() & ! $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
             $generateRecoveryCodes($request->user());
         }
 
@@ -58,15 +52,13 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
     /**
      * Disable authenticator app two-factor authentication for the user.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\DisableAuthenticatorAppTwoFactorAuthentication  $disable
      * @return \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorDisabledResponse
      */
     public function destroy(Request $request, DisableAuthenticatorAppTwoFactorAuthentication $disable, DisableRecoveryCodes $disableRecoveryCodes)
     {
         $disable($request->user());
 
-        if (!$request->user()->hasEnabledTwoFactorAuthentication() & $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
+        if (! $request->user()->hasEnabledTwoFactorAuthentication() & $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
             $disableRecoveryCodes($request->user());
         }
 
@@ -76,7 +68,6 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
     /**
      * Get the SVG element for the user's two-factor authentication QR code.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function qrCode(Request $request)
@@ -94,7 +85,6 @@ class AuthenticatorAppTwoFactorAuthenticationController extends Controller
     /**
      * Get the current user's two-factor authentication setup / secret key.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function secretKey(Request $request)

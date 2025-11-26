@@ -2,14 +2,14 @@
 
 namespace MustafaAwami\Lara2fa\Http\Requests\Auth;
 
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider;
+use Illuminate\Support\Facades\Crypt;
 use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider;
+use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider;
+use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
 
 class TwoFactorLoginRequest extends FormRequest
 {
@@ -78,13 +78,14 @@ class TwoFactorLoginRequest extends FormRequest
             ! app(EmailTwoFactorAuthenticationProvider::class)->verify((Model::$encrypter ?? Crypt::getFacadeRoot())->decrypt($user->email_two_factor_code), $this->email_code)) {
 
             return 'invalid';
-        } elseif (empty($user->email_two_factor_code_expires_at) || 
-            app(EmailTwoFactorAuthenticationProvider::class)->isCodeExpired($user->email_two_factor_code_expires_at)){
+        } elseif (empty($user->email_two_factor_code_expires_at) ||
+            app(EmailTwoFactorAuthenticationProvider::class)->isCodeExpired($user->email_two_factor_code_expires_at)) {
 
             return 'expaired';
         }
 
         $this->session()->forget('login.id');
+
         return 'valid';
     }
 
@@ -136,9 +137,8 @@ class TwoFactorLoginRequest extends FormRequest
             return $this->challengedUser;
         }
 
-        
         $model = app(StatefulGuard::class)->getProvider()->getModel();
-        
+
         if (! $this->session()->has('login.id') ||
             ! $user = $model::find($this->session()->get('login.id'))) {
             throw new HttpResponseException(

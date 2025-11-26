@@ -9,9 +9,6 @@ use Laravel\Fortify\Contracts\RedirectsIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Events\TwoFactorAuthenticationChallenged;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\LoginRateLimiter;
-use MustafaAwami\Lara2fa\Traits\TwoFactorAuthenticatable;
-use MustafaAwami\Lara2fa\Features;
-use MustafaAwami\Lara2fa\Lara2fa;
 
 class RedirectIfTwoFactorAuthenticatable implements RedirectsIfTwoFactorAuthenticatable
 {
@@ -32,8 +29,6 @@ class RedirectIfTwoFactorAuthenticatable implements RedirectsIfTwoFactorAuthenti
     /**
      * Create a new controller instance.
      *
-     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
-     * @param  \Laravel\Fortify\LoginRateLimiter  $limiter
      * @return void
      */
     public function __construct(StatefulGuard $guard, LoginRateLimiter $limiter)

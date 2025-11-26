@@ -15,7 +15,7 @@ class FailedTwoFactorLoginResponse implements FailedTwoFactorLoginResponseContra
      */
     public function toResponse($request)
     {
-        if ($request->filled('email_code')){
+        if ($request->filled('email_code')) {
             [$key, $message] = ['email_code', $request->email_code_error_message];
         } elseif ($request->filled('recovery_code')) {
             [$key, $message] = ['recovery_code', __('The provided two-factor recovery code was invalid.')];

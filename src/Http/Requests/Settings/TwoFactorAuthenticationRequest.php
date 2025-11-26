@@ -2,8 +2,8 @@
 
 namespace MustafaAwami\Lara2fa\Http\Requests\Settings;
 
-use MustafaAwami\Lara2fa\Features;
 use Illuminate\Foundation\Http\FormRequest;
+use MustafaAwami\Lara2fa\Features;
 
 class TwoFactorAuthenticationRequest extends FormRequest
 {

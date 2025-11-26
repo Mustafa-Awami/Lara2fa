@@ -2,44 +2,44 @@
 
 namespace MustafaAwami\Lara2fa;
 
-use PragmaRX\Google2FA\Google2FA;
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Cache\Repository;
-use MustafaAwami\Lara2fa\Http\Responses\PasskeyCreatedResponse;
-use MustafaAwami\Lara2fa\Http\Responses\PasskeyDeletedResponse;
-use MustafaAwami\Lara2fa\Http\Responses\PasskeyUpdatedResponse;
-use MustafaAwami\Lara2fa\Http\Responses\PasskeyDisapledResponse;
+use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider as AuthenticatorAppTwoFactorAuthenticationProviderContract;
+use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorConfirmedResponse as AuthenticatorAppTwoFactorConfirmedResponseContract;
+use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorDisabledResponse as AuthenticatorAppTwoFactorDisabledResponseContract;
+use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorEnabledResponse as AuthenticatorAppTwoFactorEnabledResponseContract;
+use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider as EmailTwoFactorAuthenticationProviderContract;
+use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorConfirmedResponse as EmailTwoFactorConfirmedResponseContract;
+use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorDisabledResponse as EmailTwoFactorDisabledResponseContract;
+use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorEnabledResponse as EmailTwoFactorEnabledResponseContract;
+use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorNotifyResponse as EmailTwoFactorNotifyResponseContract;
+use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
+use MustafaAwami\Lara2fa\Contracts\PasskeyAuthenticatedResponse as PasskeyAuthenticatedResponseContract;
+use MustafaAwami\Lara2fa\Contracts\PasskeyCreatedResponse as PasskeyCreatedResponseContract;
+use MustafaAwami\Lara2fa\Contracts\PasskeyDeletedResponse as PasskeyDeletedResponseContract;
+use MustafaAwami\Lara2fa\Contracts\PasskeyDisapledResponse as PasskeyDisapledResponseContract;
+use MustafaAwami\Lara2fa\Contracts\PasskeyUpdatedResponse as PasskeyUpdatedResponseContract;
+use MustafaAwami\Lara2fa\Contracts\RecoveryCodesDisabledResponse as RecoveryCodesDisabledResponseContract;
+use MustafaAwami\Lara2fa\Contracts\RecoveryCodesGeneratedResponse as RecoveryCodesGeneratedResponseContract;
+use MustafaAwami\Lara2fa\Http\Responses\AuthenticatorAppTwoFactorConfirmedResponse;
+use MustafaAwami\Lara2fa\Http\Responses\AuthenticatorAppTwoFactorDisabledResponse;
+use MustafaAwami\Lara2fa\Http\Responses\AuthenticatorAppTwoFactorEnabledResponse;
+use MustafaAwami\Lara2fa\Http\Responses\EmailTwoFactorConfirmedResponse;
+use MustafaAwami\Lara2fa\Http\Responses\EmailTwoFactorDisabledResponse;
+use MustafaAwami\Lara2fa\Http\Responses\EmailTwoFactorEnabledResponse;
 use MustafaAwami\Lara2fa\Http\Responses\EmailTwoFactorNotifyResponse;
 use MustafaAwami\Lara2fa\Http\Responses\FailedTwoFactorLoginResponse;
 use MustafaAwami\Lara2fa\Http\Responses\PasskeyAuthenticatedResponse;
-use MustafaAwami\Lara2fa\Http\Responses\EmailTwoFactorEnabledResponse;
+use MustafaAwami\Lara2fa\Http\Responses\PasskeyCreatedResponse;
+use MustafaAwami\Lara2fa\Http\Responses\PasskeyDeletedResponse;
+use MustafaAwami\Lara2fa\Http\Responses\PasskeyDisapledResponse;
+use MustafaAwami\Lara2fa\Http\Responses\PasskeyUpdatedResponse;
 use MustafaAwami\Lara2fa\Http\Responses\RecoveryCodesDisabledResponse;
-use MustafaAwami\Lara2fa\Http\Responses\EmailTwoFactorDisabledResponse;
 use MustafaAwami\Lara2fa\Http\Responses\RecoveryCodesGeneratedResponse;
-use MustafaAwami\Lara2fa\Services\EmailTwoFactorAuthenticationProvider;
-use MustafaAwami\Lara2fa\Http\Responses\EmailTwoFactorConfirmedResponse;
-use MustafaAwami\Lara2fa\Http\Responses\AuthenticatorAppTwoFactorEnabledResponse;
-use MustafaAwami\Lara2fa\Http\Responses\AuthenticatorAppTwoFactorDisabledResponse;
 use MustafaAwami\Lara2fa\Services\AuthenticatorAppTwoFactorAuthenticationProvider;
-use MustafaAwami\Lara2fa\Http\Responses\AuthenticatorAppTwoFactorConfirmedResponse;
-use MustafaAwami\Lara2fa\Contracts\PasskeyCreatedResponse as PasskeyCreatedResponseContract;
-use MustafaAwami\Lara2fa\Contracts\PasskeyDeletedResponse as PasskeyDeletedResponseContract;
-use MustafaAwami\Lara2fa\Contracts\PasskeyUpdatedResponse as PasskeyUpdatedResponseContract;
-use MustafaAwami\Lara2fa\Contracts\PasskeyDisapledResponse as PasskeyDisapledResponseContract;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorNotifyResponse as EmailTwoFactorNotifyResponseContract;
-use MustafaAwami\Lara2fa\Contracts\PasskeyAuthenticatedResponse as PasskeyAuthenticatedResponseContract;
-use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorEnabledResponse as EmailTwoFactorEnabledResponseContract;
-use MustafaAwami\Lara2fa\Contracts\RecoveryCodesDisabledResponse as RecoveryCodesDisabledResponseContract;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorDisabledResponse as EmailTwoFactorDisabledResponseContract;
-use MustafaAwami\Lara2fa\Contracts\RecoveryCodesGeneratedResponse as RecoveryCodesGeneratedResponseContract;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorConfirmedResponse as EmailTwoFactorConfirmedResponseContract;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider as EmailTwoFactorAuthenticationProviderContract;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorEnabledResponse as AuthenticatorAppTwoFactorEnabledResponseContract;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorDisabledResponse as AuthenticatorAppTwoFactorDisabledResponseContract;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorConfirmedResponse as AuthenticatorAppTwoFactorConfirmedResponseContract;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider as AuthenticatorAppTwoFactorAuthenticationProviderContract;
+use MustafaAwami\Lara2fa\Services\EmailTwoFactorAuthenticationProvider;
+use PragmaRX\Google2FA\Google2FA;
 
 class Lara2faServiceProvider extends ServiceProvider
 {
@@ -56,7 +56,7 @@ class Lara2faServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
+
         $this->configurePublishing();
 
         $this->configureCommands();
@@ -69,23 +69,23 @@ class Lara2faServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function configurePublishing() {
+    protected function configurePublishing()
+    {
         if (! $this->app->runningInConsole()) {
             return;
         }
 
         // Publish the config file to the application's config directory
         $this->publishes([
-            __DIR__ . '/../config/lara2fa.php' => config_path('lara2fa.php'),
+            __DIR__.'/../config/lara2fa.php' => config_path('lara2fa.php'),
         ], 'lara2fa-config');
 
-
         $this->publishes([
-            __DIR__.'/../database/migrations/2024_07_29_090549_add_two_factor_email_columns_to_users_table.php' => database_path('migrations/2024_07_29_090549_add_two_factor_email_columns_to_users_table.php')
+            __DIR__.'/../database/migrations/2024_07_29_090549_add_two_factor_email_columns_to_users_table.php' => database_path('migrations/2024_07_29_090549_add_two_factor_email_columns_to_users_table.php'),
         ], 'lara2fa-two-factor-email-migrations');
 
         $this->publishes([
-            __DIR__.'/../database/migrations/2025_09_10_081543_create_passkeys_table.php' => database_path('migrations/2025_09_10_081543_create_passkeys_table.php')
+            __DIR__.'/../database/migrations/2025_09_10_081543_create_passkeys_table.php' => database_path('migrations/2025_09_10_081543_create_passkeys_table.php'),
         ], 'lara2fa-passkeys-migrations');
 
         // Publish the route file to the application's routes directory
@@ -94,10 +94,9 @@ class Lara2faServiceProvider extends ServiceProvider
         ], 'lara2fa-routes');
     }
 
-    protected function registerTwoFactorResponseBinding() 
+    protected function registerTwoFactorResponseBinding()
     {
-        $this->app->singleton(AuthenticatorAppTwoFactorAuthenticationProviderContract::class, function ($app)
-        {
+        $this->app->singleton(AuthenticatorAppTwoFactorAuthenticationProviderContract::class, function ($app) {
             return new AuthenticatorAppTwoFactorAuthenticationProvider(
                 $app->make(Google2FA::class),
                 $app->make(Repository::class)
@@ -156,6 +155,6 @@ class Lara2faServiceProvider extends ServiceProvider
                 $this->loadRoutesFrom(__DIR__.'/../routes/lara2fa.php');
             });
         }
-        
+
     }
 }

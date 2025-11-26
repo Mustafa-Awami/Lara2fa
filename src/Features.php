@@ -7,14 +7,13 @@ class Features
     /**
      * Determine if the given feature is enabled.
      *
-     * @param  string  $feature
      * @return bool
      */
     public static function enabled(string $feature)
     {
-        return in_array($feature, config('lara2fa.features', []))  &&
+        return in_array($feature, config('lara2fa.features', [])) &&
                 (
-                    array_key_exists("enable", config("lara2fa-options.{$feature}", [])) ? 
+                    array_key_exists('enable', config("lara2fa-options.{$feature}", [])) ?
                     config("lara2fa-options.{$feature}.enable") === true :
                     true
                 );
@@ -23,8 +22,6 @@ class Features
     /**
      * Determine if the feature is enabled and has a given option enabled.
      *
-     * @param  string  $feature
-     * @param  string  $option
      * @return bool
      */
     public static function optionEnabled(string $feature, string $option)
@@ -36,7 +33,6 @@ class Features
     /**
      * Enable the authenticator app two-factor authentication feature.
      *
-     * @param  array  $options
      * @return string
      */
     public static function authenticatorAppTwoFactorAuthentication(array $options = [])
@@ -60,11 +56,9 @@ class Features
                Features::optionEnabled(Features::authenticatorAppTwoFactorAuthentication(), 'confirmPassword');
     }
 
-    
     /**
      * Enable the email two-factor authentication feature.
      *
-     * @param  array  $options
      * @return string
      */
     public static function emailTwoFactorAuthentication(array $options = [])
@@ -91,7 +85,6 @@ class Features
     /**
      * Enable the recoveryCodes two-factor authentication feature.
      *
-     * @param  array  $options
      * @return string
      */
     public static function recoveryCodes(array $options = [])
@@ -112,7 +105,6 @@ class Features
     /**
      * Enable the recoveryCodes two-factor authentication feature.
      *
-     * @param  array  $options
      * @return string
      */
     public static function passkeys(array $options = [])
@@ -137,10 +129,10 @@ class Features
      */
     public static function canManagetwoFactorAuthentication()
     {
-        return static::enabled(static::authenticatorAppTwoFactorAuthentication()) || 
+        return static::enabled(static::authenticatorAppTwoFactorAuthentication()) ||
                 static::enabled(static::emailTwoFactorAuthentication()) ||
                 static::enabled(static::passkeys());
-        
+
     }
 
     /**
@@ -158,7 +150,8 @@ class Features
      *
      * @return bool
      */
-    public static function recoveryCodesRequireTwoFactorAuthenticationEnabled() {
+    public static function recoveryCodesRequireTwoFactorAuthenticationEnabled()
+    {
         return static::optionEnabled(static::recoveryCodes(), 'requireTwoFactorAuthenticationEnabled');
     }
 }

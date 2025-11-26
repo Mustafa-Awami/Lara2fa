@@ -2,23 +2,23 @@
 
 namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
 
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\StatefulGuard;
-use MustafaAwami\Lara2fa\Actions\DisableRecoveryCodes;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorNotifyResponse;
-use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorEnabledResponse;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorDisabledResponse;
-use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorConfirmedResponse;
-use MustafaAwami\Lara2fa\Actions\EnableEmailTwoFactorAuthentication;
 use MustafaAwami\Lara2fa\Actions\ConfirmEmailTwoFactorAuthentication;
 use MustafaAwami\Lara2fa\Actions\DisableEmailTwoFactorAuthentication;
+use MustafaAwami\Lara2fa\Actions\DisableRecoveryCodes;
+use MustafaAwami\Lara2fa\Actions\EnableEmailTwoFactorAuthentication;
+use MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes;
 use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider;
+use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorConfirmedResponse;
+use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorDisabledResponse;
+use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorEnabledResponse;
+use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorNotifyResponse;
+use MustafaAwami\Lara2fa\Contracts\FailedTwoFactorLoginResponse;
 
 class EmailTwoFactorAuthenticationController extends Controller
 {
@@ -30,7 +30,6 @@ class EmailTwoFactorAuthenticationController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
      * @return void
      */
     public function __construct(StatefulGuard $guard)
@@ -41,16 +40,13 @@ class EmailTwoFactorAuthenticationController extends Controller
     /**
      * Enable email two-factor authentication for the user.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\EnableEmailTwoFactorAuthentication  $enable
-     * @param  \MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes  $generateRecoveryCodes
      * @return \MustafaAwami\Lara2fa\Contracts\EmailTwoFactorEnabledResponse
      */
     public function store(Request $request, EnableEmailTwoFactorAuthentication $enable, GenerateNewRecoveryCodes $generateRecoveryCodes)
     {
         $enable($request->user(), $request->boolean('force', false));
 
-        if ($request->user()->hasEnabledTwoFactorAuthentication() & !$request->user()->hasEnabledTwoFactorRecoveryCodes()) {
+        if ($request->user()->hasEnabledTwoFactorAuthentication() & ! $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
             $generateRecoveryCodes($request->user());
         }
 
@@ -60,16 +56,13 @@ class EmailTwoFactorAuthenticationController extends Controller
     /**
      * Confirm email two-factor authentication for the user.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\ConfirmEmailTwoFactorAuthentication  $confirm
-     * @param  \MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes  $generateRecoveryCodes
      * @return \MustafaAwami\Lara2fa\Contracts\EmailTwoFactorConfirmedResponse
      */
     public function confirm(Request $request, ConfirmEmailTwoFactorAuthentication $confirm, GenerateNewRecoveryCodes $generateRecoveryCodes)
     {
         $confirm($request->user(), $request->input('code'));
 
-        if ($request->user()->hasEnabledTwoFactorAuthentication() & !$request->user()->hasEnabledTwoFactorRecoveryCodes()) {
+        if ($request->user()->hasEnabledTwoFactorAuthentication() & ! $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
             $generateRecoveryCodes($request->user());
         }
 
@@ -79,15 +72,13 @@ class EmailTwoFactorAuthenticationController extends Controller
     /**
      * Disable email two-factor authentication for the user.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\DisableEmailTwoFactorAuthentication  $disable
      * @return \MustafaAwami\Lara2fa\Contracts\EmailTwoFactorDisabledResponse
      */
     public function destroy(Request $request, DisableEmailTwoFactorAuthentication $disable, DisableRecoveryCodes $disableRecoveryCodes)
     {
         $disable($request->user());
 
-        if (!$request->user()->hasEnabledTwoFactorAuthentication() & $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
+        if (! $request->user()->hasEnabledTwoFactorAuthentication() & $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
             $disableRecoveryCodes($request->user());
         }
 
@@ -96,8 +87,7 @@ class EmailTwoFactorAuthenticationController extends Controller
 
     /**
      * Send a new email two-factor authentication code.
-     * 
-     * @param  \Illuminate\Http\Request  $request
+     *
      * @return \MustafaAwami\Lara2fa\Contracts\EmailTwoFactorDisabledResponse
      */
     public function notify(Request $request)

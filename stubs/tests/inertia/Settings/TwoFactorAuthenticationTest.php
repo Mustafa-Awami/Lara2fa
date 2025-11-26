@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Settings;
 
-use Tests\TestCase;
 use App\Models\User;
-use MustafaAwami\Lara2fa\Features;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
+use MustafaAwami\Lara2fa\Features;
 use MustafaAwami\Lara2fa\Lara2fa;
+use Tests\TestCase;
 
 class TwoFactorAuthenticationTest extends TestCase
 {
@@ -24,7 +24,7 @@ class TwoFactorAuthenticationTest extends TestCase
         $this->actingAs($user)
             ->get(route('two-factor.show'))
             ->assertInertia(fn (Assert $page) => $page
-                ->component(Lara2fa::getView("two-factor-settings"))
+                ->component(Lara2fa::getView('two-factor-settings'))
             );
     }
 

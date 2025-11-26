@@ -7,7 +7,6 @@ interface AuthenticatorAppTwoFactorAuthenticationProvider
     /**
      * Generate a new secret key.
      *
-     * @param  int  $secretLength
      * @return string
      */
     public function generateSecretKey(int $secretLength = 16);

@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Auth;
 
-use Tests\TestCase;
 use App\Models\User;
-use MustafaAwami\Lara2fa\Features;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\RateLimiter;
+use MustafaAwami\Lara2fa\Features;
+use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {

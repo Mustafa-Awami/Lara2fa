@@ -40,19 +40,18 @@ class emailTwoFactorCode extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         $expireTimeWindow = Lara2fa::emailTwoFactorWindow();
-        
+
         /**
          * @var MailMessage
          */
         $emailMessage = (new MailMessage);
 
         $emailMessage->line('Your two-factor code is '.$this->code);
-        if($this->actionUrl){
+        if ($this->actionUrl) {
             $emailMessage->action('Verify Here', $this->actionUrl);
         }
         $emailMessage->line('The code will expire in '.$expireTimeWindow.' minutes')
-                    ->line("If you didn't make this request, ignore this email.");
-
+            ->line("If you didn't make this request, ignore this email.");
 
         return $emailMessage;
     }

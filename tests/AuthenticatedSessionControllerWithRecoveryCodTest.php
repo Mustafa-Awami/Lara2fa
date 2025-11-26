@@ -2,14 +2,13 @@
 
 namespace MustafaAwami\Lara2fa\Tests;
 
-use Illuminate\Support\Facades\Auth;
-use MustafaAwami\Lara2fa\Tests\TestCase;
-use Orchestra\Testbench\Attributes\WithConfig;
 use App\Attributes\FortifyAuthenticationPipeline;
-use Orchestra\Testbench\Attributes\WithMigration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Orchestra\Testbench\Attributes\DefineEnvironment;
+use Illuminate\Support\Facades\Auth;
 use MustafaAwami\Lara2fa\Tests\Models\UserWithTwoFactor;
+use Orchestra\Testbench\Attributes\DefineEnvironment;
+use Orchestra\Testbench\Attributes\WithConfig;
+use Orchestra\Testbench\Attributes\WithMigration;
 
 #[WithMigration]
 #[WithConfig('auth.providers.users.model', UserWithTwoFactor::class)]
@@ -22,7 +21,7 @@ use MustafaAwami\Lara2fa\Tests\Models\UserWithTwoFactor;
 class AuthenticatedSessionControllerWithRecoveryCodTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     #[WithConfig('lara2fa-options.recovery-codes', [
         'enabled' => true,
         'requireTwoFactorAuthenticationEnabled' => true,
@@ -43,7 +42,6 @@ class AuthenticatedSessionControllerWithRecoveryCodTest extends TestCase
         ])->withoutExceptionHandling()->post('/two-factor-challenge', [
             'recovery_code' => 'valid-code',
         ]);
-
 
         $response->assertRedirect('/home')
             ->assertSessionMissing('login.id');
@@ -72,5 +70,4 @@ class AuthenticatedSessionControllerWithRecoveryCodTest extends TestCase
             ->assertSessionHasErrors(['recovery_code']);
         $this->assertNull(Auth::getUser());
     }
-
 }

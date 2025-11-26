@@ -4,8 +4,8 @@ namespace MustafaAwami\Lara2fa\Actions;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
-use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider;
 use Illuminate\Validation\ValidationException;
+use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider;
 use MustafaAwami\Lara2fa\Events\AuthenticatorAppTwoFactorAuthenticationConfirmed;
 
 class ConfirmAuthenticatorAppTwoFactorAuthentication
@@ -20,7 +20,6 @@ class ConfirmAuthenticatorAppTwoFactorAuthentication
     /**
      * Create a new action instance.
      *
-     * @param  \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider  $provider
      * @return void
      */
     public function __construct(AuthenticatorAppTwoFactorAuthenticationProvider $provider)

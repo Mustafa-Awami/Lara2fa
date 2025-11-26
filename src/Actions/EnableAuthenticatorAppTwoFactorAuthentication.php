@@ -19,7 +19,6 @@ class EnableAuthenticatorAppTwoFactorAuthentication
     /**
      * Create a new action instance.
      *
-     * @param  \MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider  $provider
      * @return void
      */
     public function __construct(AuthenticatorAppTwoFactorAuthenticationProvider $provider)

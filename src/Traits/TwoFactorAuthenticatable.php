@@ -2,21 +2,21 @@
 
 namespace MustafaAwami\Lara2fa\Traits;
 
-use BaconQrCode\Writer;
-use MustafaAwami\Lara2fa\Features;
 use BaconQrCode\Renderer\Color\Rgb;
-use MustafaAwami\Lara2fa\Models\Passkey;
-use Illuminate\Support\Facades\Crypt;
-use BaconQrCode\Renderer\ImageRenderer;
-use Illuminate\Database\Eloquent\Model;
-use MustafaAwami\Lara2fa\Services\RecoveryCode;
-use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Crypt;
 use Laravel\Fortify\Fortify;
-use MustafaAwami\Lara2fa\Notifications\emailTwoFactorCode;
 use MustafaAwami\Lara2fa\Contracts\AuthenticatorAppTwoFactorAuthenticationProvider;
+use MustafaAwami\Lara2fa\Features;
+use MustafaAwami\Lara2fa\Models\Passkey;
+use MustafaAwami\Lara2fa\Notifications\emailTwoFactorCode;
+use MustafaAwami\Lara2fa\Services\RecoveryCode;
 
 trait TwoFactorAuthenticatable
 {
@@ -41,7 +41,7 @@ trait TwoFactorAuthenticatable
     {
         if (Features::confirmsAuthenticatorAppTwoFactorAuthentication()) {
 
-            return (! is_null($this->two_factor_secret) && ! is_null($this->two_factor_confirmed_at));
+            return ! is_null($this->two_factor_secret) && ! is_null($this->two_factor_confirmed_at);
         }
 
         return ! is_null($this->two_factor_secret);
@@ -56,7 +56,7 @@ trait TwoFactorAuthenticatable
     {
         if (Features::confirmsEmailTwoFactorAuthentication()) {
 
-            return (! is_null($this->email_two_factor_enabled_at) && ! is_null($this->email_two_factor_confirmed_at));
+            return ! is_null($this->email_two_factor_enabled_at) && ! is_null($this->email_two_factor_confirmed_at);
         }
 
         return ! is_null($this->email_two_factor_enabled_at);
@@ -71,8 +71,6 @@ trait TwoFactorAuthenticatable
     {
         return ! is_null($this->two_factor_recovery_codes);
     }
-
-
 
     /**
      * Test if the user can register a new passkey.
@@ -104,12 +102,6 @@ trait TwoFactorAuthenticatable
     {
         return Passkey::where('user_id', $this->id)->count();
     }
-
-
-
-
-
-
 
     /**
      * Get the user's two-factor authentication recovery codes.
@@ -193,12 +185,12 @@ trait TwoFactorAuthenticatable
     public function passkeysCollection()
     {
         return $this->passkeys()
-                            ->get()
-                            ->map(fn ($key) => [
-                                'id' => $key->id,
-                                'name' => $key->name,
-                                'created_at' => $key->created_at->diffForHumans(),
-                                'updated_at' => $key->updated_at->diffForHumans(),
-                            ]);
+            ->get()
+            ->map(fn ($key) => [
+                'id' => $key->id,
+                'name' => $key->name,
+                'created_at' => $key->created_at->diffForHumans(),
+                'updated_at' => $key->updated_at->diffForHumans(),
+            ]);
     }
 }

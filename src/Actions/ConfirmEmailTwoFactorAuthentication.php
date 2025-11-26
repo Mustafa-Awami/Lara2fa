@@ -2,11 +2,11 @@
 
 namespace MustafaAwami\Lara2fa\Actions;
 
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\ValidationException;
-use MustafaAwami\Lara2fa\Events\EmailTwoFactorAuthenticationConfirmed;
 use MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider;
+use MustafaAwami\Lara2fa\Events\EmailTwoFactorAuthenticationConfirmed;
 
 class ConfirmEmailTwoFactorAuthentication
 {
@@ -20,7 +20,6 @@ class ConfirmEmailTwoFactorAuthentication
     /**
      * Create a new action instance.
      *
-     * @param  \MustafaAwami\Lara2fa\Contracts\EmailTwoFactorAuthenticationProvider  $provider
      * @return void
      */
     public function __construct(EmailTwoFactorAuthenticationProvider $provider)
@@ -43,8 +42,8 @@ class ConfirmEmailTwoFactorAuthentication
             throw ValidationException::withMessages([
                 'code' => [__('The provided two-factor authentication code was invalid.')],
             ])->errorBag('confirmEmailTwoFactorAuthentication');
-        } elseif (empty($user->email_two_factor_code_expires_at) || 
-            $this->provider->isCodeExpired($user->email_two_factor_code_expires_at)){
+        } elseif (empty($user->email_two_factor_code_expires_at) ||
+            $this->provider->isCodeExpired($user->email_two_factor_code_expires_at)) {
             throw ValidationException::withMessages([
                 'code' => [__('The provided code is expaired.')],
             ])->errorBag('confirmEmailTwoFactorAuthentication');

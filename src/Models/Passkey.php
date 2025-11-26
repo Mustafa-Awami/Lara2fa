@@ -2,14 +2,13 @@
 
 namespace MustafaAwami\Lara2fa\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
 use MustafaAwami\Lara2fa\Services\WebauthnJsonSerializer;
 use Webauthn\PublicKeyCredentialSource;
 
 class Passkey extends Model
 {
-
     /**
      * The attributes that are mass assignable.
      *

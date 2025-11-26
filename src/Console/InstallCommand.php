@@ -3,13 +3,13 @@
 namespace MustafaAwami\Lara2fa\Console;
 
 use Exception;
-use RuntimeException;
 use Illuminate\Console\Command;
-use Symfony\Component\Process\Process;
-use Illuminate\Support\ServiceProvider;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
+use Illuminate\Support\ServiceProvider;
 use MustafaAwami\Lara2fa\Services\StackDetector;
+use RuntimeException;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Process\Process;
 
 #[AsCommand(name: 'lara2fa:install')]
 class InstallCommand extends Command implements PromptsForMissingInput
@@ -54,7 +54,7 @@ class InstallCommand extends Command implements PromptsForMissingInput
         $selectedStack = $this->choice(
             'Which stack are you using?',
             $this->stacks,
-            in_array(StackDetector::detectFrontendStack(), $this->stacks) 
+            in_array(StackDetector::detectFrontendStack(), $this->stacks)
                 ? StackDetector::detectFrontendStack()
                 : null,
             null,
@@ -81,14 +81,14 @@ class InstallCommand extends Command implements PromptsForMissingInput
             'copy('.__DIR__.'/../../stubs/tests/inertia/Settings/TwoFactorAuthenticationTest.php)' => base_path('tests/Feature/Settings/TwoFactorAuthenticationTest.php'),
         ];
 
-        if ($selectedStack === "react") { 
+        if ($selectedStack === 'react') {
             $this->filesThatNeedToBePublished = array_merge($this->filesThatNeedToBePublished, [
                 'copy('.__DIR__.'/../../stubs/inertia/react/resources/js/pages/settings/two-factor.tsx)' => resource_path('js/pages/settings/two-factor.tsx'),
                 'copy('.__DIR__.'/../../stubs/inertia/react/resources/js/pages/auth/login.tsx)' => resource_path('js/pages/auth/login.tsx'),
                 'copy('.__DIR__.'/../../stubs/inertia/react/resources/js/pages/auth/two-factor-challenge.tsx)' => resource_path('js/pages/auth/two-factor-challenge.tsx'),
                 'copy('.__DIR__.'/../../stubs/inertia/react/resources/js/components/confirm-password-dialog.tsx)' => resource_path('js/components/confirm-password-dialog.tsx'),
             ]);
-        } elseif ($selectedStack === "vue") {
+        } elseif ($selectedStack === 'vue') {
             $this->filesThatNeedToBePublished = array_merge($this->filesThatNeedToBePublished, [
                 'copy('.__DIR__.'/../../stubs/inertia/vue/resources/js/pages/settings/TwoFactor.vue)' => resource_path('js/pages/settings/TwoFactor.vue'),
                 'copy('.__DIR__.'/../../stubs/inertia/vue/resources/js/components/TwoFactorAuthenticatorApp.vue)' => resource_path('js/components/TwoFactorAuthenticatorApp.vue'),
@@ -109,8 +109,9 @@ class InstallCommand extends Command implements PromptsForMissingInput
                 $this->line(" - {$filePath}");
             }
 
-            if (!$this->confirm('Do you want to continue?', $default = true)) {
+            if (! $this->confirm('Do you want to continue?', $default = true)) {
                 $this->error('Installation aborted.');
+
                 return Command::FAILURE;
             }
         }
@@ -142,23 +143,23 @@ class InstallCommand extends Command implements PromptsForMissingInput
         }
 
         // Install other NPM packages...
-        if ($selectedStack === "react") {
+        if ($selectedStack === 'react') {
             $this->installNodePackages([
                 '@simplewebauthn/browser' => '^13.1.2',
             ]);
-        } elseif ($selectedStack === "vue") {
+        } elseif ($selectedStack === 'vue') {
             $this->installNodePackages([
                 '@simplewebauthn/browser' => '^13.1.2',
-                '@headlessui/vue' => '^1.7.23'
+                '@headlessui/vue' => '^1.7.23',
             ]);
         }
 
-        $this->replaceInFile("'stack' => 'react'", "'stack' => '" . $selectedStack . "'",config_path('lara2fa.php'));
+        $this->replaceInFile("'stack' => 'react'", "'stack' => '".$selectedStack."'", config_path('lara2fa.php'));
 
         $this->newLine();
         $this->info('✅ Lara2FA installed successfully!');
-        $this->info('Enabled methods: ' . implode(', ', $selectedChoices));
-        
+        $this->info('Enabled methods: '.implode(', ', $selectedChoices));
+
     }
 
     /**
@@ -200,12 +201,12 @@ class InstallCommand extends Command implements PromptsForMissingInput
         file_put_contents($file, $updated);
     }
 
-    function appendLineToWebFile(?string $filePath, string $lineToAdd = ""): void
+    public function appendLineToWebFile(?string $filePath, string $lineToAdd = ''): void
     {
         // Default path to routes/web.php
         $file = $filePath;
 
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             throw new RuntimeException("File not found: {$file}");
         }
 
@@ -213,7 +214,7 @@ class InstallCommand extends Command implements PromptsForMissingInput
         $content = trim($content);
 
         if (strpos($content, $lineToAdd) === false) {
-            $content .= PHP_EOL . $lineToAdd . PHP_EOL;
+            $content .= PHP_EOL.$lineToAdd.PHP_EOL;
             file_put_contents($file, $content);
         }
     }
@@ -234,32 +235,34 @@ class InstallCommand extends Command implements PromptsForMissingInput
 
     protected function installNodePackages(array $newPackagesArray, bool $runBuild = false)
     {
-        $this->updateNodePackages(function ($packages) use($newPackagesArray) {
+        $this->updateNodePackages(function ($packages) use ($newPackagesArray) {
             return $newPackagesArray + $packages;
         });
 
         if (file_exists(base_path('pnpm-lock.yaml'))) {
-            if ($runBuild)
+            if ($runBuild) {
                 $this->runCommands(['pnpm install', 'pnpm run build']);
-            else
+            } else {
                 $this->runCommands(['pnpm install']);
+            }
         } elseif (file_exists(base_path('yarn.lock'))) {
-            if ($runBuild)
+            if ($runBuild) {
                 $this->runCommands(['yarn install', 'yarn run build']);
-            else
+            } else {
                 $this->runCommands(['yarn install']);
+            }
         } else {
-            if ($runBuild)
+            if ($runBuild) {
                 $this->runCommands(['npm install', 'npm run build']);
-            else
+            } else {
                 $this->runCommands(['npm install']);
+            }
         }
     }
 
     /**
      * Update the "package.json" file.
      *
-     * @param  callable  $callback
      * @param  bool  $dev
      * @return void
      */
@@ -311,8 +314,6 @@ class InstallCommand extends Command implements PromptsForMissingInput
 
     /**
      * Check if any of the files that need to be published already exist.
-     *
-     * @return bool
      */
     protected function filesWillBeOverwritten(): bool
     {

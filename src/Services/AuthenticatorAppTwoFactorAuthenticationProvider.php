@@ -26,8 +26,6 @@ class AuthenticatorAppTwoFactorAuthenticationProvider implements AuthenticatorAp
     /**
      * Create a new two-factor authentication provider instance.
      *
-     * @param  \PragmaRX\Google2FA\Google2FA  $engine
-     * @param  \Illuminate\Contracts\Cache\Repository|null  $cache
      * @return void
      */
     public function __construct(Google2FA $engine, ?Repository $cache = null)
@@ -39,7 +37,6 @@ class AuthenticatorAppTwoFactorAuthenticationProvider implements AuthenticatorAp
     /**
      * Generate a new secret key.
      *
-     * @param  int  $secretLength
      * @return string
      */
     public function generateSecretKey(int $secretLength = 16)

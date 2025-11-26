@@ -2,22 +2,22 @@
 
 namespace MustafaAwami\Lara2fa\Services;
 
-use Webauthn\Denormalizer\WebauthnSerializerFactory;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
+use Webauthn\Denormalizer\WebauthnSerializerFactory;
 
 class WebauthnJsonSerializer
 {
-
     public static function serialize($data): string
     {
         return (new WebauthnSerializerFactory(AttestationStatementSupportManager::create()))
             ->create()
-            ->serialize($data ,'json');
+            ->serialize($data, 'json');
     }
 
     /**
      * @template TReturn
-     * @param class-string<TReturn> $type
+     *
+     * @param  class-string<TReturn>  $type
      * @return TReturn
      */
     public static function deserialize(string $json, string $type)

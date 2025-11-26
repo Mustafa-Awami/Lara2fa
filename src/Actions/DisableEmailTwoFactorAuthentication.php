@@ -2,8 +2,8 @@
 
 namespace MustafaAwami\Lara2fa\Actions;
 
-use MustafaAwami\Lara2fa\Features;
 use MustafaAwami\Lara2fa\Events\EmailTwoFactorAuthenticationDisabled;
+use MustafaAwami\Lara2fa\Features;
 
 class DisableEmailTwoFactorAuthentication
 {

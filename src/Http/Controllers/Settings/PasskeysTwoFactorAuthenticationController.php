@@ -3,57 +3,52 @@
 namespace MustafaAwami\Lara2fa\Http\Controllers\Settings;
 
 use Illuminate\Http\Request;
-use Webauthn\PublicKeyCredential;
-use MustafaAwami\Lara2fa\Models\Passkey;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Webauthn\AuthenticatorAssertionResponse;
 use Illuminate\Validation\ValidationException;
-use Webauthn\AuthenticatorAttestationResponse;
 use MustafaAwami\Lara2fa\Actions\DisableRecoveryCodes;
-use MustafaAwami\Lara2fa\Services\WebauthnJsonSerializer;
 use MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes;
+use MustafaAwami\Lara2fa\Contracts\PasskeyAuthenticatedResponse;
 use MustafaAwami\Lara2fa\Contracts\PasskeyCreatedResponse;
 use MustafaAwami\Lara2fa\Contracts\PasskeyDeletedResponse;
-use MustafaAwami\Lara2fa\Contracts\PasskeyUpdatedResponse;
-use Webauthn\AuthenticatorAssertionResponseValidator;
-use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
 use MustafaAwami\Lara2fa\Contracts\PasskeyDisapledResponse;
-use Webauthn\AuthenticatorAttestationResponseValidator;
-use MustafaAwami\Lara2fa\Contracts\PasskeyAuthenticatedResponse;
+use MustafaAwami\Lara2fa\Contracts\PasskeyUpdatedResponse;
 use MustafaAwami\Lara2fa\Events\PasskeyCreated;
-use MustafaAwami\Lara2fa\Events\PasskeyUpdated;
 use MustafaAwami\Lara2fa\Events\PasskeyDeleted;
 use MustafaAwami\Lara2fa\Events\PasskeyDisabled;
+use MustafaAwami\Lara2fa\Events\PasskeyUpdated;
+use MustafaAwami\Lara2fa\Models\Passkey;
+use MustafaAwami\Lara2fa\Services\WebauthnJsonSerializer;
+use Webauthn\AuthenticatorAssertionResponse;
+use Webauthn\AuthenticatorAssertionResponseValidator;
+use Webauthn\AuthenticatorAttestationResponse;
+use Webauthn\AuthenticatorAttestationResponseValidator;
+use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
+use Webauthn\PublicKeyCredential;
 
 class PasskeysTwoFactorAuthenticationController extends Controller
 {
-
     /**
      * Get the user passkeys.
-     *
-     * @param  \Illuminate\Http\Request  $request
      */
     public function index(Request $request)
     {
         return response()->json([
-            'passkeys' => $request->user()->passkeysCollection()
+            'passkeys' => $request->user()->passkeysCollection(),
         ]);
     }
 
     /**
      * Create a new passkey for the user.
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Actions\GenerateNewRecoveryCodes  $generateRecoveryCodes
+     *
      * @return \MustafaAwami\Lara2fa\Contracts\PasskeyCreatedResponse
      */
     public function store(Request $request, GenerateNewRecoveryCodes $generateRecoveryCodes)
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'passkey' => ['required', 'json']
+            'passkey' => ['required', 'json'],
         ]);
 
         if (! $request->user()->canRegisterPasskey()) {
@@ -66,13 +61,13 @@ class PasskeysTwoFactorAuthenticationController extends Controller
 
         if (! $publicKeyCredential->response instanceof AuthenticatorAttestationResponse) {
             throw ValidationException::withMessages([
-                'name' => "Passkey registration failed"
+                'name' => 'Passkey registration failed',
             ])->errorBag('createPasskey');
         }
 
         try {
             $publicKeyCredentialSource = AuthenticatorAttestationResponseValidator::create(
-                (new CeremonyStepManagerFactory())->creationCeremony()
+                (new CeremonyStepManagerFactory)->creationCeremony()
             )->check(
                 authenticatorAttestationResponse: $publicKeyCredential->response,
                 publicKeyCredentialCreationOptions: Session::get('passkey-registration-options'),
@@ -80,21 +75,21 @@ class PasskeysTwoFactorAuthenticationController extends Controller
             );
         } catch (\Throwable $th) {
             throw ValidationException::withMessages([
-                'name' => $th->getMessage()
+                'name' => $th->getMessage(),
             ])->errorBag('createPasskey');
         }
 
         $publicKeyCredentialSourceSerialized = json_decode(WebauthnJsonSerializer::serialize($publicKeyCredentialSource));
-        
+
         $request->user()->passkeys()->create([
             'name' => $data['name'],
             'credential_id' => $publicKeyCredentialSourceSerialized->publicKeyCredentialId,
-            'data' => $publicKeyCredentialSource
+            'data' => $publicKeyCredentialSource,
         ]);
 
         PasskeyCreated::dispatch($request->user());
 
-        if ($request->user()->hasEnabledTwoFactorAuthentication() & !$request->user()->hasEnabledTwoFactorRecoveryCodes()) {
+        if ($request->user()->hasEnabledTwoFactorAuthentication() & ! $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
             $generateRecoveryCodes($request->user());
         }
 
@@ -103,9 +98,7 @@ class PasskeysTwoFactorAuthenticationController extends Controller
 
     /**
      * Update the passkey for the user.
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Models\Passkey  $passkey
+     *
      * @return \MustafaAwami\Lara2fa\Contracts\PasskeyUpdatedResponse
      */
     public function update(Request $request, Passkey $passkey)
@@ -115,7 +108,7 @@ class PasskeysTwoFactorAuthenticationController extends Controller
         ]);
 
         $passkey->update([
-            'name' => $data['name']
+            'name' => $data['name'],
         ]);
 
         PasskeyUpdated::dispatch($request->user());
@@ -125,14 +118,13 @@ class PasskeysTwoFactorAuthenticationController extends Controller
 
     /**
      * Authenticate the user with the given passkey.
-     * 
-     * @param  \Illuminate\Http\Request  $request
+     *
      * @return \MustafaAwami\Lara2fa\Contracts\PasskeyAuthenticatedResponse
      */
     public function authenticate(Request $request)
     {
         $data = $request->validate([
-            'passkey' => ['required', 'json']
+            'passkey' => ['required', 'json'],
         ]);
 
         $publicKeyCredential = WebauthnJsonSerializer::deserialize($data['passkey'], PublicKeyCredential::class);
@@ -149,7 +141,7 @@ class PasskeysTwoFactorAuthenticationController extends Controller
 
         try {
             $publicKeyCredentialSource = AuthenticatorAssertionResponseValidator::create(
-                (new CeremonyStepManagerFactory())->requestCeremony()
+                (new CeremonyStepManagerFactory)->requestCeremony()
             )->check(
                 publicKeyCredentialSource: $passkey->data,
                 authenticatorAssertionResponse: $publicKeyCredential->response,
@@ -159,7 +151,7 @@ class PasskeysTwoFactorAuthenticationController extends Controller
             );
         } catch (\Throwable $th) {
             throw ValidationException::withMessages([
-                'passkey' => $th->getMessage()
+                'passkey' => $th->getMessage(),
             ]);
         }
 
@@ -167,7 +159,7 @@ class PasskeysTwoFactorAuthenticationController extends Controller
 
         $passkey->update([
             'credential_id' => $publicKeyCredentialSourceSerialized->publicKeyCredentialId,
-            'data' => $publicKeyCredentialSource
+            'data' => $publicKeyCredentialSource,
         ]);
 
         Auth::loginUsingId($passkey->user_id);
@@ -178,9 +170,7 @@ class PasskeysTwoFactorAuthenticationController extends Controller
 
     /**
      * Delete the passkey for the user.
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \MustafaAwami\Lara2fa\Models\Passkey  $passkey
+     *
      * @param  \MustafaAwami\Lara2fa\Actions\DisableEmailTwoFactorAuthentication  $disable
      * @return \MustafaAwami\Lara2fa\Contracts\PasskeyDeletedResponse
      */
@@ -188,7 +178,7 @@ class PasskeysTwoFactorAuthenticationController extends Controller
     {
         $passkey->delete();
 
-        if (!$request->user()->hasEnabledTwoFactorAuthentication() & $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
+        if (! $request->user()->hasEnabledTwoFactorAuthentication() & $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
             $disableRecoveryCodes($request->user());
         }
 
@@ -199,8 +189,7 @@ class PasskeysTwoFactorAuthenticationController extends Controller
 
     /**
      * Delete all passkeys for the user.
-     * 
-     * @param  \Illuminate\Http\Request  $request
+     *
      * @param  \MustafaAwami\Lara2fa\Actions\DisableEmailTwoFactorAuthentication  $disable
      * @return \MustafaAwami\Lara2fa\Contracts\PasskeyDisapledResponse
      */
@@ -208,7 +197,7 @@ class PasskeysTwoFactorAuthenticationController extends Controller
     {
         $request->user()->passkeys()->delete();
 
-        if (!$request->user()->hasEnabledTwoFactorAuthentication() & $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
+        if (! $request->user()->hasEnabledTwoFactorAuthentication() & $request->user()->hasEnabledTwoFactorRecoveryCodes()) {
             $disableRecoveryCodes($request->user());
         }
 

@@ -2,10 +2,9 @@
 
 namespace MustafaAwami\Lara2fa\Tests;
 
-use MustafaAwami\Lara2fa\Features;
-use Orchestra\Testbench\Concerns\WithWorkbench;
-use Laravel\Fortify\Features as FortifyFeatures;
 use App\Attributes\FortifyAuthenticationPipeline;
+use Laravel\Fortify\Features as FortifyFeatures;
+use Orchestra\Testbench\Concerns\WithWorkbench;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -24,6 +23,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             }
         }
     }
+
     protected function defineEnvironment($app)
     {
         $app['config']->set('database.default', 'testing');
