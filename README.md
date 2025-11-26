@@ -2,6 +2,7 @@
 
 <p align="center">
 <a href="https://github.com/Mustafa-Awami/Lara2fa/actions"><img src="https://github.com/Mustafa-Awami/Lara2fa/actions/workflows/tests.yml/badge.svg" alt="Build Status"></a>
+<a href="https://github.com/Mustafa-Awami/Lara2fa/actions"><img src="https://github.com/Mustafa-Awami/Lara2fa/actions/workflows/lint.yml/badge.svg" alt="Linter Status"></a>
 <a href="https://packagist.org/packages/mustafa-awami/lara2fa"><img src="https://img.shields.io/packagist/v/mustafa-awami/lara2fa" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/mustafa-awami/lara2fa"><img src="https://img.shields.io/packagist/dt/mustafa-awami/lara2fa" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/mustafa-awami/lara2fa"><img src="https://img.shields.io/packagist/l/mustafa-awami/lara2fa" alt="License"></a>
