@@ -429,3 +429,13 @@ Please review the [security policy](.github/SECURITY.md) on how to report securi
 # ⚖️ License
 
 The Lara2FA package is licensed under the **[MIT license](/LICENSE.md)**.
+
+---
+
+# 💖 Support
+
+If you find this package helpful, please consider sponsoring the project to support its development and maintenance!
+
+<a href="https://github.com/sponsors/Mustafa-Awami">
+  <img src="https://img.shields.io/badge/Sponsor-Mustafa%20Awami-pink?style=for-the-badge&logo=github-sponsors" alt="Sponsor">
+</a>
