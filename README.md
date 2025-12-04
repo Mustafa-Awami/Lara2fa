@@ -21,6 +21,37 @@ Designed for simplicity, security, and seamless integration into any Laravel pro
 
 ---
 
+# 📜 Table of Contents
+
+- [🚀 Features](#-features)
+- [📝 Prerequisites](#-prerequisites)
+- [🧰 Installation](#-installation)
+- [⚙️ Set Up](#️-set-up)
+  - [Step 1️⃣: Install & Publish](#step-1️⃣-install--publish)
+  - [Step 2️⃣: User Model](#step-2️⃣-user-model)
+  - [Step 3️⃣: Routes](#step-3️⃣-routes)
+  - [Step 4️⃣: Fortify Config](#step-4️⃣-fortify-config)
+  - [Step 5️⃣: Migrate & Build](#step-5️⃣-migrate--build)
+- [🧪 Example Repository](#-example-repository)
+- [💻 Usage](#-usage)
+- [🛠️ Configuration (Optional)](#️-configuration-optional)
+  - [Two-Factor Authentication](#two-factor-authentication)
+    - [Authenticator App (TOTP)](#1--authenticator-app-totp)
+    - [Email (OTP)](#2--email-otp)
+    - [Passkeys](#3--passkeys)
+    - [Recovery Codes](#4--recovery-codes)
+  - [Routes](#routes)
+  - [Rate Limiter](#rate-limiter)
+- [🚑 Troubleshooting & Important Notes](#-troubleshooting--important-notes)
+  - [⚠️ Warning: File Overwrites](#️-warning-file-overwrites)
+  - [Passkey Requirements](#passkey-requirements)
+- [👥 Contributing](#-contributing)
+- [🔒 Security Vulnerabilities](#-security-vulnerabilities)
+- [⚖️ License](#️-license)
+- [💖 Support](#-support)
+
+---
+
 # 🚀 Features
 
 - 🔢 Compatible with Google Authenticator, Authy, and 1Password
@@ -52,7 +83,7 @@ composer require mustafa-awami/lara2fa -W
 
 # ⚙️ Set Up
 
-## Step 1️⃣
+## Step 1️⃣: Install & Publish
 
 After installing via composer, publish resources using the `lara2fa:install` Artisan command
 
@@ -86,7 +117,7 @@ Depending on the selected methods, the published `lara2fa.php` config file will 
 
 This instalation process may override some of your files in your project directory, see the full list of files at the [Troubleshooting Section](#-troubleshooting--important-notes)
 
-## Step 2️⃣
+## Step 2️⃣: User Model
 
 In `User.php` model, replace:
 
@@ -100,7 +131,7 @@ with:
 use MustafaAwami\Lara2fa\Traits\TwoFactorAuthenticatable;
 ```
 
-## Step 3️⃣
+## Step 3️⃣: Routes
 
 In `settings.php` route file, replace:
 
@@ -114,7 +145,7 @@ with:
 use MustafaAwami\Lara2fa\Http\Controllers\Settings\TwoFactorAuthenticationController;
 ```
 
-## Step 4️⃣
+## Step 4️⃣: Fortify Config
 
 In `fortify.php` config file, disable the two-factor feature by commenting it out like so:
 
@@ -126,7 +157,7 @@ In `fortify.php` config file, disable the two-factor feature by commenting it ou
 // ]),
 ```
 
-## Step 5️⃣
+## Step 5️⃣: Migrate & Build
 
 Run the migrations to create the new tables:
 
